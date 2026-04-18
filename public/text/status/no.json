@@ -1,19 +1,60 @@
 {
   "title": "Systemstatus",
-  "production": "Produksjon",
-  "development": "Utvikling",
-  "noServices": "Ingen tjenester oppført",
-  "issues": {
-    "domains": "Ustabil servertilkobling",
-    "server": "Tjenesten er utilgjengelig for øyeblikket",
-    "pods": "Ustabile subsystemer",
-    "logs": "Økte feil i logger",
-    "unknown": "Ukjent problem"
+  "intro": "Se om Login sine tjenester er friske akkurat nå, og hvordan de har oppført seg i de siste sjekkene.",
+  "allOperational": "Alt ser friskt ut",
+  "someIssues": "Noen tjenester trenger oppmerksomhet",
+  "summary": {
+    "services": "Overvåkede tjenester",
+    "healthy": "Friske nå",
+    "avgResponse": "Gjennomsnittlig responstid",
+    "lastUpdated": "Sist oppdatert"
+  },
+  "legend": {
+    "title": "Nylige sjekker",
+    "description": "Nyeste sjekk til venstre. Grønn betyr frisk, ravfarget betyr planlagt nedetid, og rød betyr utilgjengelig."
+  },
+  "toggle": {
+    "compact": "Kompakt",
+    "expanded": "Utvidet",
+    "showDetails": "Detaljer",
+    "hideDetails": "Skjul"
+  },
+  "service": {
+    "status": "Status",
+    "monitorId": "Overvåkings-ID",
+    "enabled": "Overvåking aktiv",
+    "url": "Adresse",
+    "port": "Port",
+    "maxConsecutiveFailures": "Tillatte feilede sjekker",
+    "uptime": "Oppetid",
+    "tags": "Tagger",
+    "latestCheck": "Siste sjekk",
+    "responseTime": "Responstid",
+    "plannedDowntime": "Planlagt nedetid",
+    "note": "Merknad",
+    "timestamp": "Sjekket",
+    "certificate": "Sertifikat",
+    "certificateValid": "Gyldig sertifikat",
+    "subject": "Emne",
+    "issuer": "Utsteder",
+    "validFrom": "Gyldig fra",
+    "validTo": "Gyldig til",
+    "keyType": "Nøkkeltype",
+    "dnsNames": "DNS-navn",
+    "recentChecks": "Nylige sjekker"
+  },
+  "values": {
+    "yes": "Ja",
+    "no": "Nei",
+    "none": "Ingen",
+    "unknown": "Ukjent",
+    "disabled": "Skrudd av",
+    "notAvailable": "Ikke tilgjengelig"
   },
   "statuses": {
-    "operational": "Operativ",
-    "degraded": "Nedgradert",
-    "inactive": "Inaktiv",
-    "down": "Nede"
+    "healthy": "Frisk",
+    "issues": "Problemer oppdaget",
+    "planned": "Planlagt nedetid",
+    "disabled": "Skrudd av"
   }
 }

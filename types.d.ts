@@ -706,6 +706,42 @@ declare global {
 
     type Issue = 'domains' | 'logs' | 'server' | 'pods'
 
+    type MonitoringBar = {
+        status: boolean
+        delay: number
+        expectedDown: boolean
+        note: string | null
+        timestamp: string
+    }
+
+    type MonitoringCertificateIssuer = {
+        cn: string
+        name: string
+    }
+
+    type MonitoringCertificate = {
+        valid: boolean
+        subjectCN: string
+        issuer: MonitoringCertificateIssuer
+        validFrom: string
+        validTo: string
+        keyType: string
+        dnsNames: string
+    }
+
+    type MonitoringService = {
+        id: number
+        name: string
+        enabled: boolean
+        url: string
+        port: number
+        maxConsecutiveFailures: number
+        bars: MonitoringBar[]
+        uptime: string
+        tags: string[]
+        certificate?: MonitoringCertificate
+    }
+
     type EngineKey = 'google' | 'duckduckgo' | 'brave'
 
     type GPT_Client = {

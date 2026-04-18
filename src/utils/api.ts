@@ -115,8 +115,9 @@ export async function getAlbum(albumID: number): Promise<GetAlbumProps | string>
 }
 
 // Status
-export async function getStatus(): Promise<Status> {
-    return await fetchWrapper(`${config.url.beekeeper}/status`)
+export async function getStatus(): Promise<MonitoringService[]> {
+    const response = await fetchWrapper(`${config.url.beekeeper}/monitoring`)
+    return typeof response === 'string' ? [] : response
 }
 
 // Music
