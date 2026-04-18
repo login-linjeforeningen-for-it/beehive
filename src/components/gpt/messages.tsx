@@ -1,6 +1,6 @@
 import { Bot, Check, Copy } from 'lucide-react'
-import { RefObject, useEffect, useRef, useState } from 'react'
-import ReactMarkdown from 'react-markdown'
+import { RefObject, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
+import ReactMarkdown, { type Components } from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
 const SCROLL_FOLLOW_THRESHOLD = 96
@@ -13,6 +13,12 @@ type MessagesProps = {
     id: string
 }
 
+type MarkdownCodeProps = {
+    children: ReactNode
+    className?: string
+    text: AIText
+}
+
 export default function Messages({
     isLoadingChat,
     chatSession,
@@ -23,6 +29,35 @@ export default function Messages({
     const messageViewportRef = useRef<HTMLDivElement | null>(null)
     const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null)
     const hasPlacedInitialScrollRef = useRef(false)
+    const markdownComponents = useMemo<Components>(() => ({
+        h1: ({children}) => <h1 className='my-4 text-[1.5rem] font-semibold leading-tight text-current'>{children}</h1>,
+        h2: ({children}) => <h2 className='my-4 text-[1.35rem] font-semibold leading-tight text-current'>{children}</h2>,
+        h3: ({children}) => <h3 className='my-3 text-[1.2rem] font-semibold leading-tight text-current'>{children}</h3>,
+        h4: ({children}) => <h4 className='my-3 text-[1.05rem] font-semibold leading-tight text-current'>{children}</h4>,
+        h5: ({children}) => <h5 className='my-2 text-sm font-semibold text-current'>{children}</h5>,
+        h6: ({children}) => <h6 className='text-sm font-semibold text-current'>{children}</h6>,
+        p: ({children}) => <p className='text-current'>{children}</p>,
+        strong: ({children}) => <strong className='font-semibold text-current'>{children}</strong>,
+        em: ({children}) => <em className='text-current'>{children}</em>,
+        ul: ({children}) => <ul className='my-2 ml-5 list-disc'>{children}</ul>,
+        ol: ({children}) => <ol className='my-2 ml-5 list-decimal'>{children}</ol>,
+        li: ({children}) => <li className='my-1 pl-1 text-current'>{children}</li>,
+        a: ({children, href}) => (
+            <a
+                href={href}
+                target='_blank'
+                rel='noreferrer'
+                className='underline underline-offset-3 text-current'
+            >
+                {children}
+            </a>
+        ),
+        code: ({children, className}) => (
+            <MarkdownCode className={className} text={text}>
+                {children}
+            </MarkdownCode>
+        )
+    }), [text])
 
     async function handleCopy(message: GPT_ChatMessage) {
         try {
@@ -86,10 +121,7 @@ export default function Messages({
     }, [id])
 
     return (
-        <div
-            ref={messageViewportRef}
-            className='flex-1 overflow-y-auto px-5 py-5 1000px:px-8'
-        >
+        <div ref={messageViewportRef} className='flex-1 overflow-y-auto'>
             {isLoadingChat && !chatSession ? (
                 <div className='flex h-full items-center justify-center text-sm text-(--color-text-discreet)'>
                     {text.loadingConversation}
@@ -114,13 +146,8 @@ export default function Messages({
                             className={`group relative max-w-[90%] rounded-lg p-2.5
                                 ${getMessageClassName(message)}`}
                         >
-                            <div
-                                className='prose prose-sm max-w-none select-text text-current
-                                    prose-p:my-2 prose-pre:overflow-x-auto
-                                    prose-pre:rounded-(--border-radius)
-                                    prose-pre:bg-black/80 prose-pre:p-4'
-                            >
-                                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                            <div className='max-w-none select-text wrap-break-word text-current'>
+                                <ReactMarkdown components={markdownComponents} remarkPlugins={[remarkGfm]}>
                                     {message.content || '...'}
                                 </ReactMarkdown>
                             </div>
@@ -134,7 +161,11 @@ export default function Messages({
                                         className='pt-1'
                                     >
                                         {copiedMessageId === message.id
-                                            ? <Check className='h-4 w-4 text-current opacity-55 hover:opacity-100 cursor-pointer' />
+                                            ? <Check className={`
+                                                h-4 w-4 text-current opacity-55
+                                                hover:opacity-100 cursor-pointer
+                                                stroke-login-orange
+                                            `} />
                                             : <Copy className='h-4 w-4 text-current opacity-55 hover:opacity-100 cursor-pointer' />}
                                     </button>
                                 </div>
@@ -149,7 +180,9 @@ export default function Messages({
                                         group-hover:opacity-100 cursor-pointer'
                                 >
                                     {copiedMessageId === message.id
-                                        ? <Check className='h-4 w-4 text-current opacity-55 hover:opacity-100 cursor-pointer' />
+                                        ? <Check
+                                            className='h-4 w-4 text-current opacity-55 hover:opacity-100 cursor-pointer stroke-login-orange'
+                                        />
                                         : <Copy className='h-4 w-4 text-current opacity-55 hover:opacity-100 cursor-pointer' />}
                                 </button>
                             ) : null}
@@ -166,15 +199,90 @@ function getMessageClassName(message: GPT_ChatMessage) {
         return 'ml-auto bg-(--color-bg-surface)/80 text-white'
     }
 
-    if (message.role === 'system') {
-        return `mx-auto w-full max-w-full border border-dashed shadow-none
-            border-(--color-border-default) bg-(--color-bg-body)
-            text-(--color-text-discreet)`
-    }
-
     if (message.error) {
         return 'border border-red-200 bg-red-50 text-red-900 shadow-none'
     }
 
     return ''
+}
+
+function MarkdownCode({ children, className, text }: MarkdownCodeProps) {
+    const [copied, setCopied] = useState(false)
+    const value = getCodeText(children)
+    const multiline = Boolean(className) || value.includes('\n')
+
+    useEffect(() => {
+        if (!copied) {
+            return
+        }
+
+        const timeout = setTimeout(() => setCopied(false), 600)
+        return () => clearTimeout(timeout)
+    }, [copied])
+
+    async function handleCopy() {
+        try {
+            await navigator.clipboard.writeText(value)
+            setCopied(true)
+        } catch (error) {
+            console.error('Failed to copy code', error)
+        }
+    }
+
+    if (!multiline) {
+        return (
+            <span
+                className='group/code relative inline-flex max-w-full items-center rounded-(--border-radius)
+                    border border-[#30363d] bg-[#161b22] hover:pr-4 align-baseline text-[#e6edf3]
+                    in-[.light]:border-[#d0d7de] in-[.light]:bg-[#f6f8fa] in-[.light]:text-[#24292f]'
+            >
+                <code className='overflow-x-auto px-2 py-1 font-mono text-[0.9em]'>
+                    {value}
+                </code>
+                <button
+                    type='button'
+                    aria-label={text.copy}
+                    title={copied ? text.copied : text.copy}
+                    onClick={handleCopy}
+                    className='absolute top-1/2 right-1.25 -translate-y-1/2 opacity-0 transition
+                        group-hover/code:opacity-100 cursor-pointer'
+                >
+                    {copied
+                        ? <Check className='h-3.5 w-3.5 opacity-65 hover:opacity-100 stroke-login-orange' />
+                        : <Copy className='h-3.5 w-3.5 opacity-65 hover:opacity-100' />}
+                </button>
+            </span>
+        )
+    }
+
+    return (
+        <div
+            className='group/code relative my-2 overflow-hidden rounded-(--border-radius-large)
+                border border-[#30363d] bg-[#0d1117] text-[#e6edf3]
+                in-[.light]:border-[#d0d7de] in-[.light]:bg-[#f6f8fa] in-[.light]:text-[#24292f]'
+        >
+            <pre className='overflow-x-auto p-2 text-[0.92rem] leading-6'>
+                <code className={`font-mono ${className || ''}`.trim()}>
+                    {value}
+                </code>
+            </pre>
+            <button
+                type='button'
+                aria-label={text.copy}
+                title={copied ? text.copied : text.copy}
+                onClick={handleCopy}
+                className={`
+                    absolute ${value.includes('\n') ? 'right-2 bottom-2' : 'right-2 bottom-[30%]'}
+                    opacity-0 transition group-hover/code:opacity-100 cursor-pointer`}
+            >
+                {copied
+                    ? <Check className='h-4 w-4 opacity-65 hover:opacity-100 stroke-login-orange' />
+                    : <Copy className='h-4 w-4 opacity-65 hover:opacity-100' />}
+            </button>
+        </div>
+    )
+}
+
+function getCodeText(children: ReactNode) {
+    return String(children).replace(/\n$/, '')
 }
