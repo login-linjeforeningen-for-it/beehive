@@ -14,7 +14,7 @@ export default function Footer({ isConnected, text, chatSession, isLoadingChat }
                         className={`h-2.5 w-2.5 rounded-full
                             ${isConnected ? 'bg-emerald-500' : 'bg-red-500'}`}
                     />
-                    {isConnected ? text.liveConnection : text.reconnecting}
+                    {isConnected ? text.connected : text.reconnecting}
                 </div>
                 <div className='w-px h-[70%] bg-(--color-bg-surface-raised)' />
                 <p className='text-sm text-(--color-text-discreet)'>

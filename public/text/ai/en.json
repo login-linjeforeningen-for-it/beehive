@@ -34,7 +34,7 @@
         "agent": "Agent",
         "loadingConversation": "Loading conversation...",
         "notFound": "Conversation not found.",
-        "liveConnection": "Live connection",
+        "connected": "Connected",
         "reconnecting": "Reconnecting",
         "modelUnavailable": "is currently unavailable.",
         "handoffDescription": "If you continue on another model, the previous context summary will be added first so the new agent can pick up where this one left off.",

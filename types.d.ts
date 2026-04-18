@@ -827,7 +827,7 @@ declare global {
         agent: string
         loadingConversation: string
         notFound: string
-        liveConnection: string
+        connected: string
         reconnecting: string
         modelUnavailable: string
         handoffDescription: string

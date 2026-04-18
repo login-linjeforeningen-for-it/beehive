@@ -34,7 +34,7 @@
         "agent": "Agent",
         "loadingConversation": "Laster samtale...",
         "notFound": "Fant ikke samtalen.",
-        "liveConnection": "Direkte tilkobling",
+        "connected": "Tilkoblet",
         "reconnecting": "Kobler til på nytt",
         "modelUnavailable": "er ikke tilgjengelig akkurat nå.",
         "handoffDescription": "Hvis du fortsetter med en annen modell, legges først et sammendrag av den tidligere konteksten inn slik at den nye agenten kan fortsette der den andre slapp.",
