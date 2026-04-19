@@ -48,7 +48,7 @@ export default function GPTPreview({ gpt, random, lang }: { gpt: GPT, random: nu
         }
 
         let session = gpt.chatSession
-        if (!session) {
+        if (!session?.clientName && !session?.conversationId) {
             session = await gpt.openChat(client)
         }
 
