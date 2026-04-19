@@ -67,6 +67,7 @@ export default async function JobadPage({ params }: PromisedPageProps) {
                                             src={`${config.url.cdn}/img/organizations/${jobad.organization.logo}`}
                                             alt={jobad.organization.logo ?? 'Organization logo'}
                                             fill
+                                            sizes='(min-width: 800px) 14rem, (min-width: 450px) 12rem, 10rem'
                                             className='object-contain object-center'
                                         />
                                     ) : (
@@ -201,6 +202,7 @@ export default async function JobadPage({ params }: PromisedPageProps) {
                                 src={`${config.url.cdn}/img/jobs/${jobad.banner_image}`}
                                 alt={jobad.banner_image}
                                 fill={true}
+                                sizes='(min-width: 800px) calc(min(73rem + 4rem, 100vw) - 20rem - 5%), 100vw'
                                 className='object-cover object-center'
                             />
                         </div>

@@ -6,7 +6,6 @@ const siteDescription = 'Linjeforeningen for IT ved NTNU i Gjøvik.'
 
 const metadata: Metadata = {
     metadataBase: new URL('https://login.no'),
-    themeColor: '#fd8738',
     title: {
         default: siteTitle,
         template: '%s | Login',

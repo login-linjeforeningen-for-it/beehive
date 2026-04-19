@@ -110,6 +110,7 @@ export default async function EventListItem({ event, highlight = true, disableTa
                                     src={config.url.cdn + '/img/events/' + event.image_small}
                                     alt={event.image_small}
                                     fill={true}
+                                    sizes='(min-width: 1000px) 22rem, (min-width: 800px) 50vw, 100vw'
                                     className={bannerImageClassName}
                                 />
                             ) : (
@@ -160,6 +161,7 @@ export default async function EventListItem({ event, highlight = true, disableTa
                                     src={`${config.url.cdn}/img/events/${event.image_small}`}
                                     alt={event.image_small}
                                     fill={true}
+                                    sizes='(min-width: 1000px) 22rem, (min-width: 800px) 50vw, 100vw'
                                     className={bannerImageClassName}
                                 />
                             ) : (

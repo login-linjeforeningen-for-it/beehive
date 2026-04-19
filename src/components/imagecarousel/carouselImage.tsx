@@ -8,6 +8,7 @@ export default function CarouselImage({ image, title }: { image: string, title: 
                 src={image}
                 alt={title}
                 fill={true}
+                sizes='100vw'
             />
         </>
     )

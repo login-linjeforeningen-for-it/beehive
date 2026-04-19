@@ -78,6 +78,18 @@ export default function MazeMapEmbed({ poi, ...props }: any) {
             style: isDarkMode === true ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/light-v11',
         })
 
+        embeddedMazemap.on('styleimagemissing', (event: { id: string }) => {
+            if (!event?.id || embeddedMazemap.hasImage(event.id)) {
+                return
+            }
+
+            embeddedMazemap.addImage(event.id, {
+                width: 1,
+                height: 1,
+                data: new Uint8Array([0, 0, 0, 0]),
+            })
+        })
+
         embeddedMazemap.on('load', () => {
             // Initialize a Highlighter for POIs
             // Storing the object on the map just makes it easy to access for other things
@@ -114,6 +126,10 @@ export default function MazeMapEmbed({ poi, ...props }: any) {
         })
 
         setMap(embeddedMazemap)
+
+        return () => {
+            embeddedMazemap.remove()
+        }
     }, [Mazemap, hasMounted, poi])
 
     if (!hasMounted) {

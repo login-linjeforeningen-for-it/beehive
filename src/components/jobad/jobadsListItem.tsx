@@ -80,6 +80,7 @@ export default async function JobadsListItem({ jobad }: {jobad: GetJobProps}) {
                                     'border-[0.15rem] border-(--color-border-default) object-inherit aspect-3/2',
                                     '400px:h-18 600px:h-28 800px:h-32'
                                 )}
+                                sizes='(min-width: 800px) 14rem, (min-width: 450px) 12rem, 10rem'
                                 src={`${config.url.cdn}/img/organizations/${jobad.organization.logo}`}
                                 alt={jobad.organization.logo}
                                 fill={true}
