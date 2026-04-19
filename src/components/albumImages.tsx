@@ -106,6 +106,7 @@ export default function AlbumImages({ images, albumId, albumNameNo, albumNameEn,
                             hover:opacity-90 transition-opacity'
                         onClick={() => setLightboxIndex(index)}
                     >
+                        <h1>test</h1>
                         <div className='absolute inset-0 bg-(--color-bg-surface-raised) animate-pulse' />
                         <Image
                             src={getImageUrl(img)}
