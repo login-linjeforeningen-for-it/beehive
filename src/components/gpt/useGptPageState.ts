@@ -159,6 +159,7 @@ export default function useGptPageState(initialConversations?: ChatConversationS
 
     function sendPrompt(content: string, sessionOverride?: ChatSession | null) {
         const session = sessionOverride || chatSession
+        console.log('denne', sessionOverride, chatSession)
         if (!session || !socketRef.current || socketRef.current.readyState !== WebSocket.OPEN) {
             return false
         }

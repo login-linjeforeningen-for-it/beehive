@@ -23,7 +23,6 @@ export default function Menu({
     const router = useRouter()
 
     async function handleDeleteConversation(event: React.MouseEvent, conversationId: string) {
-        event.preventDefault()
         event.stopPropagation()
 
         try {
@@ -32,8 +31,7 @@ export default function Menu({
             loadConversations()
 
             if (conversationId === id) {
-                router.replace('/ai')
-                router.refresh()
+                router.push('/ai')
             }
         } catch (error) {
             console.error('Failed to delete conversation', error)
