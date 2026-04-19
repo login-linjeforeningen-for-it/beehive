@@ -16,11 +16,13 @@ export default function PageClient({
     lang,
     initialConversation,
     initialClientsCount,
+    initialConversations,
 }: {
     id: string
     lang: Lang
     initialConversation: StoredConversation | null
     initialClientsCount: number
+    initialConversations: ChatConversationSummary[]
 }) {
     const {
         chatSession: liveChatSession,
@@ -33,7 +35,7 @@ export default function PageClient({
         restoreChat,
         sendPrompt,
         switchConversationClient
-    } = useGptPageState()
+    } = useGptPageState(initialConversations)
     const text = (lang === 'no' ? no : en).conversation
     const [input, setInput] = useState('')
     const [selectedClient, setSelectedClient] = useState('')

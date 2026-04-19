@@ -23,6 +23,7 @@ export default function Menu({
     const router = useRouter()
 
     async function handleDeleteConversation(event: React.MouseEvent, conversationId: string) {
+        event.preventDefault()
         event.stopPropagation()
 
         try {
@@ -31,7 +32,8 @@ export default function Menu({
             loadConversations()
 
             if (conversationId === id) {
-                router.push('/ai')
+                router.replace('/ai')
+                router.refresh()
             }
         } catch (error) {
             console.error('Failed to delete conversation', error)
@@ -86,9 +88,17 @@ export default function Menu({
                     const isActive = conversation.id === id
 
                     return (
-                        <button
+                        <div
                             key={conversation.id}
+                            role='button'
+                            tabIndex={0}
                             onClick={() => router.push(`/ai/${conversation.id}`)}
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter' || event.key === ' ') {
+                                    event.preventDefault()
+                                    router.push(`/ai/${conversation.id}`)
+                                }
+                            }}
                             className={`group w-full rounded-lg p-2 text-left transition
                                 ${getConversationClassName(isActive)}`}
                         >
@@ -97,15 +107,19 @@ export default function Menu({
                                     {conversation.title}
                                 </p>
                                 <span className='flex shrink-0 items-center'>
-                                    <Trash2
+                                    <button
+                                        type='button'
+                                        aria-label={`${text.delete}: ${conversation.title}`}
                                         onClick={(event) =>
                                             handleDeleteConversation(event, conversation.id)}
-                                        className={`h-4 w-4 opacity-0 transition group-hover:opacity-60
+                                        className={`rounded p-1 opacity-0 transition group-hover:opacity-60
                                             hover:opacity-100 ${getDeleteIconClassName(conversation.id)}`}
-                                    />
+                                    >
+                                        <Trash2 className='h-4 w-4' />
+                                    </button>
                                 </span>
                             </div>
-                        </button>
+                        </div>
                     )
                 })}
             </div>

@@ -13,13 +13,13 @@ function createPendingAssistantMessage(conversationId: string): GPT_ChatMessage 
     }
 }
 
-export default function useGptPageState() {
+export default function useGptPageState(initialConversations?: ChatConversationSummary[]) {
     const [clients, setClients] = useState<GPT_Client[]>([])
     const [reconnect, setReconnect] = useState(false)
     const [isConnected, setIsConnected] = useState(false)
     const [participants, setParticipants] = useState(1)
-    const [conversations, setConversations] = useState<ChatConversationSummary[]>([])
-    const [isLoadingConversations, setIsLoadingConversations] = useState(true)
+    const [conversations, setConversations] = useState<ChatConversationSummary[]>(initialConversations || [])
+    const [isLoadingConversations, setIsLoadingConversations] = useState(initialConversations === undefined)
     const [isLoadingChat, setIsLoadingChat] = useState(false)
     const [chatSession, setChatSession] = useState<ChatSession | null>(null)
     const clientsRef = useRef<GPT_Client[]>([])
@@ -75,9 +75,11 @@ export default function useGptPageState() {
         return () => clearTimeout(timeout)
     }, [isConnected])
 
-    const loadConversations = useCallback(async () => {
+    const loadConversations = useCallback(async (background = false) => {
         try {
-            setIsLoadingConversations(true)
+            if (!background) {
+                setIsLoadingConversations(true)
+            }
             setConversations(await listAiConversations())
         } catch (error) {
             console.error('Failed to load conversations', error)
@@ -87,8 +89,8 @@ export default function useGptPageState() {
     }, [])
 
     useEffect(() => {
-        void loadConversations()
-    }, [loadConversations])
+        void loadConversations(initialConversations !== undefined)
+    }, [initialConversations, loadConversations])
 
     useEffect(() => {
         setChatSession((prev) => {

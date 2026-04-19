@@ -29,7 +29,11 @@ export async function switchAiConversationClient(id: string, clientName: string)
 }
 
 async function fetchAi<T>(path: string, init?: RequestInit): Promise<T> {
-    const response = await fetch(`${config.url.beekeeper}${path}`, {
+    const baseUrl = typeof window === 'undefined'
+        ? config.url.beekeeper
+        : '/api'
+
+    const response = await fetch(`${baseUrl}${path}`, {
         ...init,
         headers: {
             'Content-Type': 'application/json',
