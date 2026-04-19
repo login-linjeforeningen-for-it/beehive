@@ -56,7 +56,10 @@ export default function GPTPreview({ gpt, random, lang }: { gpt: GPT, random: nu
             return
         }
 
-        gpt.sendPrompt(input, session)
+        const sent = await gpt.sendPrompt(input, session)
+        if (!sent) {
+            return
+        }
         setInput('')
         router.push(`/ai/${session.conversationId}`)
     }

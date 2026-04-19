@@ -1,15 +1,22 @@
-import { deleteAiConversation } from '@utils/ai'
-import { MessageSquarePlus, Trash2 } from 'lucide-react'
+import {
+    deleteAiConversation,
+    importAiConversationsFromSession,
+    listDeletedAiConversations,
+    restoreAiConversation,
+    shareAiConversation
+} from '@utils/ai'
+import { MessageSquarePlus, Share2, Trash2, Undo2 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 type MenuProps = {
     text: AIText
     isLoadingConversations: boolean
     conversations: ChatConversationSummary[]
-    loadConversations: () => void
+    loadConversations: (background?: boolean) => void
     id: string
+    identity?: AIIdentity
 }
 
 export default function Menu({
@@ -17,10 +24,31 @@ export default function Menu({
     isLoadingConversations,
     conversations,
     loadConversations,
-    id
+    id,
+    identity,
 }: MenuProps) {
     const [deletingConversationId, setDeletingConversationId] = useState<string | null>(null)
+    const [restoringConversationId, setRestoringConversationId] = useState<string | null>(null)
+    const [sharingConversationId, setSharingConversationId] = useState<string | null>(null)
+    const [showDeleted, setShowDeleted] = useState(false)
+    const [deletedConversations, setDeletedConversations] = useState<ChatConversationSummary[]>([])
     const router = useRouter()
+
+    useEffect(() => {
+        if (!showDeleted) {
+            return
+        }
+
+        void loadDeletedConversations()
+    }, [showDeleted])
+
+    async function loadDeletedConversations() {
+        try {
+            setDeletedConversations(await listDeletedAiConversations())
+        } catch (error) {
+            console.error('Failed to load deleted conversations', error)
+        }
+    }
 
     async function handleDeleteConversation(event: React.MouseEvent, conversationId: string) {
         event.stopPropagation()
@@ -28,7 +56,10 @@ export default function Menu({
         try {
             setDeletingConversationId(conversationId)
             await deleteAiConversation(conversationId)
-            loadConversations()
+            await Promise.all([
+                loadConversations(true),
+                showDeleted ? loadDeletedConversations() : Promise.resolve(),
+            ])
 
             if (conversationId === id) {
                 router.push('/ai')
@@ -37,6 +68,48 @@ export default function Menu({
             console.error('Failed to delete conversation', error)
         } finally {
             setDeletingConversationId(null)
+        }
+    }
+
+    async function handleRestoreConversation(event: React.MouseEvent, conversationId: string) {
+        event.stopPropagation()
+
+        try {
+            setRestoringConversationId(conversationId)
+            await restoreAiConversation(conversationId)
+            await Promise.all([loadConversations(true), loadDeletedConversations()])
+        } catch (error) {
+            console.error('Failed to restore conversation', error)
+        } finally {
+            setRestoringConversationId(null)
+        }
+    }
+
+    async function handleShareConversation(event: React.MouseEvent, conversationId: string) {
+        event.stopPropagation()
+
+        try {
+            setSharingConversationId(conversationId)
+            const { shareToken } = await shareAiConversation(conversationId)
+            await navigator.clipboard.writeText(`${window.location.origin}/ai/shared/${shareToken}`)
+        } catch (error) {
+            console.error('Failed to share conversation', error)
+        } finally {
+            setSharingConversationId(null)
+        }
+    }
+
+    async function handleImportSession() {
+        const sessionId = window.prompt(text.enterSessionId)
+        if (!sessionId?.trim()) {
+            return
+        }
+
+        try {
+            await importAiConversationsFromSession(sessionId.trim())
+            await loadConversations(true)
+        } catch (error) {
+            console.error('Failed to import conversations from session', error)
         }
     }
 
@@ -54,9 +127,11 @@ export default function Menu({
             : 'cursor-pointer'
     }
 
+    const visibleConversations = showDeleted ? deletedConversations : conversations
+
     return (
         <aside
-            className='flex min-h-0 flex-col border-b border-(--color-border-default)
+            className='relative flex min-h-0 flex-col border-b border-(--color-border-default)
                 bg-(--color-bg-surface) p-3 1000px:border-r 1000px:border-b-0
                 1000px:px-5'
         >
@@ -73,16 +148,16 @@ export default function Menu({
             {/* previous chats header */}
             <div className='mt-4 flex items-center justify-between'>
                 <h2 className='text-xs font-semibold tracking-[0.18em] text-(--color-text-discreet)'>
-                    {text.previousChats}
+                    {showDeleted ? text.deleted : text.previousChats}
                 </h2>
                 <span className='text-xs text-(--color-text-discreet)'>
-                    {isLoadingConversations ? text.loading : conversations.length}
+                    {isLoadingConversations && !showDeleted ? text.loading : visibleConversations.length}
                 </span>
             </div>
 
             {/* previous chats */}
-            <div className='mt-2 flex-1 overflow-y-auto'>
-                {conversations.map((conversation) => {
+            <div className='mt-2 flex-1 overflow-y-auto pb-24'>
+                {visibleConversations.map((conversation) => {
                     const isActive = conversation.id === id
 
                     return (
@@ -90,9 +165,13 @@ export default function Menu({
                             key={conversation.id}
                             role='button'
                             tabIndex={0}
-                            onClick={() => router.push(`/ai/${conversation.id}`)}
+                            onClick={() => {
+                                if (!showDeleted) {
+                                    router.push(`/ai/${conversation.id}`)
+                                }
+                            }}
                             onKeyDown={(event) => {
-                                if (event.key === 'Enter' || event.key === ' ') {
+                                if ((event.key === 'Enter' || event.key === ' ') && !showDeleted) {
                                     event.preventDefault()
                                     router.push(`/ai/${conversation.id}`)
                                 }
@@ -105,21 +184,81 @@ export default function Menu({
                                     {conversation.title}
                                 </p>
                                 <span className='flex shrink-0 items-center'>
-                                    <button
-                                        type='button'
-                                        aria-label={`${text.delete}: ${conversation.title}`}
-                                        onClick={(event) =>
-                                            handleDeleteConversation(event, conversation.id)}
-                                        className={`rounded p-1 opacity-0 transition group-hover:opacity-60
-                                            hover:opacity-100 ${getDeleteIconClassName(conversation.id)}`}
-                                    >
-                                        <Trash2 className='h-4 w-4' />
-                                    </button>
+                                    {!showDeleted ? (
+                                        <>
+                                            <button
+                                                type='button'
+                                                aria-label={`${text.share}: ${conversation.title}`}
+                                                onClick={(event) =>
+                                                    void handleShareConversation(event, conversation.id)}
+                                                className={`
+                                                    rounded p-1 opacity-0 transition group-hover:opacity-60 hover:opacity-100 cursor-pointer
+                                                `}
+                                            >
+                                                <Share2
+                                                    className={`h-4 w-4 ${
+                                                        sharingConversationId === conversation.id
+                                                            ? 'text-(--color-primary)'
+                                                            : ''
+                                                    }`}
+                                                />
+                                            </button>
+                                            <button
+                                                type='button'
+                                                aria-label={`${text.delete}: ${conversation.title}`}
+                                                onClick={(event) =>
+                                                    void handleDeleteConversation(event, conversation.id)}
+                                                className={`rounded p-1 opacity-0 transition group-hover:opacity-60
+                                                    hover:opacity-100 ${getDeleteIconClassName(conversation.id)}`}
+                                            >
+                                                <Trash2 className='h-4 w-4' />
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <button
+                                            type='button'
+                                            aria-label={`${text.restore}: ${conversation.title}`}
+                                            onClick={(event) =>
+                                                void handleRestoreConversation(event, conversation.id)}
+                                            className='rounded p-1 opacity-0 transition group-hover:opacity-60 hover:opacity-100'
+                                        >
+                                            <Undo2
+                                                className={`h-4 w-4 ${
+                                                    restoringConversationId === conversation.id
+                                                        ? 'text-(--color-primary)'
+                                                        : ''
+                                                }`}
+                                            />
+                                        </button>
+                                    )}
                                 </span>
                             </div>
                         </div>
                     )
                 })}
+            </div>
+
+            <div
+                className='absolute right-2 bottom-2 left-2 grid gap-2 border-t
+                    border-(--color-border-default) bg-(--color-bg-surface)'
+            >
+                {identity?.isLoggedIn ? (
+                    <button
+                        type='button'
+                        onClick={() => void handleImportSession()}
+                        className='rounded-(--border-radius) bg-(--color-bg-body)
+                            px-3 py-2 text-sm text-(--color-text-main)'
+                    >
+                        {text.loadFromSession}
+                    </button>
+                ) : null}
+                <button
+                    type='button'
+                    onClick={() => setShowDeleted(prev => !prev)}
+                    className='rounded-(--border-radius) bg-(--color-bg-body) py-1.75 text-sm text-(--color-text-main)'
+                >
+                    {showDeleted ? text.previousChats : text.deleted}
+                </button>
             </div>
         </aside>
     )

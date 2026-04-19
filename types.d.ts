@@ -800,6 +800,11 @@ declare global {
         title: string
         originalClientName: string
         activeClientName: string
+        ownerUserId: string | null
+        ownerSessionId: string | null
+        deletedAt: string | null
+        shareToken: string | null
+        sharedFromConversationId: string | null
         createdAt: string
         updatedAt: string
         lastMessagePreview: string | null
@@ -821,6 +826,13 @@ declare global {
         metrics: GPT_ModelMetrics
         createdAt: string
         updatedAt: string
+    }
+
+    type AIIdentity = {
+        userId: string | null
+        userName: string | null
+        sessionId: string
+        isLoggedIn: boolean
     }
 
     type GptSocketMessage = {
@@ -846,11 +858,11 @@ declare global {
         isConnected: boolean
         isLoadingChat: boolean
         isLoadingConversations: boolean
-        loadConversations: () => Promise<void>
+        loadConversations: (background?: boolean, deleted?: boolean) => Promise<void>
         openChat: (client: GPT_Client) => Promise<ChatSession | null>
         participants: number
         restoreChat: (conversationId: string) => Promise<void>
-        sendPrompt: (content: string, sessionOverride?: ChatSession | null) => boolean
+        sendPrompt: (content: string, sessionOverride?: ChatSession | null) => Promise<boolean>
         switchConversationClient: (conversationId: string, clientName: string) => Promise<ChatSession | null>
     }
 
@@ -875,6 +887,15 @@ declare global {
         copy: string
         copied: string
         delete: string
+        share: string
+        restore: string
+        deleted: string
+        loadFromSession: string
+        enterSessionId: string
+        temporaryBanner: string
+        copySessionId: string
+        loginToSave: string
+        loggedInBanner: string
         askFollowup: string
         connectToModel: string
     }

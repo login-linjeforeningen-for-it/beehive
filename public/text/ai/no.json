@@ -46,6 +46,15 @@
         "copy": "Kopier",
         "copied": "Kopiert",
         "delete": "Slett",
+        "share": "Del",
+        "restore": "Gjenopprett",
+        "deleted": "Slettede",
+        "loadFromSession": "Last inn samtaler fra sesjons-ID",
+        "enterSessionId": "Skriv inn en midlertidig sesjons-ID",
+        "temporaryBanner": "Du er ikke logget inn. Samtalene dine er midlertidig lagret under ID {id}.",
+        "copySessionId": "Kopier sesjons-ID",
+        "loginToSave": "Logg inn",
+        "loggedInBanner": "Du er logget inn som {name}.",
         "askFollowup": "Still et oppfølgingsspørsmål...",
         "connectToModel": "Koble til en tilgjengelig modell for å fortsette denne samtalen."
     }

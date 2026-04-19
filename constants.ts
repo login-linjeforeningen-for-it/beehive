@@ -3,12 +3,16 @@ import packageInfo from './package.json'
 const { env } = process
 
 const cdn = env.NEXT_PUBLIC_CDN_URL ?? 'https://cdn.login.no'
+const beekeeperApiUrl = env.BEEKEEPER_API_URL ?? 'https://beekeeper.login.no/api'
+const beekeeperWsUrl = env.NEXT_PUBLIC_BEEKEEPER_WSS_URL
+    ?? beekeeperApiUrl.replace(/^http/, 'ws')
+
 const config = {
     url: {
         workerbee:  env.WORKERBEE_API_URL ?? 'https://workerbee.login.no/api/v2',
         tekkomBot: env.TEKKOM_BOT_API_URL ?? 'https://bot.login.no/api',
-        beekeeper: env.BEEKEEPER_API_URL ?? 'https://beekeeper.login.no/api',
-        beekeeper_wss: 'wss://beekeeper.login.no/api',
+        beekeeper: beekeeperApiUrl,
+        beekeeper_wss: beekeeperWsUrl,
         cdn,
         exam: 'https://exam.login.no',
         wiki: 'https://wiki.login.no',

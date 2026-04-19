@@ -46,6 +46,15 @@
         "copy": "Copy",
         "copied": "Copied",
         "delete": "Delete",
+        "share": "Share",
+        "restore": "Restore",
+        "deleted": "Deleted",
+        "loadFromSession": "Load chats from session ID",
+        "enterSessionId": "Enter a temporary session ID",
+        "temporaryBanner": "You are not logged in. Your chats are temporary stored under ID {id}.",
+        "copySessionId": "Copy session ID",
+        "loginToSave": "Log in",
+        "loggedInBanner": "You are logged in as {name}.",
         "askFollowup": "Ask a follow-up question...",
         "connectToModel": "Connect to an available model to continue this chat."
     }

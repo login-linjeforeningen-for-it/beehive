@@ -3,7 +3,10 @@
 import en from '@text/ai/en.json'
 import no from '@text/ai/no.json'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import useGptPageState, { createChatSessionFromStoredConversation } from '@components/gpt/useGptPageState'
+import useGptPageState, {
+    createChatSessionFromStoredConversation,
+    getStoredChatSessionSnapshot
+} from '@components/gpt/useGptPageState'
 import findHighestTPSClient from '@utils/findHighestTPSClient'
 import Footer from '@components/gpt/footer'
 import Prompt from '@components/gpt/prompt'
@@ -17,12 +20,14 @@ export default function PageClient({
     initialConversation,
     initialClientsCount,
     initialConversations,
+    identity,
 }: {
     id: string
     lang: Lang
     initialConversation: StoredConversation | null
     initialClientsCount: number
     initialConversations: ChatConversationSummary[]
+    identity: AIIdentity
 }) {
     const {
         chatSession: liveChatSession,
@@ -42,15 +47,18 @@ export default function PageClient({
     const [isSwitching, setIsSwitching] = useState(false)
     const textareaRef = useRef<HTMLTextAreaElement | null>(null)
     const shouldFollowRef = useRef(true)
+    const snapshotSession = useMemo(() => getStoredChatSessionSnapshot(id), [id])
     const fallbackSession = useMemo(
         () => initialConversation ? createChatSessionFromStoredConversation(initialConversation) : null,
         [initialConversation]
     )
     const chatSession = liveChatSession?.conversationId === id
         ? liveChatSession
-        : fallbackSession?.conversationId === id
-            ? fallbackSession
-            : liveChatSession
+        : snapshotSession?.conversationId === id
+            ? snapshotSession
+            : fallbackSession?.conversationId === id
+                ? fallbackSession
+                : liveChatSession
 
     useEffect(() => {
         if (!fallbackSession || fallbackSession.conversationId !== id) {
@@ -103,7 +111,7 @@ export default function PageClient({
 
         shouldFollowRef.current = true
 
-        const didSend = sendPrompt(input, chatSession)
+        const didSend = await sendPrompt(input, chatSession)
         if (didSend) {
             setInput('')
         }
@@ -138,9 +146,35 @@ export default function PageClient({
                     conversations={conversations}
                     loadConversations={loadConversations}
                     id={id}
+                    identity={identity}
                 />
 
                 <section className='flex min-h-0 flex-col bg-(--color-bg-main)'>
+                    {!identity.isLoggedIn ? (
+                        <div className='border border-red-500/40 bg-red-500/10 px-5 py-3 1000px:px-8'>
+                            <div className='flex flex-col gap-2 text-sm text-red-100 in-[.light]:text-red-900'>
+                                <p className='font-semibold'>
+                                    {text.temporaryBanner.replace('{id}', identity.sessionId)}
+                                </p>
+                                <div className='flex flex-wrap items-center gap-3'>
+                                    <button
+                                        type='button'
+                                        onClick={() => navigator.clipboard.writeText(identity.sessionId)}
+                                        className='text-left underline underline-offset-3'
+                                    >
+                                        {text.copySessionId}
+                                    </button>
+                                    <a
+                                        href={`/api/auth/login?redirect=${encodeURIComponent(`/ai/${id}`)}`}
+                                        className='rounded-(--border-radius) bg-red-500 px-3 py-1.5 font-semibold text-white'
+                                    >
+                                        {text.loginToSave}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    ) : null}
+
                     <UnavailableBanner
                         showUnavailableBanner={showUnavailableBanner}
                         chatSession={chatSession}

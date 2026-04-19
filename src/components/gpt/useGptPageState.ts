@@ -4,6 +4,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import defaultModelMetrics from './defaultModelMetrics'
 import normalizeClient from './normalizeClient'
 
+const CHAT_SESSION_STORAGE_PREFIX = 'ai-chat-session:'
+
 function createPendingAssistantMessage(conversationId: string): GPT_ChatMessage {
     return {
         id: `${conversationId}-assistant`,
@@ -105,11 +107,22 @@ export default function useGptPageState(initialConversations?: ChatConversationS
         })
     }, [clients])
 
+    useEffect(() => {
+        if (!chatSession?.conversationId) {
+            return
+        }
+
+        persistChatSessionSnapshot(chatSession)
+    }, [chatSession])
+
     async function openChat(client: GPT_Client | string) {
         const clientName = typeof client === 'string' ? client : client.name
 
         try {
             const conversation = await createAiConversation(clientName)
+            if (!conversation) {
+                return null
+            }
             const session = mapStoredConversationToSession(
                 conversation,
                 typeof client === 'string'
@@ -157,17 +170,18 @@ export default function useGptPageState(initialConversations?: ChatConversationS
         }
     }
 
-    function sendPrompt(content: string, sessionOverride?: ChatSession | null) {
-        const session = sessionOverride || chatSession
-        console.log('denne', sessionOverride, chatSession)
-        if (!session || !socketRef.current || socketRef.current.readyState !== WebSocket.OPEN) {
+    async function sendPrompt(content: string, sessionOverride?: ChatSession | null) {
+        const session = resolveValidSession(sessionOverride, chatSession)
+        const trimmedContent = content.trim()
+
+        if (!session || !trimmedContent || !socketRef.current || socketRef.current.readyState !== WebSocket.OPEN) {
             return false
         }
 
         const userMessage: GPT_ChatMessage = {
             id: crypto.randomUUID(),
             role: 'user',
-            content,
+            content: trimmedContent,
             createdAt: new Date().toISOString(),
         }
         const requestMessages = [...session.messages, userMessage]
@@ -177,29 +191,27 @@ export default function useGptPageState(initialConversations?: ChatConversationS
                 || message.role === 'assistant')
             .map(message => ({ role: message.role, content: message.content }))
 
+        const nextSession = setSessionWithPrompt(session, userMessage)
         setChatSession((prev) => prev
             && prev.conversationId === session.conversationId
-            ? {
-                ...prev,
-                isSending: true,
-                messages: [...prev.messages, userMessage, createPendingAssistantMessage(prev.conversationId)],
-            }
-            : {
-                ...session,
-                isSending: true,
-                messages: [...session.messages, userMessage, createPendingAssistantMessage(session.conversationId)],
-            })
+            ? setSessionWithPrompt(prev, userMessage)
+            : nextSession)
+        persistChatSessionSnapshot(nextSession)
+
+        const identity = getOwnerIdentityFromCookies()
 
         socketRef.current.send(JSON.stringify({
             type: 'prompt_request',
             conversationId: session.conversationId,
             clientName: session.clientName,
+            ownerUserId: identity.userId,
+            ownerSessionId: identity.sessionId,
             messages: requestMessages,
             maxTokens: 512,
             temperature: 0.7,
         }))
 
-        void loadConversations()
+        void loadConversations(true)
         return true
     }
 
@@ -235,6 +247,24 @@ export function createChatSessionFromStoredConversation(
     activeClient: GPT_Client | null = null
 ) {
     return mapStoredConversationToSession(conversation, activeClient)
+}
+
+export function getStoredChatSessionSnapshot(conversationId: string) {
+    if (typeof window === 'undefined') {
+        return null
+    }
+
+    const rawValue = window.sessionStorage.getItem(`${CHAT_SESSION_STORAGE_PREFIX}${conversationId}`)
+    if (!rawValue) {
+        return null
+    }
+
+    try {
+        const value = JSON.parse(rawValue) as ChatSession
+        return isValidSession(value) ? value : null
+    } catch {
+        return null
+    }
 }
 
 function handleSocketMessage(
@@ -367,5 +397,62 @@ function updatePromptError(session: ChatSession | null, msg: GptSocketMessage) {
         isSending: false,
         metrics: msg.metrics || { ...session.metrics, status: 'error', lastError: content },
         messages,
+    }
+}
+
+function resolveValidSession(sessionOverride?: ChatSession | null, chatSession?: ChatSession | null) {
+    const session = isValidSession(sessionOverride) ? sessionOverride : chatSession
+    return isValidSession(session) ? session : null
+}
+
+function isValidSession(session: ChatSession | null | undefined): session is ChatSession {
+    return Boolean(
+        session
+        && session.conversationId
+        && session.clientName
+        && Array.isArray(session.messages)
+    )
+}
+
+function setSessionWithPrompt(session: ChatSession, userMessage: GPT_ChatMessage): ChatSession {
+    return {
+        ...session,
+        isSending: true,
+        messages: [...session.messages, userMessage, createPendingAssistantMessage(session.conversationId)],
+    }
+}
+
+function persistChatSessionSnapshot(session: ChatSession) {
+    if (typeof window === 'undefined' || !session.conversationId) {
+        return
+    }
+
+    window.sessionStorage.setItem(
+        `${CHAT_SESSION_STORAGE_PREFIX}${session.conversationId}`,
+        JSON.stringify(session)
+    )
+}
+
+function getOwnerIdentityFromCookies() {
+    if (typeof document === 'undefined') {
+        return {
+            userId: null,
+            sessionId: null,
+        }
+    }
+
+    const values = Object.fromEntries(
+        document.cookie
+            .split('; ')
+            .filter(Boolean)
+            .map((entry) => {
+                const [key, ...rest] = entry.split('=')
+                return [key, decodeURIComponent(rest.join('='))]
+            })
+    )
+
+    return {
+        userId: values.user_id || null,
+        sessionId: values.ai_session_id || null,
     }
 }

@@ -6,6 +6,10 @@ backend default {
 }
 
 sub vcl_recv {
+    if (req.url ~ "^/ai(/|$)" || req.url ~ "^/api/ai(/|$)") {
+        return (pass);
+    }
+
     if (req.http.Cookie) {
         set req.http.X-Theme = regsub(req.http.Cookie, ".*theme=([^;]+);?.*", "\1");
         set req.http.X-Lang = regsub(req.http.Cookie, ".*lang=([^;]+);?.*", "\1");
@@ -25,6 +29,12 @@ sub vcl_hash {
 }
 
 sub vcl_backend_response {
+    if (bereq.url ~ "^/ai(/|$)" || bereq.url ~ "^/api/ai(/|$)") {
+        set beresp.ttl = 0s;
+        set beresp.uncacheable = true;
+        return (deliver);
+    }
+
     if (bereq.url ~ "^/_next/image") {
         set beresp.ttl = 180d;
         if (beresp.http.Set-Cookie) {
