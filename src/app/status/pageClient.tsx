@@ -117,9 +117,10 @@ function ServiceCard({
                 <button
                     type='button'
                     onClick={() => setOpen(prev => !prev)}
-                    className='flex shrink-0 items-center gap-2 rounded-(--border-radius)
-                        bg-(--color-bg-body) px-3 py-2 text-sm font-medium
-                        text-(--color-text-main) transition hover:bg-(--color-bg-surface-raised)'
+                    className='flex shrink-0 items-center gap-2 font-medium
+                        rounded-(--border-radius) bg-(--color-bg-body)
+                        hover:bg-(--color-bg-surface-raised) px-3 py-2 text-sm
+                        text-(--color-text-main) transition cursor-pointer'
                 >
                     {open ? text.toggle.hideDetails : text.toggle.showDetails}
                     <ChevronDown

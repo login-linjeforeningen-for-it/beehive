@@ -50,7 +50,7 @@
         "share": "Share",
         "restore": "Restore",
         "deleted": "Deleted",
-        "loadFromSession": "Load chats from session ID",
+        "loadFromSession": "Load chats from ID",
         "enterSessionId": "Enter a temporary session ID",
         "temporaryBanner": "You are not logged in. Your chats are temporarily stored under ID {id}.",
         "copySessionId": "Copy session ID",

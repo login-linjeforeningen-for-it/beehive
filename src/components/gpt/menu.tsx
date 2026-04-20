@@ -9,6 +9,7 @@ import { MessageSquarePlus, Share2, Trash2, Undo2 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { Input } from 'uibee/components'
 
 type MenuProps = {
     text: AIText
@@ -31,6 +32,7 @@ export default function Menu({
     const [restoringConversationId, setRestoringConversationId] = useState<string | null>(null)
     const [sharingConversationId, setSharingConversationId] = useState<string | null>(null)
     const [showDeleted, setShowDeleted] = useState(false)
+    const [sessionId, setSessionId] = useState('')
     const [deletedConversations, setDeletedConversations] = useState<ChatConversationSummary[]>([])
     const router = useRouter()
 
@@ -100,14 +102,13 @@ export default function Menu({
     }
 
     async function handleImportSession() {
-        const sessionId = window.prompt(text.enterSessionId)
         if (!sessionId?.trim()) {
             return
         }
 
         try {
             await importAiConversationsFromSession(sessionId.trim())
-            await loadConversations(true)
+            loadConversations(true)
         } catch (error) {
             console.error('Failed to import conversations from session', error)
         }
@@ -242,14 +243,14 @@ export default function Menu({
                     border-(--color-border-default) bg-(--color-bg-surface)'
             >
                 {identity?.isLoggedIn ? (
-                    <button
-                        type='button'
-                        onClick={() => void handleImportSession()}
-                        className='rounded-(--border-radius) bg-(--color-bg-body)
-                            px-3 py-2 text-sm text-(--color-text-main)'
-                    >
-                        {text.loadFromSession}
-                    </button>
+                    <Input
+                        // className='rounded-(--border-radius) bg-(--color-bg-body)
+                        //         px-3 py-2 text-sm text-(--color-text-main)'
+                        name='text'
+                        value={sessionId}
+                        onChange={(e) => setSessionId(e.target.value)}
+                        onSubmit={handleImportSession}
+                    />
                 ) : null}
                 <button
                     type='button'
