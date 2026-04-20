@@ -1,5 +1,6 @@
-import { NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest) {
-    return request.headers.get('x-forwarded-proto')
+    const protocol = request.headers.get('x-forwarded-proto') ?? 'error'
+    return NextResponse.json({ protocol })
 }
