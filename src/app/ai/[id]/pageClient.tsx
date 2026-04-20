@@ -13,6 +13,7 @@ import Prompt from '@components/gpt/prompt'
 import Messages from '@components/gpt/messages'
 import UnavailableBanner from '@components/gpt/unavailableBanner'
 import Menu from '@components/gpt/menu'
+import AnonymousDisclaimer from '@components/gpt/anonymousDisclaimer'
 
 export default function PageClient({
     id,
@@ -138,7 +139,7 @@ export default function PageClient({
     )
 
     return (
-        <div className='page-section--without-gaps h-full min-h-0'>
+        <div className='page-section--without-gaps h-full min-h-full'>
             <div className='grid h-full min-h-0 grid-cols-1 1000px:grid-cols-[18rem_minmax(0,1fr)]'>
                 <Menu
                     text={text}
@@ -149,31 +150,12 @@ export default function PageClient({
                     identity={identity}
                 />
 
-                <section className='flex min-h-0 flex-col bg-(--color-bg-main)'>
-                    {!identity.isLoggedIn ? (
-                        <div className='border border-red-500/40 bg-red-500/10 px-5 py-3 1000px:px-8'>
-                            <div className='flex flex-col gap-2 text-sm text-red-100 in-[.light]:text-red-900'>
-                                <p className='font-semibold'>
-                                    {text.temporaryBanner.replace('{id}', identity.sessionId)}
-                                </p>
-                                <div className='flex flex-wrap items-center gap-3'>
-                                    <button
-                                        type='button'
-                                        onClick={() => navigator.clipboard.writeText(identity.sessionId)}
-                                        className='text-left underline underline-offset-3'
-                                    >
-                                        {text.copySessionId}
-                                    </button>
-                                    <a
-                                        href={`/api/auth/login?redirect=${encodeURIComponent(`/ai/${id}`)}`}
-                                        className='rounded-(--border-radius) bg-red-500 px-3 py-1.5 font-semibold text-white'
-                                    >
-                                        {text.loginToSave}
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    ) : null}
+                <section className='flex min-h-full flex-col bg-(--color-bg-main)'>
+                    <AnonymousDisclaimer
+                        identity={identity}
+                        conversations={conversations}
+                        text={text}
+                    />
 
                     <UnavailableBanner
                         showUnavailableBanner={showUnavailableBanner}
