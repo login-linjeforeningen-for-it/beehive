@@ -132,9 +132,13 @@ export default function Menu({
     const visibleConversations = showDeleted ? deletedConversations : conversations
 
     return (
-        <aside
-            className='relative flex min-h-0 flex-col border-b border-(--color-border-default)
-                bg-(--color-bg-surface) p-3'
+        <aside className={`relative flex min-h-0 flex-col p-6
+            1000px:before:content-[''] 1000px:before:w-[2.6rem]
+            1000px:before:h-[2.6rem] 1000px:before:absolute
+            1000px:before:border-t-[0.7rem] 1000px:before:border-r-[0.7rem]
+            1000px:before:border-b-0 1000px:before:border-l-0
+            1000px:before:border-(--color-border-default)
+            1000px:before:top-0 1000px:before:right-0 1000px:before:transition`}
         >
             {/* new chat */}
             <Link
@@ -239,10 +243,7 @@ export default function Menu({
                 })}
             </div>
 
-            <div
-                className='absolute right-2 bottom-2 left-2 grid gap-2 border-t
-                    border-(--color-border-default) bg-(--color-bg-surface)'
-            >
+            <div className='absolute right-2 bottom-2 left-2 grid gap-2'>
                 {identity?.isLoggedIn ? (
                     <Input
                         name='text'
@@ -250,13 +251,16 @@ export default function Menu({
                         value={sessionId}
                         onChange={(e) => setSessionId(e.target.value)}
                         onSubmit={handleImportSession}
-                        className='bottom-2 h-7'
+                        className='bottom-4 h-7'
                     />
                 ) : null}
                 <button
                     type='button'
                     onClick={() => setShowDeleted(prev => !prev)}
-                    className='rounded-(--border-radius) bg-(--color-bg-body) py-1.75 text-sm text-(--color-text-main)'
+                    className={`
+                        rounded-lg bg-(--color-bg-surface) py-1.75 text-sm 
+                        text-(--color-text-main)
+                    `}
                 >
                     {showDeleted ? text.previousChats : text.deleted}
                 </button>

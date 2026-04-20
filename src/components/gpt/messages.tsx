@@ -20,6 +20,20 @@ type MarkdownCodeProps = {
     text: AIText
 }
 
+type AssistantMessageProps = {
+    text: AIText
+    copiedMessageId: string | null
+    message: GPT_ChatMessage
+    handleCopy: (message: GPT_ChatMessage) => Promise<void>
+}
+
+type UserMessageProps = {
+    text: AIText
+    copiedMessageId: string | null
+    message: GPT_ChatMessage
+    handleCopy: (message: GPT_ChatMessage) => Promise<void>
+}
+
 export default function Messages({
     isLoadingChat,
     chatSession,
@@ -157,46 +171,66 @@ export default function Messages({
                                     {message.content || '...'}
                                 </ReactMarkdown>
                             </div>
-                            {message.role === 'assistant' ? (
-                                <div className='flex'>
-                                    <button
-                                        type='button'
-                                        aria-label={text.copy}
-                                        title={copiedMessageId === message.id ? text.copied : text.copy}
-                                        onClick={() => handleCopy(message)}
-                                        className='pt-1'
-                                    >
-                                        {copiedMessageId === message.id
-                                            ? <Check className={`
-                                                h-4 w-4 text-current opacity-55
-                                                hover:opacity-100 cursor-pointer
-                                                stroke-login-orange
-                                            `} />
-                                            : <Copy className='h-4 w-4 text-current opacity-55 hover:opacity-100 cursor-pointer' />}
-                                    </button>
-                                </div>
-                            ) : null}
-                            {message.role === 'user' ? (
-                                <button
-                                    type='button'
-                                    aria-label={text.copy}
-                                    title={copiedMessageId === message.id ? text.copied : text.copy}
-                                    onClick={() => handleCopy(message)}
-                                    className='absolute -bottom-5 right-1 opacity-0 transition
-                                        group-hover:opacity-100 cursor-pointer'
-                                >
-                                    {copiedMessageId === message.id
-                                        ? <Check
-                                            className='h-4 w-4 text-current opacity-55 hover:opacity-100 cursor-pointer stroke-login-orange'
-                                        />
-                                        : <Copy className='h-4 w-4 text-current opacity-55 hover:opacity-100 cursor-pointer' />}
-                                </button>
-                            ) : null}
+                            {message.role === 'assistant' && <AssistantMessage
+                                text={text}
+                                copiedMessageId={copiedMessageId}
+                                message={message}
+                                handleCopy={handleCopy}
+                            />}
+                            {message.role === 'user' && <UserMessage
+                                text={text}
+                                copiedMessageId={copiedMessageId}
+                                message={message}
+                                handleCopy={handleCopy}
+                            />}
                         </article>
                     ))}
                 </div>
             )}
         </div>
+    )
+}
+
+function AssistantMessage({ text, copiedMessageId, message, handleCopy }: AssistantMessageProps) {
+    console.log(message)
+    return (
+        <div className='flex'>
+            <button
+                type='button'
+                aria-label={text.copy}
+                title={copiedMessageId === message.id ? text.copied : text.copy}
+                onClick={() => handleCopy(message)}
+                className='pt-1'
+            >
+                {copiedMessageId === message.id
+                    ? <Check className={`
+                        h-4 w-4 text-current opacity-55
+                        hover:opacity-100 cursor-pointer
+                        stroke-login-orange
+                    `} />
+                    : <Copy className='h-4 w-4 text-current opacity-55 hover:opacity-100 cursor-pointer' />}
+            </button>
+        </div>
+    )
+}
+
+function UserMessage({ text, copiedMessageId, message, handleCopy }: UserMessageProps) {
+    console.log(message)
+    return (
+        <button
+            type='button'
+            aria-label={text.copy}
+            title={copiedMessageId === message.id ? text.copied : text.copy}
+            onClick={() => handleCopy(message)}
+            className='absolute -bottom-5 right-1 opacity-0 transition
+                group-hover:opacity-100 cursor-pointer'
+        >
+            {copiedMessageId === message.id
+                ? <Check
+                    className='h-4 w-4 text-current opacity-55 hover:opacity-100 cursor-pointer stroke-login-orange'
+                />
+                : <Copy className='h-4 w-4 text-current opacity-55 hover:opacity-100 cursor-pointer' />}
+        </button>
     )
 }
 
@@ -206,7 +240,7 @@ function getMessageClassName(message: GPT_ChatMessage) {
     }
 
     if (message.error) {
-        return 'border border-red-200 bg-red-50 text-red-900 shadow-none'
+        return 'border border-login-orange bg-login-orange/20 text-login-orange'
     }
 
     return ''

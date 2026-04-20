@@ -83,7 +83,7 @@ export default function GPTPreview({ gpt, random, lang }: { gpt: GPT, random: nu
             className='relative z-1 flex h-[calc(100%-10rem)] flex-col
                 justify-center gap-5'
         >
-            <div className='w-full justify-center items-center mt-12'>
+            <div className='w-full justify-center items-center mt-25'>
                 <h1 className='w-full text-center text-[1.35rem] mt-40'>{text.help}</h1>
             </div>
             <div

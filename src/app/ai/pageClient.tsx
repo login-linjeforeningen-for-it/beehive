@@ -37,7 +37,7 @@ export default function page({
                 />
 
                 <section className='page-container min-h-[calc(100vh-var(--h-topbar))] bg-(--color-bg-main) col-span-6'>
-                    <div className='page-section--normal flex flex-col'>
+                    <div className='page-section--normal flex flex-col -mt-13'>
                         <h1 className='heading-1 heading-1--top-left-corner'>
                             Login AI
                         </h1>

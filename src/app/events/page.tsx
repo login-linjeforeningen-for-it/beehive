@@ -4,7 +4,6 @@ import prepFilter from '@components/filter/prepFilter'
 import no from '@text/eventList/no.json'
 import en from '@text/eventList/en.json'
 import GridView from '@components/svg/symbols/gridView'
-// import ArrowDownWard from '@components/svg/symbols/arrowDownWard'
 import ListBulleted from '@components/svg/symbols/listBulleted'
 import { getEventCategoryFilters, getEvents } from '@utils/api'
 import { cookies } from 'next/headers'
@@ -18,16 +17,13 @@ type PageProps = {
 
 export default async function Page({searchParams}: PageProps) {
     const filters = (await searchParams)
-
     const eventsView = filters.view ? `${filters.view}-view` : 'list-view'
-    const filtersParams = typeof filters.categories === 'string' ? filters.categories : undefined
-
+    const categories = typeof filters.categories === 'string' ? filters.categories : undefined
     const lang = ((await cookies()).get('lang')?.value || 'no') as Lang
     const text = lang === 'no' ? no : en
-
     const limit = 20
     const eventsResponse = await getEvents({
-        categories: filtersParams,
+        categories,
         orderBy: 'time_start',
         limit
     })
@@ -42,14 +38,14 @@ export default async function Page({searchParams}: PageProps) {
         })
     const { currentWeekEvents, nextWeekEvents, futureEvents } = groupEvents(events)
 
-
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response: { categories?: any[] } = {}
 
     const categoryFilters = await getCategoryFilters()
-    // @ts-ignore
-    if (categoryFilters) response['categories'] = categoryFilters
-
+    if (categoryFilters) {
+        // @ts-ignore
+        response['categories'] = categoryFilters
+    }
 
     return (
         <div className='page-container'>
@@ -63,17 +59,15 @@ export default async function Page({searchParams}: PageProps) {
                         options={[
                             {
                                 leadingIcon: (
-                                    <GridView className='w-6 fill-[var(--color-text-main)]' />
+                                    <GridView className='w-6 fill-(--color-text-main)' />
                                 ),
                                 name: 'grid'
                             },
                             {
-                                leadingIcon: (<ListBulleted className='w-6 fill-[var(--color-text-main)]' />),
+                                leadingIcon: (<ListBulleted className='w-6 fill-(--color-text-main)' />),
                                 name: 'list'
                             },
                         ]}
-                        // activeVariant='primary-outlined'
-                        // inactiveVariant='secondary-outlined'
                         groupVariant='ghost'
                         buttonVariant='ghost'
                         size='medium'
@@ -81,7 +75,8 @@ export default async function Page({searchParams}: PageProps) {
                 </div>
             </div>
             <div className='page-section--without-gaps'>
-                <div className='p-[0_0.5rem] 400px:p-[0_1rem] 800px:p-[0_2rem] 1000px:grid 1000px:grid-cols-[17rem_auto] 1000px:gap-[3vw]'>
+                <div className='p-[0_0.5rem] 400px:p-[0_1rem] 800px:p-[0_2rem]
+                1000px:grid 1000px:grid-cols-[17rem_auto] 1000px:gap-[3vw]'>
                     <div className='1000px:order-1 flex flex-col'>
                         <div className='w-full'>
                             <FilterItem filterData={response} />
@@ -90,7 +85,7 @@ export default async function Page({searchParams}: PageProps) {
                                     size='medium'
                                     variant='secondary-outlined'
                                     target='_self'
-                                    trailingIcon={<Download className='w-6 h-6 fill-[var(--color-text-regular)]'/>}
+                                    trailingIcon={<Download className='w-6 h-6 fill-(--color-text-regular)'/>}
                                     href='https://workerbee.login.no/api/calendar'
                                 >
                                     {text.calendar}
@@ -106,7 +101,7 @@ export default async function Page({searchParams}: PageProps) {
                                     size='medium'
                                     variant='secondary-outlined'
                                     target='_self'
-                                    trailingIcon={<Download className='w-6 h-6 fill-[var(--color-text-regular)]'/>}
+                                    trailingIcon={<Download className='w-6 h-6 fill-(--color-text-regular)'/>}
                                     href='https://workerbee.login.no/api/calendar'
                                 >
                                     {text.calendar}
@@ -117,24 +112,22 @@ export default async function Page({searchParams}: PageProps) {
                                 size='medium'
                                 variant='secondary-outlined'
                                 target='_self'
-                                leadingIcon={<Download className='w-6 h-6 fill-[var(--color-text-regular)]'/>}
+                                leadingIcon={<Download className='w-6 h-6 fill-(--color-text-regular)'/>}
                                 href='https://workerbee.login.no/api/calendar'
                             />
                             <GroupToggle
                                 options={[
                                     {
                                         leadingIcon: (
-                                            <GridView className='w-6 fill-[var(--color-text-main)]' />
+                                            <GridView className='w-6 fill-(--color-text-main)' />
                                         ),
                                         name: 'grid'
                                     },
                                     {
-                                        leadingIcon: (<ListBulleted className='w-6 fill-[var(--color-text-main)]' />),
+                                        leadingIcon: (<ListBulleted className='w-6 fill-(--color-text-main)' />),
                                         name: 'list'
                                     },
                                 ]}
-                                // activeVariant='primary-outlined'
-                                // inactiveVariant='secondary-outlined'
                                 groupVariant='secondary-outlined'
                                 size='medium'
                             />
@@ -154,10 +147,11 @@ export default async function Page({searchParams}: PageProps) {
                                     {eventsView == 'list-view' && (
                                         <div className='relative m-[1.2rem_0.5rem_0.2rem_0.5rem]
                                             before:content-[""] before:absolute before:top-[50%]
-                                            before:w-full before:h-[0.13rem] before:bg-[var(--color-border-default)]
+                                            before:w-full before:h-[0.13rem] before:bg-(--color-border-default)
                                             600px:mr-4 600px:ml-4 mt-[0.2rem]'>
-                                            <p className='bg-[var(--color-bg-body)] text-[var(--color-text-discreet)]
-                                                font-medium text-[0.9rem] tracking-[0.15em] w-fit p-[0_1rem] m-[0_auto] z-2 block relative'>
+                                            <p className='g-(--color-bg-body)] text-(--color-text-discreet)
+                                                font-medium text-[0.9rem] tracking-[0.15em] w-fit p-[0_1rem]
+                                                m-[0_auto] z-2 block relative'>
                                                 {text.thisWeek}
                                             </p>
                                         </div>
@@ -185,10 +179,13 @@ export default async function Page({searchParams}: PageProps) {
                                     {eventsView == 'list-view' && (
                                         <div className='relative m-[1.2rem_0.5rem_0.2rem_0.5rem]
                                             before:content-[""] before:absolute before:top-[50%]
-                                            before:w-full before:h-[0.13rem] before:bg-[var(--color-border-default)]
+                                            before:w-full before:h-[0.13rem] before:bg-(--color-border-default)
                                             600px:mr-4 600px:ml-4'>
-                                            <p className='bg-[var(--color-bg-body)] text-[var(--color-text-discreet)]
-                                                font-medium text-[0.9rem] tracking-[0.15em] w-fit p-[0_1rem] m-[0_auto] z-2 block relative'>
+                                            <p className='bg-(--color-bg-body)
+                                                text-(--color-text-discreet)
+                                                font-medium text-[0.9rem]
+                                                tracking-[0.15em] w-fit p-[0_1rem]
+                                                m-[0_auto] z-2 block relative'>
                                                 {text.nextWeek}
                                             </p>
                                         </div>
@@ -216,10 +213,14 @@ export default async function Page({searchParams}: PageProps) {
                                     {eventsView == 'list-view' && currentWeekEvents?.length + nextWeekEvents?.length > 0 && (
                                         <div className='relative m-[1.2rem_0.5rem_0.2rem_0.5rem]
                                             before:content-[""] before:absolute before:top-[50%]
-                                            before:w-full before:h-[0.13rem] before:bg-[var(--color-border-default)]
+                                            before:w-full before:h-[0.13rem] before:bg-(--color-border-default)
                                             600px:mr-4 600px:ml-4'>
-                                            <p className='bg-[var(--color-bg-body)] text-[var(--color-text-discreet)]
-                                                font-medium text-[0.9rem] tracking-[0.15em] w-fit p-[0_1rem] m-[0_auto] z-2 block relative'>
+                                            <p className='bg-(--color-bg-body)
+                                                text-(--color-text-discreet)
+                                                font-medium text-[0.9rem]
+                                                tracking-[0.15em]
+                                                w-fit p-[0_1rem] m-[0_auto]
+                                                z-2 block relative'>
                                                 {text.later}
                                             </p>
                                         </div>
@@ -242,21 +243,6 @@ export default async function Page({searchParams}: PageProps) {
                             )
                             }
                         </ul>
-
-                        {events.length > 0 && (
-                            <div className='events_load-more'>
-                                {/* @ts-ignore */}
-                                {/* <Button
-                                            href=''
-                                            onClick={loadItems}
-                                            variant='secondary'
-                                            className='m-[2rem_0]'
-                                            trailingIcon={<ArrowDownWard className=''/>}
-                                        >
-                                            {text.loadMore}
-                                        </Button> */}
-                            </div>
-                        )}
                     </div>
                 </div>
             </div>
@@ -276,7 +262,6 @@ function getLabelKeyWithLang(key: string) {
         }
     }
 }
-
 
 async function getCategoryFilters() {
     try {
