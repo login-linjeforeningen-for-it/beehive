@@ -5,13 +5,12 @@ import {
     restoreAiConversation,
     shareAiConversation
 } from '@utils/ai'
-import { Ellipsis, MessageSquarePlus, Undo2 } from 'lucide-react'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { Input } from 'uibee/components'
-import MenuBar from './menuBar'
-import Marquee from '@components/music/marquee'
+import NewChatLink from './newChatLink'
+import PreviousChatsHeader from './previousChatsHeader'
+import PreviousChatsList from './previousChatsList'
 
 type MenuProps = {
     text: AIText
@@ -151,102 +150,29 @@ export default function Menu({
             before:border-(--color-border-default) before:border-l-0
             before:top-0 before:right-0 before:transition`}
         >
-            {/* new chat */}
-            <Link
-                href='/ai'
-                className='flex items-center gap-2 rounded-lg py-2 text-sm font-semibold
-                    text-(--color-text-main) transition hover:bg-(--color-bg-main)'
-            >
-                <MessageSquarePlus className='h-4 w-4' />
-                {text.newChat}
-            </Link>
-
-            {/* previous chats header */}
-            <div className='mt-4 flex items-center justify-between'>
-                <h2 className='text-xs font-semibold tracking-[0.18em] text-(--color-text-discreet)'>
-                    {showDeleted ? text.deleted : text.previousChats}
-                </h2>
-                <span className='text-xs text-(--color-text-discreet)'>
-                    {isLoadingConversations && !showDeleted ? text.loading : visibleConversations.length}
-                </span>
-            </div>
-
-            {/* previous chats */}
-            <div className='mt-2 flex-1 overflow-y-auto pb-24'>
-                {visibleConversations.map((conversation) => {
-                    const isActive = conversation.id === id
-
-                    return (
-                        <div
-                            key={conversation.id}
-                            role='button'
-                            tabIndex={0}
-                            onClick={() => {
-                                if (!showDeleted) {
-                                    router.push(`/ai/${conversation.id}`)
-                                }
-                            }}
-                            onKeyDown={(event) => {
-                                if ((event.key === 'Enter' || event.key === ' ') && !showDeleted) {
-                                    event.preventDefault()
-                                    router.push(`/ai/${conversation.id}`)
-                                }
-                            }}
-                            className={`
-                                group w-full rounded-lg p-2 text-left transition
-                                cursor-pointer
-                                ${getConversationClassName(isActive)}`}
-                        >
-                            <div className='flex items-start justify-between gap-3'>
-                                <Marquee
-                                    className='truncate'
-                                    innerClassName='text-sm text-neutral-500'
-                                    text={conversation.title}
-                                />
-                                <span onMouseLeave={() => setSidebar(null)} className='flex shrink-0 items-center'>
-                                    {!showDeleted ? (
-                                        <>
-                                            <button
-                                                type='button'
-                                                aria-label={`${text.share}: ${conversation.title}`}
-                                                onClick={(event) => handleMenuItemSidebar(event, conversation.id)}
-                                                className={`
-                                                    rounded p-1 opacity-0 transition group-hover:opacity-60 hover:opacity-100 cursor-pointer
-                                                    `}
-                                            >
-                                                <Ellipsis className='h-4 w-4' />
-                                            </button>
-                                            {sidebar === conversation.id && <MenuBar
-                                                text={text}
-                                                conversation={conversation}
-                                                handleShareConversation={handleShareConversation}
-                                                handleDeleteConversation={handleDeleteConversation}
-                                                getDeleteIconClassName={getDeleteIconClassName}
-                                            />}
-                                        </>
-                                    ) : (
-                                        <button
-                                            type='button'
-                                            aria-label={`${text.restore}: ${conversation.title}`}
-                                            onClick={(event) =>
-                                                void handleRestoreConversation(event, conversation.id)}
-                                            className='rounded p-1 opacity-0 transition group-hover:opacity-60 hover:opacity-100'
-                                        >
-                                            <Undo2
-                                                className={`h-4 w-4 ${
-                                                    restoringConversationId === conversation.id
-                                                        ? 'text-(--color-primary)'
-                                                        : ''
-                                                }`}
-                                            />
-                                        </button>
-                                    )}
-                                </span>
-                            </div>
-                        </div>
-                    )
-                })}
-            </div>
+            <NewChatLink text={text} />
+            <PreviousChatsHeader
+                text={text}
+                showDeleted={showDeleted}
+                isLoadingConversations={isLoadingConversations}
+                visibleConversations={visibleConversations}
+            />
+            <PreviousChatsList
+                text={text}
+                showDeleted={showDeleted}
+                visibleConversations={visibleConversations}
+                id={id}
+                sidebar={sidebar}
+                restoringConversationId={restoringConversationId}
+                router={router}
+                setSidebar={setSidebar}
+                handleMenuItemSidebar={handleMenuItemSidebar}
+                handleShareConversation={handleShareConversation}
+                handleDeleteConversation={handleDeleteConversation}
+                handleRestoreConversation={handleRestoreConversation}
+                getDeleteIconClassName={getDeleteIconClassName}
+                getConversationClassName={getConversationClassName}
+            />
 
             <div className='absolute right-2 bottom-2 left-2 grid gap-2'>
                 {identity?.isLoggedIn ? (
@@ -264,7 +190,7 @@ export default function Menu({
                     type='button'
                     onClick={() => setShowDeleted(prev => !prev)}
                     className={`
-                        rounded-lg bg-(--color-bg-surface) py-1.75 text-sm 
+                        cursor-pointer rounded-lg bg-(--color-bg-surface) py-1.75 text-sm 
                         text-(--color-text-main)
                     `}
                 >

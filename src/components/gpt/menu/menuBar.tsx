@@ -5,7 +5,7 @@ type MenuBarProps = {
     conversation: ChatConversationSummary
     handleShareConversation: (event: React.MouseEvent<Element, MouseEvent>, conversationId: string) => Promise<void>
     handleDeleteConversation: (event: React.MouseEvent<Element, MouseEvent>, conversationId: string) => Promise<void>
-    getDeleteIconClassName: (conversationId: string) => 'pointer-events-none opacity-100' | 'cursor-pointer'
+    getDeleteIconClassName: (conversationId: string) => string
 }
 
 export default function MenuBar({
