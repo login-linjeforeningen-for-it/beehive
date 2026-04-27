@@ -4,12 +4,9 @@ import en from '@text/landing/en.json'
 import EndCard from '@components/endCard'
 import JobadCard from './jobadCard'
 import { getJobs } from '@utils/api'
-import { cookies } from 'next/headers'
-import { normalizeLang } from '@utils/lang'
 
-export default async function JobadsPreview() {
+export default async function JobadsPreview({ lang }: { lang: Lang }) {
     const jobads = await getJobs(null, null, null, null, 3, 0)
-    const lang = normalizeLang((await cookies()).get('lang')?.value)
     const text = lang === 'no' ? no : en
 
     return (
@@ -47,7 +44,7 @@ export default async function JobadsPreview() {
                                 <JobadCard jobad={e} />
                             </li>
                         ))}
-                        {jobads.jobs.length > 2 && <EndCard path='/career' />}
+                        {jobads.jobs.length > 2 && <EndCard path='/career' lang={lang} />}
                     </ul>
                 )}
             </section>

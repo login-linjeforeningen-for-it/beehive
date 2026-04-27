@@ -4,12 +4,10 @@ import Link from 'next/link'
 import EventListItem from '@components/event/eventItem'
 import EndCard from '@components/endCard'
 import { getEvents } from '@utils/api'
-import { cookies } from 'next/headers'
 import { Egg } from '@components/decoration/easter'
 import { Decoration } from '@components/decoration/wrapper'
-import { normalizeLang } from '@utils/lang'
 
-export default async function EventsPreview() {
+export default async function EventsPreview({ lang }: { lang: Lang }) {
     const eventsResponse = await getEvents({
         orderBy: 'time_start',
         limit: 3,
@@ -25,7 +23,6 @@ export default async function EventsPreview() {
             return start - now > 0
         })
 
-    const lang = normalizeLang((await cookies()).get('lang')?.value)
     const text = lang === 'no' ? no : en
 
     return (
@@ -68,7 +65,7 @@ export default async function EventsPreview() {
                                 <EventListItem event={e} variant='card' highlight={false} />
                             </li>
                         ))}
-                        {events.length > 2 && <EndCard path='/events' />}
+                        {events.length > 2 && <EndCard path='/events' lang={lang} />}
                     </ul>
                 )}
             </section>
