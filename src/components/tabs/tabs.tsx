@@ -1,21 +1,23 @@
-import React, { type SetStateAction } from 'react'
+import type { Dispatch, JSX, ReactNode, SetStateAction } from 'react'
 import clsx from '@utils/clsx'
 
 type TabNavItemProps = {
     id: string
-    title: React.JSX.Element
+    title: JSX.Element
     activeTab: string
-    setActiveTab: React.Dispatch<SetStateAction<string>>
+    setActiveTab: Dispatch<SetStateAction<string>>
 }
 
-export default function TabNavItem({ id, title, activeTab, setActiveTab }: TabNavItemProps) {
-    function handleClick() {
-        setActiveTab(id)
-    }
+type TabContentProps = {
+    id: string
+    activeTab: string
+    children: ReactNode
+}
 
+export function TabNavItem({ id, title, activeTab, setActiveTab }: TabNavItemProps) {
     return (
         <li
-            onClick={handleClick}
+            onClick={() => setActiveTab(id)}
             className={clsx(
                 'group w-full list-none overflow-hidden rounded-(--border-radius)',
                 'bg-(--color-bg-surface) shadow-(--container-shadow)',
@@ -32,8 +34,24 @@ export default function TabNavItem({ id, title, activeTab, setActiveTab }: TabNa
                     activeTab === id && 'tabs_nav-title--active border-(--color-primary) text-(--color-text-main)'
                 )}
             >
-                { title }
+                {title}
             </div>
         </li>
+    )
+}
+
+export function TabContent({ id, activeTab, children }: TabContentProps) {
+    if (activeTab !== id) {
+        return null
+    }
+
+    return (
+        <div className='rounded-(--border-radius) bg-(--color-bg-surface)
+            p-[.1rem_1rem_2rem_1rem] shadow-(--container-shadow)
+            600px:p-[2rem_2rem_2rem_3rem] 800px:p-[2rem_3rem_3rem_3rem]
+            1200px:m-[0_2rem] 1200px:p-[2rem_5rem_3rem_5rem]'
+        >
+            {children}
+        </div>
     )
 }

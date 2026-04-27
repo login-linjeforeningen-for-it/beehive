@@ -2,8 +2,7 @@
 
 import { useState } from 'react'
 import config from '@config'
-import TabNavItem from '@components/tabs/tabNavItem'
-import TabContent from '@components/tabs/tabContent'
+import { TabContent, TabNavItem } from '@components/tabs/tabs'
 import LogChamp from '@components/logchamp/logChamp'
 import EvntkomLogo from '@components/svg/committeelogos/evntkomLogo'
 import BedkomLogo from '@components/svg/committeelogos/bedkomLogo'

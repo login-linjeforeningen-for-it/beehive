@@ -1,7 +1,6 @@
 'use client'
 
-import AccordionItem from '@components/accordion/accordionItem'
-import AccordionContent from '@components/accordion/accordionContent'
+import { AccordionContent, AccordionItem } from '@components/accordion/accordion'
 import { useState } from 'react'
 import Link from 'next/link'
 import no from '@text/about/no.json'
