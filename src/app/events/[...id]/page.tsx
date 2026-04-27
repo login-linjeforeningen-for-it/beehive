@@ -26,7 +26,6 @@ import { formatEventStatusDate, formatTimeHHMM, isOngoing } from '@utils/datetim
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 import Image from 'next/image'
-import { normalizeLang } from '@utils/lang'
 
 type EventBannerProps = {
     event: GetEventProps
@@ -35,12 +34,12 @@ type EventBannerProps = {
 export default async function EventPage({ params }: PromisedPageProps) {
     const id = (await params).id
     const event = await getEvent(Number(id))
-    const lang = normalizeLang((await cookies()).get('lang')?.value)
+    const lang = ((await cookies()).get('lang')?.value || 'no') as Lang
     const errorMsg = lang === 'no' ? 'Oi! Her var det tomt... ' : 'Oh! Looks empty... '
 
     return (
         <>
-            {typeof event !== 'string' && <Event event={event} lang={lang} />}
+            {typeof event !== 'string' && <Event event={event} />}
             {!event && (
                 <Alert variant='danger' className='page-section--normal mt-32 mx-auto max-w-160'>
                     {errorMsg}
@@ -50,7 +49,8 @@ export default async function EventPage({ params }: PromisedPageProps) {
     )
 }
 
-function Event({ event, lang }: { event: GetEventProps, lang: Lang }) {
+async function Event({ event }: { event: GetEventProps }) {
+    const lang = ((await cookies()).get('lang')?.value || 'no') as Lang
     const text = lang === 'no' ? no : en
 
     return (
@@ -207,7 +207,6 @@ function Event({ event, lang }: { event: GetEventProps, lang: Lang }) {
                     )}
                 </div>
                 <EventSignUp
-                    lang={lang}
                     // @ts-ignore
                     cap={event.capacity}
                     // @ts-ignore
@@ -225,7 +224,7 @@ function Event({ event, lang }: { event: GetEventProps, lang: Lang }) {
             <div
                 className='[grid-area:ban] bg-[rgba(100,100,100,0.3)] block aspect-10/4 w-full rounded-(--border-radius) overflow-hidden'
             >
-                <EventBanner event={event} lang={lang} />
+                <EventBanner event={event} />
             </div>
             <div
                 className='[grid-area:des] p-4 relative 400px:py-4 400px:px-8
@@ -242,7 +241,6 @@ function Event({ event, lang }: { event: GetEventProps, lang: Lang }) {
                     800px:before:bottom-0 800px:before:right-0 800px:before:transition'
             >
                 <Article
-                    lang={lang}
                     // @ts-ignore
                     title={(event.canceled ? `❌ (${text.canceled})` : '') + (lang === 'en' ? event.name_en : event.name_no)}
                     // @ts-ignore
@@ -286,7 +284,8 @@ function Event({ event, lang }: { event: GetEventProps, lang: Lang }) {
     )
 }
 
-async function EventBanner({ event, lang }: EventBannerProps & { lang: Lang }) {
+async function EventBanner({ event }: EventBannerProps) {
+    const lang = ((await cookies()).get('lang')?.value || 'no') as Lang
     const banner_url = `${config.url.cdn}/img/events/${event.image_banner}`
     if (!event || !((await fetch(banner_url)).status === 200)) {
         // @ts-ignore

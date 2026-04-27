@@ -162,7 +162,6 @@ export default async function Page({searchParams}: PageProps) {
                                             <EventListItem
                                                 key={e.id}
                                                 event={e}
-                                                lang={lang}
                                                 highlight={e.highlight}
                                                 variant={
                                                     eventsView === 'grid-view'
@@ -197,7 +196,6 @@ export default async function Page({searchParams}: PageProps) {
                                             <EventListItem
                                                 key={e.id}
                                                 event={e}
-                                                lang={lang}
                                                 highlight={e.highlight}
                                                 variant={
                                                     eventsView === 'grid-view'
@@ -233,7 +231,6 @@ export default async function Page({searchParams}: PageProps) {
                                             <EventListItem
                                                 key={e.id}
                                                 event={e}
-                                                lang={lang}
                                                 highlight={e.highlight}
                                                 variant={
                                                     eventsView === 'grid-view'

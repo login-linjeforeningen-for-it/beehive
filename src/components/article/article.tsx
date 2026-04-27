@@ -1,9 +1,10 @@
 import MarkdownRender from '@components/markdownrender/markdownRender'
 import Alert from '@components/alert/alert'
 import { formatPublishedDate } from '@utils/datetimeFormatter'
+import { cookies } from 'next/headers'
+import { normalizeLang } from '@utils/lang'
 
 type ArticleProps = {
-    lang: Lang
     title: string
     publishTime: Date
     updateTime: Date
@@ -12,7 +13,9 @@ type ArticleProps = {
     description: string
 }
 
-export default function Article({ lang, title, publishTime, updateTime, informational, introduction, description }: ArticleProps) {
+export default async function Article({ title, publishTime, updateTime, informational, introduction, description }: ArticleProps) {
+    const lang = normalizeLang((await cookies()).get('lang')?.value)
+
     return (
         <div className='wrap-break-word'>
             <h1 className='my-[0.2em] text-[1.9rem] leading-[1.2em] font-normal 400px:text-[2rem] 800px:text-[2.3rem]'>{title}</h1>

@@ -8,9 +8,9 @@ import ArrowOutward from '@components/svg/symbols/arrowOutward'
 import ConfirmationNumber from '@components/svg/symbols/confirmationNumber'
 import DisabledByDefault from '@components/svg/symbols/disabledByDefault'
 import ExitToApp from '@components/svg/symbols/exitToApp'
+import { cookies } from 'next/headers'
 
 type EventSignUpProps = {
-    lang: Lang
     url: string
     full: boolean
     canceled: boolean
@@ -20,7 +20,6 @@ type EventSignUpProps = {
 }
 
 export default async function EventSignUp({
-    lang,
     url,
     full,
     canceled = false,
@@ -28,6 +27,7 @@ export default async function EventSignUp({
     signupRelease,
     signupDeadline,
 }: EventSignUpProps) {
+    const lang = ((await cookies()).get('lang')?.value || 'no') as Lang
     const text = lang === 'no' ? no : en
     const now = new Date()
     const isFormsLoginNo = !!url && url.includes('forms.login.no')
