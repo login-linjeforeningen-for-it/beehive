@@ -6,12 +6,26 @@ import { useEffect } from 'react'
 import { InnerTopFiveThisX } from '@components/music/topFiveThisX'
 import no from '@text/music/no.json'
 import en from '@text/music/en.json'
-import CurrentSummary from '@components/music/currentSummary'
+import PlayIcon from '@components/music/playIcon'
 
 async function fetcher(url: string) {
     const response = await fetch(url)
     const data = await response.json()
     return data
+}
+
+function CurrentSummary({ text, listeners }: { text: string, listeners: number }) {
+    return (
+        <div className='bg-(--color-bg-surface) rounded-lg w-full h-full p-4'>
+            <div className='flex items-center justify-between'>
+                <div className='flex gap-2 w-full font-semibold justify-between'>
+                    <PlayIcon />
+                    {listeners} {text}
+                    <PlayIcon />
+                </div>
+            </div>
+        </div>
+    )
 }
 
 export default function MusicDashboardToday({ initialData, lang }: { initialData: Music, lang: Lang }) {

@@ -6,11 +6,11 @@ import {
     shareAiConversation
 } from '@utils/ai'
 import clsx from '@utils/clsx'
+import { MessageSquarePlus } from 'lucide-react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { Input } from 'uibee/components'
-import NewChatLink from './newChatLink'
-import PreviousChatsHeader from './previousChatsHeader'
 import PreviousChatsList from './previousChatsList'
 
 type MenuProps = {
@@ -21,6 +21,42 @@ type MenuProps = {
     id: string
     identity?: AIIdentity
     className?: string
+}
+
+function NewChatLink({ text }: { text: AIText }) {
+    return (
+        <Link
+            href='/ai'
+            className='flex items-center gap-2 rounded-lg py-2 text-sm font-semibold
+                text-(--color-text-main) transition hover:bg-(--color-bg-main)'
+        >
+            <MessageSquarePlus className='h-4 w-4' />
+            {text.newChat}
+        </Link>
+    )
+}
+
+function PreviousChatsHeader({
+    text,
+    showDeleted,
+    isLoadingConversations,
+    visibleConversations,
+}: {
+    text: AIText
+    showDeleted: boolean
+    isLoadingConversations: boolean
+    visibleConversations: ChatConversationSummary[]
+}) {
+    return (
+        <div className='mt-4 flex items-center justify-between'>
+            <h2 className='text-xs font-semibold tracking-[0.18em] text-(--color-text-discreet)'>
+                {showDeleted ? text.deleted : text.previousChats}
+            </h2>
+            <span className='text-xs text-(--color-text-discreet)'>
+                {isLoadingConversations && !showDeleted ? text.loading : visibleConversations.length}
+            </span>
+        </div>
+    )
 }
 
 export default function Menu({

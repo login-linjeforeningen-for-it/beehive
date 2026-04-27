@@ -1,10 +1,34 @@
 import config from '@config'
 import { createAiConversation, getAiConversation, listAiConversations, switchAiConversationClient } from '@utils/ai'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import defaultModelMetrics from './defaultModelMetrics'
-import normalizeClient from './normalizeClient'
 
 const CHAT_SESSION_STORAGE_PREFIX = 'ai-chat-session:'
+
+function defaultModelMetrics(): GPT_ModelMetrics {
+    return {
+        conversationId: null,
+        status: 'idle',
+        currentTokens: 0,
+        maxTokens: 0,
+        promptTokens: 0,
+        generatedTokens: 0,
+        contextTokens: 0,
+        contextMaxTokens: 0,
+        tps: 0,
+        lastUpdated: null,
+        lastError: null,
+    }
+}
+
+function normalizeClient(client: GPT_Client): GPT_Client {
+    return {
+        ...client,
+        model: {
+            ...defaultModelMetrics(),
+            ...(client.model || {}),
+        },
+    }
+}
 
 function createPendingAssistantMessage(conversationId: string): GPT_ChatMessage {
     return {

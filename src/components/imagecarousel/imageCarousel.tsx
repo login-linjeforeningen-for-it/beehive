@@ -1,6 +1,6 @@
 'use client'
+import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
-import CarouselImage from './carouselImage'
 import clsx from '@utils/clsx'
 
 type NavigateButtonProps = {
@@ -79,7 +79,13 @@ function SlideItem({ image, stateClassName, isActive, title, description, isPaus
                     <p className='text-[rgb(250,250,250)]'>{description}</p>
                 </div>
             </div>
-            <CarouselImage image={image} title={title} />
+            <Image
+                className='rounded-(--border-radius)'
+                src={image}
+                alt={title}
+                fill={true}
+                sizes='100vw'
+            />
         </div>
     )
 }
