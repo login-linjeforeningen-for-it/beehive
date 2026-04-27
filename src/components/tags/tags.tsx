@@ -3,6 +3,7 @@ import no from '@text/tags/no.json'
 import en from '@text/tags/en.json'
 import { isNew } from '@utils/datetimeFormatter'
 import { cookies } from 'next/headers'
+import { normalizeLang } from '@utils/lang'
 
 type TagsProps = {
     highlight: boolean,
@@ -19,7 +20,7 @@ export default async function Tags({
     full,
     ongoing
 }: TagsProps) {
-    const lang = ((await cookies()).get('lang')?.value || 'no') as Lang
+    const lang = normalizeLang((await cookies()).get('lang')?.value)
     const text = lang === 'no' ? no : en
 
     return (

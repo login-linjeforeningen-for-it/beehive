@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ChevronRight } from 'lucide-react'
 import AlbumImages from '@components/albumImages'
+import { normalizeLang } from '@utils/lang'
 
 export default async function AlbumPage({ params }: PromisedPageProps) {
     const { id } = await params
@@ -13,7 +14,7 @@ export default async function AlbumPage({ params }: PromisedPageProps) {
         notFound()
     }
 
-    const lang = (await cookies()).get('lang')?.value || 'no'
+    const lang = normalizeLang((await cookies()).get('lang')?.value)
 
     const formatter = new Intl.DateTimeFormat('no-NO', {
         year: 'numeric',

@@ -7,6 +7,7 @@ import { getEvents } from '@utils/api'
 import { cookies } from 'next/headers'
 import { Egg } from '@components/decoration/easter'
 import { Decoration } from '@components/decoration/wrapper'
+import { normalizeLang } from '@utils/lang'
 
 export default async function EventsPreview() {
     const eventsResponse = await getEvents({
@@ -24,7 +25,7 @@ export default async function EventsPreview() {
             return start - now > 0
         })
 
-    const lang = ((await cookies()).get('lang')?.value || 'no') as Lang
+    const lang = normalizeLang((await cookies()).get('lang')?.value)
     const text = lang === 'no' ? no : en
 
     return (

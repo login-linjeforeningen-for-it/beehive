@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers'
 import { getSafeActivity } from '@utils/api'
 import type { Metadata } from 'next'
+import { normalizeLang } from '@utils/lang'
 
 export const metadata: Metadata = {
     robots: {
@@ -14,7 +15,7 @@ import MusicDashboardToday from './dashboards/today'
 
 export default async function Music({ params }: { params: Promise<{ items: string[] }> }) {
     const item = (await params).items
-    const lang = ((await cookies()).get('lang')?.value || 'no') as Lang
+    const lang = normalizeLang((await cookies()).get('lang')?.value)
     const data = await getSafeActivity()
 
     if (item.length === 2 && item[1] === 'today') {

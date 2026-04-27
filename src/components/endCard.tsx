@@ -3,9 +3,10 @@ import no from '@text/landing/no.json'
 import en from '@text/landing/en.json'
 import Link from 'next/link'
 import { cookies } from 'next/headers'
+import { normalizeLang } from '@utils/lang'
 
 export default async function EndCard({ path }: {path: string}) {
-    const lang = ((await cookies()).get('lang')?.value || 'no') as Lang
+    const lang = normalizeLang((await cookies()).get('lang')?.value)
     const text = lang === 'no' ? no : en
 
     return (

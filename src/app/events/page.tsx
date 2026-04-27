@@ -10,6 +10,7 @@ import { cookies } from 'next/headers'
 import FilterItem from '@components/filter/filterItem'
 import Button from '@components/button/button'
 import Download from '@components/svg/symbols/download'
+import { normalizeLang } from '@utils/lang'
 
 type PageProps = {
     searchParams: Promise<{ [key: string]: string | undefined }>
@@ -19,7 +20,7 @@ export default async function Page({searchParams}: PageProps) {
     const filters = (await searchParams)
     const eventsView = filters.view ? `${filters.view}-view` : 'list-view'
     const categories = typeof filters.categories === 'string' ? filters.categories : undefined
-    const lang = ((await cookies()).get('lang')?.value || 'no') as Lang
+    const lang = normalizeLang((await cookies()).get('lang')?.value)
     const text = lang === 'no' ? no : en
     const limit = 20
     const eventsResponse = await getEvents({
