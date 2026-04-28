@@ -2,7 +2,7 @@ import Button from '@components/button/button'
 import Alert from '@components/alert/alert'
 import no from '@text/eventPage/no.json'
 import en from '@text/eventPage/en.json'
-import EventSignUpLiveCount from './eventSignUpLiveCount'
+import LiveCount from './liveCount'
 import { formatDeadlineDate, formatPublishedDate } from '@utils/datetimeFormatter'
 import ArrowOutward from '@components/svg/symbols/arrowOutward'
 import ConfirmationNumber from '@components/svg/symbols/confirmationNumber'
@@ -82,7 +82,7 @@ export default async function EventSignUp({
             {!canceled && ready && reqSignup && (
                 <div className='grid grid-cols-[min-content_auto] gap-4 my-4 mb-8'>
                     {isFormsLoginNo && formName ? (
-                        <EventSignUpLiveCount formName={formName} lang={lang} />
+                        <LiveCount formName={formName} lang={lang} />
                     ) : cap !== null &&
                         <>
                             <div className='inline-flex text-(--color-text-discreet)'>
@@ -139,7 +139,6 @@ export default async function EventSignUp({
             )}
             {reqSignup && ready && showBtn && (
                 <div className='800px:flex 800px:justify-end'>
-                    {/* @ts-ignore */}
                     <Button
                         trailingIcon={
                             <ArrowOutward className='w-6 h-6 fill-white' />

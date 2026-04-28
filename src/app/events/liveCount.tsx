@@ -15,7 +15,7 @@ type Props = {
     lang: Lang
 }
 
-export default function EventSignUpLiveCount({ formName, lang }: Props) {
+export default function LiveCount({ formName, lang }: Props) {
     const [data, setData] = useState<LiveData | null>(null)
 
     useEffect(() => {
