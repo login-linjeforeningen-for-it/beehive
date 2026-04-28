@@ -17,11 +17,6 @@ type YahooQuote = {
     currency?: string
 }
 
-type YahooHistorical = {
-    date?: Date
-    close?: number | null
-}
-
 type HistoryPoint = {
     date: string
     totalBase: number
@@ -64,11 +59,11 @@ const cacheByRange = new Map<HistoryRange, {
 const HOLDINGS_SNAPSHOTS: HoldingsSnapshot[] = (() => {
     // holdingsData is an array of { until_date, holdning } objects
     const data = Array.isArray(holdingsData) ? holdingsData : []
-    
+
     return data.map((entry) => {
         const untilDate = entry.until_date || ''
         const holdings: Holding[] = []
-        
+
         if (Array.isArray(entry.holdning)) {
             for (const holdingObj of entry.holdning) {
                 const firstValidEntry = Object.entries(holdingObj).find(([, value]) => typeof value === 'number')
@@ -81,15 +76,15 @@ const HOLDINGS_SNAPSHOTS: HoldingsSnapshot[] = (() => {
                 holdings.push({ symbol, shares })
             }
         }
-        
+
         return { untilDate, holdings }
     })
 })()
 
 function getHoldingsForDate(dateStr: string): Holding[] {
-    
+
     let activeSnapshot: HoldingsSnapshot | undefined
-    
+
     for (const snapshot of HOLDINGS_SNAPSHOTS) {
         if (!snapshot.untilDate) {
             if (!activeSnapshot || activeSnapshot.untilDate <= dateStr) {
@@ -99,10 +94,10 @@ function getHoldingsForDate(dateStr: string): Holding[] {
             activeSnapshot = snapshot
             break
         } else {
-            activeSnapshot = snapshot 
+            activeSnapshot = snapshot
         }
     }
-    
+
     return activeSnapshot?.holdings || []
 }
 
@@ -246,7 +241,7 @@ async function calculateHistory(baseCurrency: string, range: HistoryRange): Prom
     const points: CalculatedHistoryPoint[] = targetDates.map((targetDate) => {
         const dateKey = getDateKey(targetDate)
         let hasExactDataDay = false
-        
+
         const activeHoldings = getHoldingsForDate(dateKey)
 
         const totalBase = activeHoldings.reduce((sum, holding) => {

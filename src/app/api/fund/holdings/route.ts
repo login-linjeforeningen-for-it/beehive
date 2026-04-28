@@ -29,7 +29,7 @@ let cachedUntil = 0
 const HOLDINGS: Holding[] = (() => {
     const data = Array.isArray(holdingsData) ? holdingsData : []
     const currentHoldingsEntry = data.find((entry) => entry.until_date === '')
-    
+
     if (!currentHoldingsEntry || !Array.isArray(currentHoldingsEntry.holdning)) {
         return []
     }
