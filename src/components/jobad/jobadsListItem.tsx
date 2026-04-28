@@ -16,8 +16,7 @@ import { normalizeLang } from '@utils/lang'
 export default async function JobadsListItem({ jobad }: {jobad: GetJobProps}) {
     const lang = normalizeLang((await cookies()).get('lang')?.value)
 
-    // eslint-disable-next-line
-    function useTags(publishTime: any, highlight: any) {
+    function useTags(publishTime: string, highlight: boolean) {
         if (highlight) return true
         if (isNew(publishTime)) return true
         return false

@@ -6,14 +6,25 @@ import { useEffect, useState } from 'react'
 import { language } from '../langtoggle/langToggle'
 import clsx from '@utils/clsx'
 
+type DateTileProps = {
+    startDate: Date | string | number
+    endDate: Date | string | number
+    color: string
+    varient?: 'regular' | 'overlay'
+    useDayText?: boolean
+    day?: boolean
+    opacity?: number
+}
+
 export default function DateTile({
     startDate,
     endDate,
     color,
     varient = 'regular',
     useDayText = false,
-    // eslint-disable-next-line
-}: any) {
+    day = false,
+    opacity = 0.75,
+}: DateTileProps) {
     const [lang, setLang] = useState<Lang>('no')
     const sTime = new Date(startDate)
     const eTime = new Date(endDate)
@@ -64,19 +75,19 @@ export default function DateTile({
         no: ['Søn', 'Man', 'Tir', 'Ons', 'Tor', 'Fre', 'Lør'],
     }
 
-    let background
+    let background: string | undefined
 
     if (isValidHex(color)) {
         if (varient === 'regular') {
             background = createGradient(color, 1)
         } else {
-            background = hexToRgba(color, 0.75)
+            background = hexToRgba(color, opacity) ?? undefined
         }
     } else {
         background = color
     }
 
-    if (useDayText) {
+    if (useDayText || day) {
         return (
             <div
                 className={clsx(

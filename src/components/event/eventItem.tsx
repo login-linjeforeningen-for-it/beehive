@@ -68,8 +68,7 @@ export default async function EventListItem({ event, highlight = true, disableTa
         ? 'block w-full h-full object-cover aspect-5/2 rounded-(--border-radius)'
         : 'object-cover hidden 600px:block 600px:max-h-20 600px:w-[12.5rem] 600px:h-full 600px:rounded-[0.2rem]'
 
-    // eslint-disable-next-line
-    function useTags(publishTime: any, highlight: any, canceled: boolean, full: boolean, ongoing: boolean) {
+    function useTags(publishTime: string, highlight: boolean, canceled: boolean, full: boolean, ongoing: boolean) {
         if (disableTags) return false
         if (highlight) return true
         if (isNew(publishTime)) return true
