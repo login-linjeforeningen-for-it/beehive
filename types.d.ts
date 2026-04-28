@@ -340,8 +340,8 @@ declare global {
 
     type ColorTransitionClassNameProps = {
         color: string
-        transition: boolean
-        className: string
+        transition?: boolean
+        className?: string
     }
 
     type PromisedPageProps = {

@@ -177,22 +177,16 @@ export default async function EventListItem({ event, highlight = true, disableTa
 function getDefaultBanner(category: string, color: string, className: string) {
     switch (category) {
         case 'Sosialt':
-            {/* @ts-ignore */}
             return <DefaultSocialBanner color={color} className={className} />
         case 'EvntKom':
-            {/* @ts-ignore */}
             return <DefaultSocialBanner color={color} className={className} />
         case 'TekKom':
-            {/* @ts-ignore */}
             return <DefaultTekkomBanner color={color} className={className} />
         case 'CTF':
-            {/* @ts-ignore */}
             return <DefaultCtfBanner color={color} className={className} />
         case 'BedKom':
-            {/* @ts-ignore */}
             return <DefaultBedpresBanner color={color} className={className} />
         default:
-            {/* @ts-ignore */}
             return <DefaultEventBanner color={color} className={className} />
     }
 }
