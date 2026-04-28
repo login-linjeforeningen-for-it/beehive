@@ -7,9 +7,12 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "${PORT:-3000}:3000"
     env_file:
       - .env
+    environment:
+      BEEKEEPER_API_URL: ${BEEKEEPER_API_URL:-https://beekeeper.login.no/api}
+      NEXT_PUBLIC_BEEKEEPER_WSS_URL: ${NEXT_PUBLIC_BEEKEEPER_WSS_URL:-wss://beekeeper.login.no/api}
     networks:
       - workerbee_default
       - tekkom_bot_default

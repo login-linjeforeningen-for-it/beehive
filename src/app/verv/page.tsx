@@ -5,15 +5,16 @@ import no from '@text/verv/no.json'
 import en from '@text/verv/en.json'
 import { cookies } from 'next/headers'
 import config from '@config'
+import { normalizeLang } from '@utils/lang'
 
 export default async function Verv() {
-    const lang = ((await cookies()).get('lang')?.value || 'no') as Lang
+    const lang = normalizeLang((await cookies()).get('lang')?.value)
     const text = lang === 'no' ? no : en
     const slides = []
 
     for (let i = 1; i <= 15; i++) {
         slides.push({
-            imgSrc: `${config.url.CDN_URL}/img/imagecarousel/${i}.jpg`,
+            imgSrc: `${config.url.cdn}/img/imagecarousel/${i}.jpg`,
             title: text.imageCarousel[String(i) as keyof typeof text.imageCarousel].title,
             description: text.imageCarousel[String(i) as keyof typeof text.imageCarousel].description,
         })
@@ -32,7 +33,7 @@ export default async function Verv() {
                     {text.intro2}
                 </p>
             </section>
-            <section className='mb-8 800px:mb-20 page-section--full-width'>
+            <section className='mb-8 800px:mb-20 col-span-full'>
                 {/* @ts-ignore */}
                 <ImageCarousel slides={slides} />
             </section>
@@ -40,7 +41,7 @@ export default async function Verv() {
                 <h2 className='heading-2'>{text.committeeSection.title}</h2>
                 <p className='p-regular'>{text.committeeSection.intro}</p>
             </section>
-            <VervTabs />
+            <VervTabs lang={lang} />
             <section className='mb-8 800px:mb-20 mt-8 400px:max-w-200 mx-auto page-section--normal'>
                 <h2
                     className='heading-2'

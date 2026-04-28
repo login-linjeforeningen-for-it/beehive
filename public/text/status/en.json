@@ -1,19 +1,60 @@
 {
   "title": "System Status",
-  "production": "Production",
-  "development": "Development",
-  "noServices": "No services listed",
-  "issues": {
-    "domains": "Unstable server connection",
-    "server": "Service is currently unavailable",
-    "pods": "Ustable subsystems",
-    "logs": "Increased errors identified in logs",
-    "unknown": "Unknown issue"
+  "intro": "See whether Login's services are healthy right now, and how they have behaved over the latest checks.",
+  "allOperational": "Everything looks healthy",
+  "someIssues": "Some services need attention",
+  "summary": {
+    "services": "Services monitored",
+    "healthy": "Healthy now",
+    "avgResponse": "Average response time",
+    "lastUpdated": "Last updated"
+  },
+  "legend": {
+    "title": "Recent checks",
+    "description": "Newest check on the left. Green means healthy, amber means planned downtime, red means unavailable."
+  },
+  "toggle": {
+    "compact": "Compact",
+    "expanded": "Expanded",
+    "showDetails": "Details",
+    "hideDetails": "Hide"
+  },
+  "service": {
+    "status": "Status",
+    "monitorId": "Monitor ID",
+    "enabled": "Monitoring enabled",
+    "url": "Address",
+    "port": "Port",
+    "maxConsecutiveFailures": "Allowed failed checks",
+    "uptime": "Uptime",
+    "tags": "Tags",
+    "latestCheck": "Latest check",
+    "responseTime": "Response time",
+    "plannedDowntime": "Planned downtime",
+    "note": "Note",
+    "timestamp": "Checked at",
+    "certificate": "Certificate",
+    "certificateValid": "Certificate valid",
+    "subject": "Subject",
+    "issuer": "Issuer",
+    "validFrom": "Valid from",
+    "validTo": "Valid to",
+    "keyType": "Key type",
+    "dnsNames": "DNS names",
+    "recentChecks": "Recent checks"
+  },
+  "values": {
+    "yes": "Yes",
+    "no": "No",
+    "none": "None",
+    "unknown": "Unknown",
+    "disabled": "Disabled",
+    "notAvailable": "Not available"
   },
   "statuses": {
-    "operational": "Operational",
-    "degraded": "Degraded",
-    "inactive": "Inactive",
-    "down": "Down"
+    "healthy": "Healthy",
+    "issues": "Issues detected",
+    "planned": "Planned downtime",
+    "disabled": "Disabled"
   }
 }

@@ -1,5 +1,4 @@
 /* eslint-disable @stylistic/max-len */
-import './ctfkomLogoAnimation.css'
 
 export default function CtfkomLogo() {
     return (

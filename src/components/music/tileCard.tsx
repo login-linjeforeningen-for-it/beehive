@@ -15,6 +15,7 @@ type TileCardProps = {
     discord?: true
     user_id?: string
     song_id?: string
+    media_type?: 'track' | 'episode'
     user?: boolean
     start?: string
     end?: string
@@ -38,17 +39,20 @@ export default function TileCard({
     discord,
     user_id,
     song_id,
+    media_type = 'track',
     start,
     end
 }: TileCardProps) {
     const src = discord
-        ? `${config.url.DISCORD_AVATARS_API_URL}/${user_id}/${imageHash}?size=1024`
-        : image ? image : `${config.url.SPOTIFY_IMAGE_API_URL}/${imageHash}`
+        ? `${config.url.discordAvatars}/${user_id}/${imageHash}?size=1024`
+        : image ? image : `${config.url.spotifyImage}/${imageHash}`
     const style = `flex items-center gap-4 px-2 rounded-lg bg-[var(--color-text-disabled)]/30
         shadow-none ${className} min-h-[90px] h-[90px] max-h-[90px]
         ${(song_id || user_id || url) && 'transform transition hover:scale-102 hover:z-20 cursor-pointer'}`
-    const spotifyUrl = `${config.url.SPOTIFY_URL}${song_id}`
-    const discordUrl = `${config.url.DISORD_USER_URL}${user_id}`
+    const spotifyUrl = media_type === 'episode'
+        ? `${config.url.spotifyEpisode}/${song_id}`
+        : `${config.url.spotify}${song_id}`
+    const discordUrl = `${config.url.discordUser}${user_id}`
     const [shouldRenderPlayer, setShouldRenderPlayer] = useState(false)
     const { ref } = useVisibility<HTMLAnchorElement>(() => setShouldRenderPlayer(true))
 
@@ -61,7 +65,7 @@ export default function TileCard({
     }
 
     if (song_id || user_id || url) {
-        const song: MinimalSong = { start, end, song_id, image, name }
+        const song: MinimalSong = { start, end, song_id, image, name, media_type }
         return (
             <Link
                 className={style}

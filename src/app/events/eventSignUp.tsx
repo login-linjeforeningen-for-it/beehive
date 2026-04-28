@@ -2,7 +2,7 @@ import Button from '@components/button/button'
 import Alert from '@components/alert/alert'
 import no from '@text/eventPage/no.json'
 import en from '@text/eventPage/en.json'
-import EventSignUpLiveCount from './eventSignUpLiveCount'
+import LiveCount from './liveCount'
 import { formatDeadlineDate, formatPublishedDate } from '@utils/datetimeFormatter'
 import ArrowOutward from '@components/svg/symbols/arrowOutward'
 import ConfirmationNumber from '@components/svg/symbols/confirmationNumber'
@@ -80,34 +80,32 @@ export default async function EventSignUp({
             <div className='mb-4 text-[1.2rem] font-medium'>{text.signup.title}:</div>
 
             {!canceled && ready && reqSignup && (
-                <div className='event-details_list'>
+                <div className='grid grid-cols-[min-content_auto] gap-4 my-4 mb-8'>
                     {isFormsLoginNo && formName ? (
-                        <EventSignUpLiveCount formName={formName} lang={lang} />
+                        <LiveCount formName={formName} lang={lang} />
                     ) : cap !== null &&
                         <>
-                            <div className='event-details_lable'>
+                            <div className='inline-flex text-(--color-text-discreet)'>
                                 <ConfirmationNumber
-                                    className='fill-(--color-text-discreet)
-                                        event-details_icon event-details_icon--lable-color'
+                                    className='w-8 pr-2 text-center leading-6 fill-(--color-text-discreet)'
                                 />
                                 {text.info.capacity}:
                             </div>
-                            <div className='event-details_info'>{cap}</div>
+                            <div className='font-medium text-(--color-text-regular) wrap-break-word hyphens-auto'>{cap}</div>
                         </>
                     }
                     {ready && (
                         <>
-                            <div className='event-details_lable'>
+                            <div className='inline-flex text-(--color-text-discreet)'>
                                 <ExitToApp
-                                    className='fill-(--color-text-discreet)
-                                        event-details_icon event-details_icon--lable-color'
+                                    className='w-8 pr-2 text-center leading-6 fill-(--color-text-discreet)'
                                 />
                                 {now < signupRelease
                                     ? text.signup.opens
                                     : text.signup.hasOpened}
                                 :
                             </div>
-                            <div className='event-details_info'>
+                            <div className='font-medium text-(--color-text-regular) wrap-break-word hyphens-auto'>
                                 {now < signupRelease
                                     ? formatDeadlineDate(signupRelease, lang)
                                     : formatPublishedDate(signupRelease, lang)}
@@ -116,14 +114,13 @@ export default async function EventSignUp({
                     )}
                     {ready && now < signupDeadline && (
                         <>
-                            <div className='event-details_lable'>
+                            <div className='inline-flex text-(--color-text-discreet)'>
                                 <DisabledByDefault
-                                    className='fill-(--color-text-discreet)
-                                        event-details_icon event-details_icon--lable-color'
+                                    className='w-8 pr-2 text-center leading-6 fill-(--color-text-discreet)'
                                 />
                                 {text.signup.closes}:
                             </div>
-                            <div className='event-details_info'>
+                            <div className='font-medium text-(--color-text-regular) wrap-break-word hyphens-auto'>
                                 {formatDeadlineDate(signupDeadline, lang)}
                             </div>
                         </>
@@ -142,7 +139,6 @@ export default async function EventSignUp({
             )}
             {reqSignup && ready && showBtn && (
                 <div className='800px:flex 800px:justify-end'>
-                    {/* @ts-ignore */}
                     <Button
                         trailingIcon={
                             <ArrowOutward className='w-6 h-6 fill-white' />

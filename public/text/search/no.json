@@ -1,0 +1,35 @@
+{
+  "entry": {
+    "title": "La meg søke det opp for deg",
+    "subtitle": "Lag en delbar lenke, spill av søket, og send videre til valgt søkemotor.",
+    "queryLabel": "Søk",
+    "queryPlaceholder": "Hva vil du at jeg skal søke etter?",
+    "engineLabel": "Søkemotor",
+    "linkLabel": "Delbar lenke",
+    "description": "For alle som fortsatt trenger hjelp med å søke.",
+    "actions": {
+      "createAndCopy": "Lag og kopier lenke",
+      "copied": "Kopiert",
+      "play": "Spill av demo",
+      "stop": "Stopp demo"
+    },
+    "engines": {
+      "google": "Google",
+      "duckduckgo": "DuckDuckGo",
+      "brave": "Brave Søk"
+    },
+    "playback": {
+      "title": "Login Søk",
+      "idle": "Klar",
+      "typing": "Skriver søk...",
+      "submitting": "Sender søk...",
+      "redirecting": "Videresender til",
+      "redirectNotice": "Vent litt, åpner valgt søkemotor..."
+    },
+    "errors": {
+      "empty": "Skriv inn et søk før du lager eller spiller av lenken.",
+      "copy": "Kunne ikke kopiere lenken. Prøv igjen.",
+      "invalidLink": "Denne lenken er ugyldig eller utløpt."
+    }
+  }
+}

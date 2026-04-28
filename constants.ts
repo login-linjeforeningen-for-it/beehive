@@ -2,31 +2,39 @@ import packageInfo from './package.json'
 
 const { env } = process
 
-const CDN_URL = env.NEXT_PUBLIC_CDN_URL ?? 'https://cdn.login.no'
+const cdn = env.NEXT_PUBLIC_CDN_URL ?? 'https://cdn.login.no'
+const beekeeperApiUrl = env.BEEKEEPER_API_URL ?? 'https://beekeeper.login.no/api'
+const beekeeperWsUrl = env.NEXT_PUBLIC_BEEKEEPER_WSS_URL
+    ?? beekeeperApiUrl.replace(/^http/, 'ws')
+
 const config = {
     url: {
-        WORKERBEE_API_URL:  env.WORKERBEE_API_URL   ?? 'https://workerbee.login.no/api/v2',
-        TEKKOM_BOT_API_URL: env.TEKKOM_BOT_API_URL  ?? 'https://bot.login.no/api',
-        BEEKEEPER_URL:      env.BEEKEEPER_API_URL   ?? 'https://beekeeper.login.no/api',
-        CDN_URL,
-        EXAM_URL: 'https://exam.login.no',
-        WIKI_URL: 'https://wiki.login.no',
-        GITHUB_URL: 'https://github.com/login-linjeforeningen-for-it',
-        GITLAB_URL: 'https://gitlab.login.no',
-        LINKEDIN_URL: 'https://www.linkedin.com/company/linjeforeningen-login/about',
-        MAIL_URL: 'kontakt@login.no',
-        FACEBOOK_URL: 'https://facebook.com/LogNTNU',
-        INSTAGRAM_URL: 'https://www.instagram.com/login_linjeforening/',
-        DISCORD_URL: 'https://discord.gg/login-ntnu',
-        DISORD_USER_URL: 'https://discord.com/users/',
-        SPOTIFY_IMAGE_API_URL: 'https://i.scdn.co/image',
-        DISCORD_AVATARS_API_URL: 'https://cdn.discordapp.com/avatars',
-        SPOTIFY_URL: 'https://open.spotify.com/track/',
-        SPOTIFY_EMBED_URL: 'https://open.spotify.com/embed/track',
-        SPOTIFY_ALBUM_URL: 'https://open.spotify.com/album',
-        SPOTIFY_ARTIST_URL: 'https://open.spotify.com/artist',
-        MAIN_URL: 'login.no',
-        PORTRAIT_URL: `${CDN_URL}/img/board/portraits/2026`
+        workerbee:  env.WORKERBEE_API_URL ?? 'https://workerbee.login.no/api/v2',
+        tekkomBot: env.TEKKOM_BOT_API_URL ?? 'https://bot.login.no/api',
+        beekeeper: beekeeperApiUrl,
+        beekeeper_wss: beekeeperWsUrl,
+        cdn,
+        exam: 'https://exam.login.no',
+        wiki: 'https://wiki.login.no',
+        github: 'https://github.com/login-linjeforeningen-for-it',
+        gitlab: 'https://gitlab.login.no',
+        linkedin: 'https://www.linkedin.com/company/linjeforeningen-login/about',
+        mail: 'kontakt@login.no',
+        facebook: 'https://facebook.com/LogNTNU',
+        instagram: 'https://www.instagram.com/login_linjeforening/',
+        norskTipping: 'https://www.norsk-tipping.no/grasrotandelen/din-mottaker/811940372',
+        discord: 'https://discord.gg/login-ntnu',
+        discordUser: 'https://discord.com/users/',
+        spotifyImage: 'https://i.scdn.co/image',
+        discordAvatars: 'https://cdn.discordapp.com/avatars',
+        spotify: 'https://open.spotify.com/track/',
+        spotifyEmbed: 'https://open.spotify.com/embed/track',
+        spotifyEpisode: 'https://open.spotify.com/episode',
+        spotifyEpisodeEmbed: 'https://open.spotify.com/embed/episode',
+        spotifyAlbum: 'https://open.spotify.com/album',
+        spotifyArtist: 'https://open.spotify.com/artist',
+        main: 'login.no',
+        portrait: `${cdn}/img/board/portraits/2026`
     },
     authPath: {
         login: '/api/auth/login',
@@ -35,11 +43,11 @@ const config = {
         logout: '/api/auth/logout'
     },
     authentik: {
-        CLIENT_ID: env.AUTHENTIK_CLIENT_ID,
-        CLIENT_SECRET: env.AUTHENTIK_CLIENT_SECRET,
-        AUTH_URL: `${env.AUTHENTIK_URL}/application/o/authorize/`,
-        TOKEN_URL: `${env.AUTHENTIK_URL}/application/o/token/`,
-        USERINFO_URL: `${env.AUTHENTIK_URL}/application/o/userinfo/`,
+        clientId: env.AUTHENTIK_CLIENT_ID,
+        clientSecret: env.AUTHENTIK_CLIENT_SECRET,
+        auth: `${env.AUTHENTIK_URL}/application/o/authorize/`,
+        token: `${env.AUTHENTIK_URL}/application/o/token/`,
+        userinfo: `${env.AUTHENTIK_URL}/application/o/userinfo/`,
     },
     version: packageInfo.version,
     timeout: 5000

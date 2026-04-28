@@ -11,16 +11,17 @@ import Office from '@components/svg/symbols/office'
 import HoldingsTotalLive from './holdings'
 import HoldingsHistory from './holdingsHistory'
 import { cookies } from 'next/headers'
+import { normalizeLang } from '@utils/lang'
+
+type FundText = typeof no
 
 export default async function Fund() {
-    const lang = ((await cookies()).get('lang')?.value || 'no') as Lang
+    const lang = normalizeLang((await cookies()).get('lang')?.value)
     const locale = lang === 'en' ? 'en-GB' : 'nb-NO'
-    // eslint-disable-next-line
-    const text: any = lang === 'en' ? {...en} : {...no}
+    const text: FundText = lang === 'en' ? en : no
 
     const boardMembers = text.board.members
-    const boardMemberKeys = Object.keys(boardMembers)
-    const actualBoardMembers = Array.isArray(boardMemberKeys) ? boardMemberKeys : []
+    const boardMemberKeys = Object.keys(boardMembers) as Array<keyof typeof boardMembers>
 
     return (
         <div className='page-container'>
@@ -63,7 +64,6 @@ export default async function Fund() {
             </section>
             <section className='page-section--normal mb-20'>
                 <div className='fund-section_container 800px:grid 800px:grid-cols-2 800px:gap-16'>
-                    {/* @ts-ignore */}
                     <div className='fund-section_container--grid-item'>
                         <h2 className='flex flex-row heading-2 heading-2--icon'>
                             <Chart className='w-12 h-12 fill-(--color-text-main) mr-4'/>
@@ -71,7 +71,6 @@ export default async function Fund() {
                         </h2>
                         <p className='p-regular' dangerouslySetInnerHTML={{__html: text.purpose.body}}/>
                     </div>
-                    {/* @ts-ignore */}
                     <div className='fund-section_container--grid-item'>
                         <h2 className='heading-2 heading-2--icon'>
                             <Group className='w-12 h-12 fill-(--color-text-main) mr-4'/>
@@ -81,7 +80,6 @@ export default async function Fund() {
                     </div>
                 </div>
                 <div className='fund-section_container 800px:grid 800px:grid-cols-2 800px:gap-16'>
-                    {/* @ts-ignore */}
                     <div className='fund-section_container--grid-item'>
                         <h2 className='heading-2 heading-2--icon'>
                             <Diversity className='w-12 h-12 fill-(--color-text-main) mr-4'/>
@@ -89,7 +87,6 @@ export default async function Fund() {
                         </h2>
                         <p className='p-regular' dangerouslySetInnerHTML={{__html: text.application.body}}/>
                     </div>
-                    {/* @ts-ignore */}
                     <div className='fund-section_container--grid-item'>
                         <h2 className='heading-2 heading-2--icon'>
                             <ChartDetailed className='w-12 h-12 fill-(--color-text-main) mr-4'/>
@@ -106,18 +103,17 @@ export default async function Fund() {
             >
                 <div className='fund-section_container fund-board'>
                     <h2 className='heading-2 heading-2--icon'>
-                        <Office className='w-12 h-12 fill-(--color-text-main) heading-2_icon'/>
+                        <Office className='w-12 h-12 fill-(--color-text-main) mr-[0.4em] text-[1.2em] leading-[inherit] align-top'/>
                         <span>{text.board.title}</span>
                     </h2>
                     <div className='flex flex-wrap justify-center gap-12 mb-16'>
-                        {/* @ts-ignore */}
                         <div className='box-border flex-[1_1_20rem] m-auto'>
                             <p className='p-highlighted'>{text.board.intro}</p>
                             <p className='p-regular' dangerouslySetInnerHTML={{__html: text.board.body}}/>
                         </div>
                         <div className='box-border flex-[1_1_20rem] my-auto max-w-132'>
                             <DecoratedPicture
-                                imgUrl={config.url.CDN_URL+'/img/fund/group.jpg'}
+                                imgUrl={config.url.cdn+'/img/fund/group.jpg'}
                                 variant={4}
                                 cornerSize={90}
                                 width={300}
@@ -128,12 +124,12 @@ export default async function Fund() {
                     </div>
                     <h3 className='heading-3'>{text.board.heading1}</h3>
                     <div className='flex flex-wrap gap-8 justify-center py-8 800px:gap-12'>
-                        {Array.isArray(actualBoardMembers) && actualBoardMembers.map(key => (
+                        {boardMemberKeys.map(key => (
                             <div key={key}>
                                 <LogChamp
                                     img={boardMembers[key].img == ''
                                         ? 'assets/img/placeholders/portrett_placeholder.svg'
-                                        : `${config.url.CDN_URL}/img/fund/${boardMembers[key].img}`}
+                                        : `${config.url.cdn}/img/fund/${boardMembers[key].img}`}
                                     name={boardMembers[key].name == ''
                                         ? boardMembers[key].title
                                         : boardMembers[key].name}

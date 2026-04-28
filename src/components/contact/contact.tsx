@@ -31,10 +31,10 @@ export default function Contact() {
                     <h4 className='heading-4'>{text.contact.email}:</h4>
                     <p className='p-regular'>
                         <a
-                            className='link link--primary link--underscore-hover'
-                            href={`mailto:${config.url.MAIL_URL}`}
+                            className='link link--primary hover:underline'
+                            href={`mailto:${config.url.mail}`}
                         >
-                            {config.url.MAIL_URL}
+                            {config.url.mail}
                         </a>
                     </p>
                 </div>

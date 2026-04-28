@@ -1,0 +1,35 @@
+{
+  "entry": {
+    "title": "Let me search that for you",
+    "subtitle": "Create a shareable link, replay the search, then redirect to your selected engine.",
+    "queryLabel": "Query",
+    "queryPlaceholder": "What should I search for?",
+    "engineLabel": "Search engine",
+    "linkLabel": "Shareable link",
+    "description": "For everyone who still needs help using a search bar.",
+    "actions": {
+      "createAndCopy": "Create and copy link",
+      "copied": "Copied",
+      "play": "Play demo",
+      "stop": "Stop demo"
+    },
+    "engines": {
+      "google": "Google",
+      "duckduckgo": "DuckDuckGo",
+      "brave": "Brave Search"
+    },
+    "playback": {
+      "title": "Login Search",
+      "idle": "Ready",
+      "typing": "Typing query...",
+      "submitting": "Submitting search...",
+      "redirecting": "Redirecting to",
+      "redirectNotice": "Sit tight, opening the selected search engine..."
+    },
+    "errors": {
+      "empty": "Enter a query before generating or playing a link.",
+      "copy": "Could not copy link. Try again.",
+      "invalidLink": "This link is invalid or has expired."
+    }
+  }
+}

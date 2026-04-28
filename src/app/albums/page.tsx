@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { getAlbums } from '@utils/api'
 import Button from '@components/button/button'
 import EvntkomLogo from '@components/svg/committeelogos/evntkomLogo'
+import { normalizeLang } from '@utils/lang'
 
 type PageProps = {
     searchParams: Promise<{ [key: string]: string | undefined }>
@@ -18,7 +19,7 @@ export default async function Page({ searchParams }: PageProps) {
     const limit = 6
     const offset = (currentPage - 1)
 
-    const lang = (await cookies()).get('lang')?.value || 'no'
+    const lang = normalizeLang((await cookies()).get('lang')?.value)
     const text = lang === 'no' ? no : en
 
     const response = await getAlbums({ limit, offset, sort: 'desc' })
@@ -47,7 +48,7 @@ export default async function Page({ searchParams }: PageProps) {
                                     ? cardStack(Math.min(album.images.length, 3), (index, className) => (
                                         <Image
                                             key={index}
-                                            src={`${config.url.CDN_URL}/albums/${album.id}/${album.images[index]}`}
+                                            src={`${config.url.cdn}/albums/${album.id}/${album.images[index]}`}
                                             alt={lang === 'no' ? album.name_no : album.name_en}
                                             className={className + ' object-cover bg-(--color-bg-surface-raised)'}
                                             width={280}
@@ -127,8 +128,8 @@ function cardStack(count: number, renderItem: (index: number, className: string)
             + 'left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'
         const positionClasses =
             index === 0 ? 'z-30 rotate-0 scale-100' :
-                index === 1 ? 'z-20 -rotate-6 scale-95 -translate-x-[55%] -translate-y-[55%]' :
-                    'z-10 rotate-6 scale-95 -translate-x-[45%] -translate-y-[45%]'
+                index === 1 ? 'z-20 -rotate-6 scale-95 translate-x-[-55%] translate-y-[-55%]' :
+                    'z-10 rotate-6 scale-95 translate-x-[-45%] translate-y-[-45%]'
         return `${baseClasses} ${positionClasses}`
     }
 

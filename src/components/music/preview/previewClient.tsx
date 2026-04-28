@@ -4,7 +4,7 @@ import Link from 'next/link'
 import no from '@text/landing/no.json'
 import en from '@text/landing/en.json'
 import useSWR from 'swr'
-import CurrentlyPlayingCard from '../currentlyListeningCard'
+import ListeningCard from '../listeningCard'
 import PlayIcon from '../playIcon'
 import Snowfall from 'react-snowfall'
 import { Decoration } from '@components/decoration/wrapper'
@@ -29,7 +29,7 @@ export default function MusicPreviewClient({ initialData, lang }: { initialData:
     function SongPreview() {
         return  (
             <div className='grid grid-cols-1 md:grid-cols-2 gap-4 place-items-center w-full hover:overflow-visible'>
-                {uniqueSongs.map((song) => <CurrentlyPlayingCard key={song.id} song={song} />)}
+                {uniqueSongs.map((song) => <ListeningCard key={song.id} song={song} />)}
             </div>
         )
     }

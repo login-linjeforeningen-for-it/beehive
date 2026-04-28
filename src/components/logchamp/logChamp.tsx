@@ -1,7 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
 import DecoratedPicture from '@components/images/decoratedpicture/decoratedPicture'
-import './logChamp.css'
 import Link from 'next/link'
 
 type LogChampProps = {
@@ -22,7 +21,7 @@ export default function LogChamp({name, position, img, discord, discordLink}: Lo
     if (variant === null ) return <></>
 
     return (
-        <div className='logchamp'>
+        <div className='mx-auto my-4 block w-44'>
             <DecoratedPicture
                 imgUrl={img}
                 variant={variant}
@@ -31,11 +30,11 @@ export default function LogChamp({name, position, img, discord, discordLink}: Lo
                 height={100}
                 cover
             />
-            <div className='logchamp_info'>
-                <p className='logchamp_title'>{position}</p>
-                <p className='logchamp_name'>{name}</p>
+            <div>
+                <p className='mt-4 text-[1.2rem] font-medium text-(--color-text-primary)'>{position}</p>
+                <p>{name}</p>
                 {discord &&
-                    <p className='logchamp_discord'>
+                    <p className='mt-4'>
                         <i className='logfont-discord'> </i>
                         <Link href={discordLink} target='_blank'>{discord}</Link>
                     </p>

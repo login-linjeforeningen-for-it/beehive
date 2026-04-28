@@ -2,8 +2,7 @@
 
 import { useState } from 'react'
 import config from '@config'
-import TabNavItem from '@components/tabs/tabNavItem'
-import TabContent from '@components/tabs/tabContent'
+import { TabContent, TabNavItem } from '@components/tabs/tabs'
 import LogChamp from '@components/logchamp/logChamp'
 import EvntkomLogo from '@components/svg/committeelogos/evntkomLogo'
 import BedkomLogo from '@components/svg/committeelogos/bedkomLogo'
@@ -18,16 +17,15 @@ import text_en from '@text/about/en.json'
 import board_no from '@text/board/no.json'
 import board_en from '@text/board/en.json'
 import data from '@text/board/data.json'
-import '@components/tabs/tabs.css'
-import useLang from '@/hooks/useLang'
 
 const no = { ...text_no, board: board_no }
 const en = { ...text_en, board: board_en }
 
-export default function CommitteeTabs() {
+export default function CommitteeTabs({ lang }: { lang: Lang }) {
     const [activeTab, setActiveTab] = useState('styret')
-    const text = useLang(no, en)
+    const text = lang === 'en' ? en : no
     const boardKeys = Object.keys(text.board) as Array<keyof typeof text.board>
+
     const actualBoard = Array.isArray(boardKeys) ? boardKeys : []
 
     return (
@@ -53,7 +51,7 @@ export default function CommitteeTabs() {
                     {actualBoard.map((key) => (
                         <LogChamp
                             key={key}
-                            img={`${config.url.PORTRAIT_URL}/${data[key].img}`}
+                            img={`${config.url.portrait}/${data[key].img}`}
                             name={data[key].name}
                             position={text.board[key].title}
                             discord={data[key].dctag}
@@ -72,7 +70,7 @@ export default function CommitteeTabs() {
                         <p className='p-regular' dangerouslySetInnerHTML={{ __html: text.committeeSection.evntkom.body }} />
                     </div>
                     <LogChamp
-                        img={`${config.url.PORTRAIT_URL}/${data.evntkomLeader.img}`}
+                        img={`${config.url.portrait}/${data.evntkomLeader.img}`}
                         name={data.evntkomLeader.name}
                         position={text.board.evntkomLeader.title}
                         discord={data.evntkomLeader.dctag}
@@ -90,7 +88,7 @@ export default function CommitteeTabs() {
                         <p className='p-regular'>{text.committeeSection.tekkom.body}</p>
                     </div>
                     <LogChamp
-                        img={`${config.url.PORTRAIT_URL}/${data.tekkomLeader.img}`}
+                        img={`${config.url.portrait}/${data.tekkomLeader.img}`}
                         name={data.tekkomLeader.name}
                         position={text.board.tekkomLeader.title}
                         discord={data.tekkomLeader.dctag}
@@ -108,7 +106,7 @@ export default function CommitteeTabs() {
                         <p className='p-regular'>{text.committeeSection.bedkom.body}</p>
                     </div>
                     <LogChamp
-                        img={`${config.url.PORTRAIT_URL}/${data.bedkomLeader.img}`}
+                        img={`${config.url.portrait}/${data.bedkomLeader.img}`}
                         name={data.bedkomLeader.name}
                         position={text.board.bedkomLeader.title}
                         discord={data.bedkomLeader.dctag}
@@ -126,7 +124,7 @@ export default function CommitteeTabs() {
                         <p className='p-regular' dangerouslySetInnerHTML={{ __html: text.committeeSection.ctfkom.body }} />
                     </div>
                     <LogChamp
-                        img={`${config.url.PORTRAIT_URL}/${data.ctfkomLeader.img}`}
+                        img={`${config.url.portrait}/${data.ctfkomLeader.img}`}
                         name={data.ctfkomLeader.name}
                         position={text.board.ctfkomLeader.title}
                         discord={data.ctfkomLeader.dctag}
@@ -144,7 +142,7 @@ export default function CommitteeTabs() {
                         <p className='p-regular'>{text.committeeSection.satkom.body}</p>
                     </div>
                     <LogChamp
-                        img={`${config.url.PORTRAIT_URL}/${data.satkomLeader.img}`}
+                        img={`${config.url.portrait}/${data.satkomLeader.img}`}
                         name={data.satkomLeader.name}
                         position={text.board.satkomLeader.title}
                         discord={data.satkomLeader.dctag}
@@ -162,7 +160,7 @@ export default function CommitteeTabs() {
                         <p className='p-regular'>{text.committeeSection.pr.body}</p>
                     </div>
                     <LogChamp
-                        img={`${config.url.PORTRAIT_URL}/${data.prLeader.img}`}
+                        img={`${config.url.portrait}/${data.prLeader.img}`}
                         name={data.prLeader.name}
                         position={text.board.prLeader.title}
                         discord={data.prLeader.dctag}
@@ -180,7 +178,7 @@ export default function CommitteeTabs() {
                         <p className='p-regular'>{text.committeeSection.barkom.body}</p>
                     </div>
                     <LogChamp
-                        img={`${config.url.PORTRAIT_URL}/${data.barkomLeader.img}`}
+                        img={`${config.url.portrait}/${data.barkomLeader.img}`}
                         name={data.barkomLeader.name}
                         position={text.board.barkomLeader.title}
                         discord={data.barkomLeader.dctag}

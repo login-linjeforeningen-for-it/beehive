@@ -12,10 +12,14 @@
     "music": "Music",
     "more": "More",
     "status": "Status",
-    "internal": "Internal"
+    "internal": "Internal",
+    "ai": "Login GPT"
+  },
+  "info": {
+    "login": "Log in to save your chats."
   },
   "footer": {
-    "contactInfo": {
+    "contact": {
       "address": {
         "header": "Address",
         "info1": "Teknologivegen 22",
@@ -24,8 +28,16 @@
       },
       "email": "Email"
     },
+    "sites": {
+        "title": "Diverse",
+        "nav": {
+          "policy": "Policy",
+          "search": "Search",
+          "pwned": "Pwned"
+        }
+    },
     "sponsor": "Main partner",
-    "copy1": "Copyright &copy; ",
+    "copy1": "Copyright &copy;",
     "copy2": " Login - Linjeforeningen for IT, NO 811 940 372"
   }
 }

@@ -1,5 +1,4 @@
 /* eslint-disable @stylistic/max-len */
-import './evntkomLogoAnimation.css'
 
 export default function EvntkomLogo() {
     return (

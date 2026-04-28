@@ -1,47 +1,26 @@
-import TopBar from '@components/topbar/topBar'
-import TopBarPwned from '@components/topbar/topBarPwned'
-import Footer from '@components/footer/footer'
 import type { ReactNode } from 'react'
-import { cookies, headers } from 'next/headers'
+import { cookies } from 'next/headers'
 import '@assets/fonts/style.css'
 import '@assets/fonts/logfont/style.css'
 import 'uibee/styles'
 import './globals.css'
-import clsx from '@utils/clsx'
-import Alerts from '@components/alerts/alerts'
+import { normalizeLang } from '@utils/lang'
+import LayoutShell from './layoutShell'
 export { default as metadata } from './metadata'
 export { default as viewport } from './metadata'
 
-export default async function layout({children}: {children: ReactNode}) {
+export default async function layout({ children }: { children: ReactNode }) {
     const Cookies = await cookies()
     const theme = Cookies.get('theme')?.value || 'dark'
-    const lang = (Cookies.get('lang')?.value || 'no') as Lang
-    const Headers = headers()
-    const path = (await Headers).get('x-current-path') || ''
-    const page = path.split('/').pop()
-    const dashboard = path.includes('dashboard')
+    const bubbleLogin = Cookies.get('bubbleLogin')?.value === 'true'
+    const lang = normalizeLang(Cookies.get('lang')?.value)
 
     return (
-        <html test-id='root' lang='en' className={theme}>
-            <body className={clsx('min-h-screen w-full bg-(--color-bg-body)', dashboard && 'max-h-screen overflow-hidden')}>
-                {page !== 'pwned' ?
-                    <header className='fixed top-0 z-900 w-full'>
-                        <TopBar onlyLogo={dashboard} />
-                    </header>
-                    :
-                    page === 'pwned' && <header className='main-header fixed top-0 z-900 w-full'>
-                        <TopBarPwned lang={lang} theme={theme} />
-                    </header>
-                }
-                <main className='w-full mx-auto mt-(--h-topbar) min-h-[calc(100vh-var(--h-topbar))]'>
+        <html test-id='root' lang={lang === 'no' ? 'nb' : 'en'} className={theme}>
+            <body className='min-h-screen w-full bg-(--color-bg-body)'>
+                <LayoutShell bubbleLogin={bubbleLogin} lang={lang} theme={theme}>
                     {children}
-                </main>
-                {page !== 'pwned' && !path.includes('dashboard') &&
-                    <footer className='bg-(--color-bg-footer) main-footer'>
-                        <Footer />
-                    </footer>
-                }
-                <Alerts />
+                </LayoutShell>
             </body>
         </html>
     )

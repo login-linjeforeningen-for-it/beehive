@@ -5,9 +5,10 @@ import Flowsheet from '@components/svg/symbols/flowsheet'
 import Megaphone from '@components/svg/symbols/megaphone'
 import Wrench from '@components/svg/symbols/wrench'
 import { cookies } from 'next/headers'
+import { normalizeLang } from '@utils/lang'
 
 export default async function CompaniesPage() {
-    const lang = ((await cookies()).get('lang')?.value || 'no') as Lang
+    const lang = normalizeLang((await cookies()).get('lang')?.value)
     const text = lang === 'no' ? no : en
 
     return (
@@ -32,7 +33,7 @@ export default async function CompaniesPage() {
                         <p className='p-regular'>
                             {text.bedpres.footer1}
                             <a
-                                className='link link--primary link--underscore-hover'
+                                className='link link--primary hover:underline'
                                 href='mailto:bedpres@login.no'
                             >
                                 bedpres@login.no
@@ -42,14 +43,14 @@ export default async function CompaniesPage() {
                     </section>
                     <section>
                         <h2 className='heading-2 heading-2--icon'>
-                            <i className='heading-2_icon logfont-bedkom' />
+                            <i className='logfont-bedkom mr-[0.4em] text-[1.2em] leading-[inherit] align-top' />
                             {text.cyberdays.title}
                         </h2>
                         <p className='p-regular'>{text.cyberdays.body}</p>
                         <p className='p-regular'>
                             {text.cyberdays.footer1}
                             <a
-                                className='link link--primary link--underscore-hover'
+                                className='link link--primary hover:underline'
                                 href='mailto:cyberdagene@login.no'
                             >
                                 cyberdagene@login.no
@@ -59,7 +60,7 @@ export default async function CompaniesPage() {
                     </section>
                     <section>
                         <h2 className='heading-2'>
-                            <i className='heading-2_icon logfont-ctfkom' />
+                            <i className='logfont-ctfkom mr-[0.4em] text-[1.2em] leading-[inherit] align-top' />
                             {text.ctf.title}
                         </h2>
                         <p className='p-regular'>{text.ctf.body}</p>

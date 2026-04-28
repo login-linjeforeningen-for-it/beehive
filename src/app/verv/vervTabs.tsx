@@ -1,8 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import TabNavItem from '@components/tabs/tabNavItem'
-import TabContent from '@components/tabs/tabContent'
+import { useState } from 'react'
+import { TabContent, TabNavItem } from '@components/tabs/tabs'
 import LogChamp from '@components/logchamp/logChamp'
 import EvntkomLogo from '@components/svg/committeelogos/evntkomLogo'
 import BedkomLogo from '@components/svg/committeelogos/bedkomLogo'
@@ -12,30 +11,15 @@ import SatkomLogo from '@components/svg/committeelogos/satkomLogo'
 import BarkomLogo from '@components/svg/committeelogos/barkomLogo'
 import PrLogo from '@components/svg/committeelogos/prLogo'
 import config from '@config'
-import '@components/tabs/tabs.css'
 import en from '@text/verv/en.json'
 import no from '@text/verv/no.json'
 import board_no from '@text/board/no.json'
 import board_en from '@text/board/en.json'
 import data from '@text/board/data.json'
-import { getCookie } from 'utilbee/utils'
-import { language } from '@components/langtoggle/langToggle'
+export default function VervTabs({ lang }: { lang: Lang }) {
+    const [activeTab, setActiveTab] = useState('evnt')
+    const text = lang === 'en' ? { ...en, ...board_en } : { ...no, ...board_no }
 
-export default function VervTabs() {
-    const [activeTab, setActiveTab] = useState('event')
-    const [lang, setLang] = useState('no')
-    const [text, setText] = useState({ ...no, ...board_no })
-
-    useEffect(() => {
-        const text = lang === 'en' ? { ...en, ...board_en } : { ...no, ...board_no }
-        // eslint-disable-next-line
-        setText(text as any)
-    }, [lang])
-
-    useEffect(() => {
-        const temp = getCookie('lang')
-        setLang( temp || 'no')
-    }, [language])
 
     return (
         <div className='mb-8 800px:mb-20 tabs page-section--without-gaps'>
@@ -48,7 +32,7 @@ export default function VervTabs() {
                 <TabNavItem title={<PrLogo />} id='pr' activeTab={activeTab} setActiveTab={setActiveTab}/>
                 <TabNavItem title={<BarkomLogo />} id='bar' activeTab={activeTab} setActiveTab={setActiveTab}/>
             </ul>
-            <TabContent id='event' activeTab={activeTab}>
+            <TabContent id='evnt' activeTab={activeTab}>
                 <h3 className='heading-3 flex items-center gap-2'>
                     <i className='logfont-evntkom text-4xl' /> {text.committeeSection.evntkom.title}
                 </h3>
@@ -58,7 +42,7 @@ export default function VervTabs() {
                         <p className='p-regular' dangerouslySetInnerHTML={{__html: text.committeeSection.evntkom.body}} />
                     </div>
                     <LogChamp
-                        img={`${config.url.PORTRAIT_URL}/${data.evntkomLeader.img}`}
+                        img={`${config.url.portrait}/${data.evntkomLeader.img}`}
                         name={data.evntkomLeader.name}
                         position={text.evntkomLeader.title}
                         discord={data.evntkomLeader.dctag}
@@ -76,7 +60,7 @@ export default function VervTabs() {
                         <p className='p-regular'>{text.committeeSection.tekkom.body}</p>
                     </div>
                     <LogChamp
-                        img={`${config.url.PORTRAIT_URL}/${data.tekkomLeader.img}`}
+                        img={`${config.url.portrait}/${data.tekkomLeader.img}`}
                         name={data.tekkomLeader.name}
                         position={text.tekkomLeader.title}
                         discord={data.tekkomLeader.dctag}
@@ -94,7 +78,7 @@ export default function VervTabs() {
                         <p className='p-regular'>{text.committeeSection.bedkom.body}</p>
                     </div>
                     <LogChamp
-                        img={`${config.url.PORTRAIT_URL}/${data.bedkomLeader.img}`}
+                        img={`${config.url.portrait}/${data.bedkomLeader.img}`}
                         name={data.bedkomLeader.name}
                         position={text.bedkomLeader.title}
                         discord={data.bedkomLeader.dctag}
@@ -112,7 +96,7 @@ export default function VervTabs() {
                         <p className='p-regular' dangerouslySetInnerHTML={{__html: text.committeeSection.ctfkom.body}}/>
                     </div>
                     <LogChamp
-                        img={`${config.url.PORTRAIT_URL}/${data.ctfkomLeader.img}`}
+                        img={`${config.url.portrait}/${data.ctfkomLeader.img}`}
                         name={data.ctfkomLeader.name}
                         position={text.ctfkomLeader.title}
                         discord={data.ctfkomLeader.dctag}
@@ -130,7 +114,7 @@ export default function VervTabs() {
                         <p className='p-regular'>{text.committeeSection.satkom.body}</p>
                     </div>
                     <LogChamp
-                        img={`${config.url.PORTRAIT_URL}/${data.satkomLeader.img}`}
+                        img={`${config.url.portrait}/${data.satkomLeader.img}`}
                         name={data.satkomLeader.name}
                         position={text.satkomLeader.title}
                         discord={data.satkomLeader.dctag}
@@ -148,7 +132,7 @@ export default function VervTabs() {
                         <p className='p-regular'>{text.committeeSection.pr.body}</p>
                     </div>
                     <LogChamp
-                        img={`${config.url.PORTRAIT_URL}/${data.prLeader.img}`}
+                        img={`${config.url.portrait}/${data.prLeader.img}`}
                         name={data.prLeader.name}
                         position={text.prLeader.title}
                         discord={data.prLeader.dctag}
@@ -166,7 +150,7 @@ export default function VervTabs() {
                         <p className='p-regular'>{text.committeeSection.barkom.body}</p>
                     </div>
                     <LogChamp
-                        img={`${config.url.PORTRAIT_URL}/${data.barkomLeader.img}`}
+                        img={`${config.url.portrait}/${data.barkomLeader.img}`}
                         name={data.barkomLeader.name}
                         position={text.barkomLeader.title}
                         discord={data.barkomLeader.dctag}

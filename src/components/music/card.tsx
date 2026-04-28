@@ -5,8 +5,14 @@ import { ChevronDown } from 'lucide-react'
 import PlayIcon from './playIcon'
 import clsx from '@utils/clsx'
 
+type UserText = {
+    active: string
+    skipping: string
+    reveal: string
+}
+
 type CardProps<T> = {
-    text: string | string[]
+    text: string | UserText
     dropdown?: boolean
     open?: boolean
     setOpen?: Dispatch<SetStateAction<boolean>>
@@ -59,11 +65,11 @@ export default function Card<T>({
     }
 
     const display = current === 'listens'
-        ? (Array.isArray(text) ? text[0] : text)
-        : (Array.isArray(text) ? text[1] : text)
+        ? typeof text === 'string' ? text : text.active
+        : typeof text === 'string' ? text : text.skipping
     const opposite = current === 'listens'
-        ? (Array.isArray(text) ? text[1] : text)
-        : (Array.isArray(text) ? text[0] : text)
+        ? typeof text === 'string' ? text : text.skipping
+        : typeof text === 'string' ? text : text.active
 
     return (
         <div className={`bg-(--color-bg-surface) rounded-lg w-full ${removePadding ? '' : 'p-4'} ${className}`}>
@@ -79,7 +85,7 @@ export default function Card<T>({
                 onClick={toggleOpen}
             >
                 <div className='flex gap-2 w-full'>
-                    {!changeValues && <h1 className={titleStyle}>{text}</h1>}
+                    {!changeValues && <h1 className={titleStyle}>{typeof text === 'string' ? text : text.reveal}</h1>}
                     {changeValues && current && <h1 className={titleStyle}>
                         {display}
                     </h1>}

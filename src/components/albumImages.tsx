@@ -89,7 +89,9 @@ export default function AlbumImages({ images, albumId, albumNameNo, albumNameEn,
         return () => clearTimeout(timer)
     }, [isImageLoading])
 
-    const getImageUrl = (filename: string) => `${config.url.CDN_URL}/albums/${albumId}/${filename}`
+    function getImageUrl(filename: string) {
+        return `${config.url.cdn}/albums/${albumId}/${filename}`
+    }
 
     const visibleImages = images.slice(0, visibleCount)
 

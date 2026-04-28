@@ -42,13 +42,13 @@ export default function PageClient({pwnedNumber, lang}: PageClientProps){
     const meme = memes.pwned[pwnedNumber] || memes.pwned[0] || { text: 'Pwned!', image: '' }
 
     return (
-        <div className='h-[calc(100vh-var(--h-topbar))] w-full grid grid-rows-[auto,1fr,auto] justify-items-center items-center'>
+        <div className='h-full min-h-0 w-full overflow-hidden grid grid-rows-[auto,1fr,auto] justify-items-center items-center'>
             <h1 className='text-xl font-semibold px-8 max-w-240 text-center'>
                 {meme.text}
             </h1>
             <div className='relative max-h-100 m-8'>
                 <Image
-                    src={`${config.url.CDN_URL}/img/pwned/${meme.image}`}
+                    src={`${config.url.cdn}/img/pwned/${meme.image}`}
                     className='object-contain w-auto h-100'
                     alt='meme'
                     width={400}
@@ -60,7 +60,7 @@ export default function PageClient({pwnedNumber, lang}: PageClientProps){
                     {memes.text.replace('{time}', `${String(time)} ${seconds}`)}
                 </p>
                 <Image
-                    src={`${config.url.CDN_URL}/img/login_shitty_thicc${isDark ? '_white' : ''}.png`}
+                    src={`${config.url.cdn}/img/login_shitty_thicc${isDark ? '_white' : ''}.png`}
                     className='object-contain w-6 h-6'
                     alt='meme'
                     width={40}

@@ -5,11 +5,11 @@ import { authCallback } from 'uibee/utils'
 export async function GET(request: NextRequest) {
     return await authCallback({
         req: request,
-        tokenURL: config.authentik.TOKEN_URL,
-        clientID: config.authentik.CLIENT_ID,
-        clientSecret: config.authentik.CLIENT_SECRET,
+        tokenURL: config.authentik.token,
+        clientID: config.authentik.clientId,
+        clientSecret: config.authentik.clientSecret,
         redirectPath: config.authPath.callback,
-        userInfoURL: config.authentik.USERINFO_URL,
+        userInfoURL: config.authentik.userinfo,
         tokenRedirectPath: config.authPath.token
     })
 }

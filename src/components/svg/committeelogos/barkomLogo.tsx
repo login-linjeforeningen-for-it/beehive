@@ -1,0 +1,13 @@
+/* eslint-disable @stylistic/max-len */
+export default function BarkomLogo() {
+    return (
+        <svg className='barkom-logo committee-logo block mx-auto' viewBox='-2.5 -3 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'>
+            {/* content */}
+            <path className='barkom-logo stroke-(--color-text-disabled) transition duration-200 group-hover:stroke-(--color-text-main) group-[.active]:stroke-(--color-text-main) fill-(--color-bg-surface)' fill='red' d='M17.75,6.27a1.9,1.9,0,0,1-.95,1.65V7.23H12a1,1,0,0,0-.95.95V9.61a1.44,1.44,0,1,1-2.87,0V8.18a.94.94,0,0,0-.95-.95H5.34v.69a1.9,1.9,0,0,1-1-1.65A1.92,1.92,0,0,1,6.3,4.36,1.91,1.91,0,0,1,8.2,2.45a1.93,1.93,0,0,1,1.07.33,1.9,1.9,0,0,1,3.59,0,2,2,0,0,1,1.07-.33,1.92,1.92,0,0,1,1.91,1.91A1.92,1.92,0,0,1,17.75,6.27Z' />
+            {/* cup */}
+            <path className='barkom-logo stroke-(--color-text-disabled) transition duration-200 group-hover:stroke-(--color-text-main) group-[.active]:stroke-(--color-text-main) fill-(--color-bg-surface)' d='M16.8,7.23V20.59a1.91,1.91,0,0,1-1.91,1.91H7.25a1.91,1.91,0,0,1-1.91-1.91V7.23H7.25a.94.94,0,0,1,.95.95V9.61a1.44,1.44,0,1,0,2.87,0V8.18A1,1,0,0,1,12,7.23Z' />
+            {/* handle */}
+            <path className='barkom-logo stroke-(--color-text-disabled) transition duration-200 group-hover:stroke-(--color-text-main) group-[.active]:stroke-(--color-text-main) fill-(--color-bg-surface)' d='M16.8,10.09H18.7A1.91,1.91,0,0,1,20.61,12v3.82a1.91,1.91,0,0,1-1.91,1.91H16.8a0,0,0,0,1,0,0V10.09A0,0,0,0,1,16.8,10.09Z' />
+        </svg>
+    )
+}

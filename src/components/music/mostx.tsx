@@ -44,7 +44,7 @@ export default function MostX({
                 text={text.mostx.most_liked_albums}
                 items={mostLikedAlbums}
                 getImageHash={a => a.image}
-                getUrl={a => `${config.url.SPOTIFY_ALBUM_URL}/${a.album_id}`}
+                getUrl={a => `${config.url.spotifyAlbum}/${a.album_id}`}
                 getTitle={a => a.album}
                 getFirstLine={a => a.artist}
                 getCountWithIcons={a => ({
@@ -61,7 +61,7 @@ export default function MostX({
                 text={text.mostx.most_skipped_albums}
                 items={mostSkippedAlbums}
                 getImageHash={a => a.top_song_image}
-                getUrl={a => `${config.url.SPOTIFY_ALBUM_URL}/${a.album_id}`}
+                getUrl={a => `${config.url.spotifyAlbum}/${a.album_id}`}
                 getTitle={a => a.album}
                 getFirstLine={a => a.artist}
                 getCount={a => a.skips}
@@ -75,7 +75,7 @@ export default function MostX({
                 text={text.mostx.most_liked_artists}
                 items={mostLikedArtists}
                 getImageHash={a => a.image}
-                getUrl={a => `${config.url.SPOTIFY_ARTIST_URL}/${a.artist_id}`}
+                getUrl={a => `${config.url.spotifyArtist}/${a.artist_id}`}
                 getTitle={a => a.artist}
                 getCountWithIcons={a => ({
                     likeRatio: Math.round(a.like_ratio * 100),
@@ -91,7 +91,7 @@ export default function MostX({
                 text={text.mostx.most_skipped_artists}
                 items={mostSkippedArtists}
                 getImageHash={a => a.image}
-                getUrl={a => `${config.url.SPOTIFY_ARTIST_URL}/${a.artist_id}`}
+                getUrl={a => `${config.url.spotifyArtist}/${a.artist_id}`}
                 getTitle={a => a.artist}
                 getFirstLine={a => a.album}
                 getSecondLine={a => a.top_song}
@@ -106,6 +106,7 @@ export default function MostX({
                 text={text.mostx.most_liked_songs}
                 items={mostLikedSongs}
                 getImageHash={s => s.image}
+                getUrl={s => `${config.url.spotify}${s.song_id}`}
                 getTitle={s => s.song}
                 getFirstLine={s => s.artist}
                 getCountWithIcons={s => ({
@@ -122,6 +123,7 @@ export default function MostX({
                 text={text.mostx.most_skipped_songs}
                 items={mostSkippedSongs}
                 getImageHash={s => s.image}
+                getUrl={s => `${config.url.spotify}${s.song_id}`}
                 getTitle={s => s.song}
                 getFirstLine={s => s.album}
                 getSecondLine={s => s.artist}
@@ -136,6 +138,7 @@ export default function MostX({
                 text={text.mostx.most_liked_episodes}
                 items={mostLikedEpisodes}
                 getImageHash={e => e.image}
+                getUrl={e => `${config.url.spotifyEpisode}/${e.id}`}
                 getTitle={e => e.name}
                 getFirstLine={e => e.show}
                 getCountWithIcons={e => ({
@@ -152,6 +155,7 @@ export default function MostX({
                 text={text.mostx.most_skipped_episodes}
                 items={mostSkippedEpisodes}
                 getImageHash={e => e.image}
+                getUrl={e => `${config.url.spotifyEpisode}/${e.id}`}
                 getTitle={e => e.name}
                 getFirstLine={e => e.show}
                 getCount={e => e.skips}
@@ -165,6 +169,7 @@ export default function MostX({
                 text={text.mostx.most_inspired_songs}
                 items={mostInspiredSongs}
                 getImageHash={s => s.image}
+                getUrl={s => `${config.url.spotify}${s.song_id}`}
                 getTitle={s => s.song}
                 getFirstLine={s => s.album}
                 getSecondLine={s => s.artist}
@@ -179,6 +184,7 @@ export default function MostX({
                 text={text.mostx.most_inspired_episodes}
                 items={mostInspiredEpisodes}
                 getImageHash={e => e.image}
+                getUrl={e => `${config.url.spotifyEpisode}/${e.id}`}
                 getTitle={e => e.name}
                 getFirstLine={e => e.show}
                 getCount={e => e.inspired}

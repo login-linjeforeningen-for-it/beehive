@@ -1,6 +1,5 @@
 'use client'
 
-import './mazeMapEmbed.css'
 import { useEffect, useState } from 'react'
 import './mazemap.min.css'
 import ArrowOutward from '@components/svg/symbols/arrowOutward'
@@ -79,8 +78,19 @@ export default function MazeMapEmbed({ poi, ...props }: any) {
             style: isDarkMode === true ? 'mapbox://styles/mapbox/dark-v11' : 'mapbox://styles/mapbox/light-v11',
         })
 
-        embeddedMazemap.on('load', () => {
+        embeddedMazemap.on('styleimagemissing', (event: { id: string }) => {
+            if (!event?.id || embeddedMazemap.hasImage(event.id)) {
+                return
+            }
 
+            embeddedMazemap.addImage(event.id, {
+                width: 1,
+                height: 1,
+                data: new Uint8Array([0, 0, 0, 0]),
+            })
+        })
+
+        embeddedMazemap.on('load', () => {
             // Initialize a Highlighter for POIs
             // Storing the object on the map just makes it easy to access for other things
             // @ts-ignore
@@ -107,7 +117,7 @@ export default function MazeMapEmbed({ poi, ...props }: any) {
                 // zoom animation on loading, by increesing the zoom
                 embeddedMazemap.flyTo({
                     zoom: 18,
-                    speed: 0.5
+                    speed: 0.5,
                 })
 
                 // if poi is the lounge, set custom name
@@ -116,6 +126,10 @@ export default function MazeMapEmbed({ poi, ...props }: any) {
         })
 
         setMap(embeddedMazemap)
+
+        return () => {
+            embeddedMazemap.remove()
+        }
     }, [Mazemap, hasMounted, poi])
 
     if (!hasMounted) {
@@ -149,10 +163,7 @@ export default function MazeMapEmbed({ poi, ...props }: any) {
                 />
             )}
             {!webGLSupported ? (
-                <div
-                    className='mazemap-container'
-                    style={{ height: props.height || defualtHeight }}
-                >
+                <div className='relative' style={{ height: props.height || defualtHeight }}>
                     <div className='flex items-center justify-center h-full p-4'>
                         <Alert variant='warning'>
                             WebGL is required for the map to display. Please enable WebGL in your browser settings.
@@ -160,30 +171,57 @@ export default function MazeMapEmbed({ poi, ...props }: any) {
                     </div>
                 </div>
             ) : (
-                <div
-                    className='mazemap-container'
-                    style={{ height: props.height || defualtHeight }}
-                >
-                    <div id='mazemap' className='mazemap'>
+                <div className='relative' style={{ height: props.height || defualtHeight }}>
+                    <div
+                        id='mazemap'
+                        className='w-full h-full rounded-lg block border-[.2rem] border-(--color-border-default) mx-auto'
+                    >
                         <a
                             href={'https://use.mazemap.com/#v=1&sharepoitype=poi&campusid=1&sharepoi=' + poi}
                             rel='noreferrer noopener'
                             target='_blank'
-                            className='mazemap_link mazemap_overlay-item'
+                            className={
+                                'absolute z-5 backdrop-blur-[10px] rounded-(--border-radius) bg-[rgba(40,40,40,0.4)] ' +
+                                'p-2 top-2 right-2 hover:bg-[rgba(0,0,0,0.5)] 400px:top-[.8rem] 400px:right-[.8rem]'
+                            }
                         >
-                            <ArrowOutward className='w-6 h-6 fill-white'/>
+                            <ArrowOutward className='w-6 h-6 fill-white' />
                         </a>
-                        {room &&
-                            <div className='flex flex-row items-center mazemap_location-name mazemap_overlay-item'>
-                                <Pin className='w-6 h-6 fill-white mazemap_location-name-icon' />
+                        {room && (
+                            <div
+                                className={
+                                    'flex flex-row items-center absolute z-5 backdrop-blur-[10px] rounded-(--border-radius) ' +
+                                    'bg-[rgba(40,40,40,0.4)] left-2 top-2 py-2 px-[.9rem] leading-6 ' +
+                                    'text-white text-base 400px:left-[.8rem] 400px:top-[.8rem]'
+                                }
+                            >
+                                <Pin className='w-6 h-6 fill-white mt-[-.2rem] mr-[.2rem] ml-[-.4rem]' />
                                 {room}
                             </div>
-                        }
-                        <div className='mazemap_controls mazemap_overlay-item'>
-                            <button onClick={zoomIn} className='mazemap_zoom-btn mazemap_zoom-btn--top'>
-                                <Add className='w-6 h-6 fill-white'/>
+                        )}
+                        <div
+                            className={
+                                'absolute z-5 backdrop-blur-[10px] rounded-(--border-radius) bg-[rgba(40,40,40,0.4)] ' +
+                                'right-2 400px:right-[.8rem] bottom-8 flex flex-col'
+                            }
+                        >
+                            <button
+                                onClick={zoomIn}
+                                className={
+                                    '[background:none] outline-none border-0 rounded-t-[.3rem] rounded-b-none ' +
+                                    '[border-bottom:.05rem_solid_rgb(100,100,100)] text-2xl text-white cursor-pointer ' +
+                                    'p-2 hover:bg-[rgba(0,0,0,0.1)]'
+                                }
+                            >
+                                <Add className='w-6 h-6 fill-white' />
                             </button>
-                            <button onClick={zoomOut} className='mazemap_zoom-btn mazemap_zoom-btn--bottom'>
+                            <button
+                                onClick={zoomOut}
+                                className={
+                                    '[background:none] outline-none border-0 rounded-b-[.3rem] rounded-t-none ' +
+                                    'text-2xl text-white cursor-pointer p-2 hover:bg-[rgba(0,0,0,0.1)]'
+                                }
+                            >
                                 <Remove className='w-6 h-6 fill-white' />
                             </button>
                         </div>

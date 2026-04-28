@@ -1,25 +1,37 @@
 import type { Viewport, Metadata } from 'next'
 
+const siteName = 'Login'
+const siteTitle = 'Login - Linjeforeningen for IT'
+const siteDescription = 'Linjeforeningen for IT ved NTNU i Gjøvik.'
+
 const metadata: Metadata = {
-    title: 'Login',
+    metadataBase: new URL('https://login.no'),
+    title: {
+        default: siteTitle,
+        template: '%s | Login',
+    },
     keywords: [
         'login', 'linjeforeningen', 'IT', 'NTNU', 'Gjøvik', 'pwned', 'events',
         'arrangementer', 'bedriftspresentasjon', 'sosialt', 'nettverk', 'karriere',
     ],
     authors: [{ name: 'Login - Linjeforeningen for IT', url: 'https://login.no' }],
-    description: 'Login - Linjeforeningen for IT ved NTNU i Gjøvik.',
+    description: siteDescription,
+    applicationName: siteName,
     creator: 'Login - Linjeforeningen for IT',
     publisher: 'Login - Linjeforeningen for IT',
+    alternates: {
+        canonical: '/',
+    },
     openGraph: {
-        title: 'Login',
-        description: 'Login - Linjeforeningen for IT ved NTNU i Gjøvik.',
-        url: 'https://login.no/',
-        siteName: 'Login',
+        title: siteTitle,
+        description: siteDescription,
+        url: '/',
+        siteName,
         images: [
             {
-                url: 'https://login.no/favicon.ico',
-                width: 600,
-                height: 600,
+                url: '/opengraph-image',
+                width: 1200,
+                height: 630,
                 alt: 'Login Logo',
             },
         ],
@@ -39,6 +51,11 @@ const metadata: Metadata = {
     },
     icons: {
         icon: '/favicon.ico',
+        shortcut: '/favicon.ico',
+        apple: '/favicon.ico',
+    },
+    other: {
+        'apple-itunes-app': 'app-id=1660125165',
     },
 }
 

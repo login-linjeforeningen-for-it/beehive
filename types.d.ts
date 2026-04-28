@@ -340,19 +340,19 @@ declare global {
 
     type ColorTransitionClassNameProps = {
         color: string
-        transition: boolean
-        className: string
+        transition?: boolean
+        className?: string
     }
 
     type PromisedPageProps = {
-        params: Promise<{ id: number }>
+        params: Promise<{ id: number | string }>
     }
 
     type Lang = 'en' | 'no'
 
     type Music = {
         stats: MusicStats
-        currentlyListening: CurrentlyPlaying[]
+        currentlyListening: CurrentlyListening[]
         mostPlayedAlbums: Album[]
         mostPlayedArtists: ArtistPlayed[]
         mostPlayedSongs: CountedSong[]
@@ -396,19 +396,24 @@ declare global {
     type InspiredSong = {
         song: string
         artist: string
+        artist_id: string
         album: string
+        album_id: string
         skips: number
         listens: number
         inspired: number
-        id: string
+        song_id: string
         image: string
         like_ratio: number
     }
 
     type CurrentlyListening = {
         id: number
+        type: 'track' | 'episode'
         song_id: string
-        user_id: string
+        artist_id: string
+        album_id: string | null
+        user_id?: string
         start: string
         end: string
         source: string
@@ -417,7 +422,7 @@ declare global {
         image: string
         name: string
         artist: string
-        album: string
+        album: string | null
     }
 
     type ArtistPlayed = {
@@ -434,6 +439,7 @@ declare global {
         album: string
         album_id: string
         artist: string
+        artist_id: string
         total_listens: number
         top_song: string
         top_song_image: string
@@ -451,28 +457,34 @@ declare global {
     type CountedSong = {
         name: string
         artist: string
+        artist_id: string
         album: string
+        album_id: string
         listens: number
         image: string
-        id: string
+        song_id: string
     }
 
     type SongDay = {
         day: string
         song: string
         artist: string
+        artist_id: string
         album: string
+        album_id: string
         image: string
         listens: number
         total_songs_played: number
-        id: string
+        song_id: string
     }
 
     type TopXSong = {
         song: string
         artist: string
+        artist_id: string
         album: string
-        listens: string
+        album_id: string
+        listens: number
         image: string
         song_id: string
         start?: string
@@ -507,6 +519,7 @@ declare global {
         album: string
         album_id: string
         artist: string
+        artist_id: string
         total_listens: number
         total_skips: number
         like_ratio: number
@@ -527,7 +540,9 @@ declare global {
     type LikedSong = {
         song: string
         artist: string
+        artist_id: string
         album: string
+        album_id: string
         skips: number
         listens: number
         image: string
@@ -549,6 +564,7 @@ declare global {
         album: string
         album_id: string
         artist: string
+        artist_id: string
         skips: number
         top_song: string
         top_song_image: string
@@ -568,7 +584,9 @@ declare global {
     type SkippedSong = {
         song: string
         artist: string
+        artist_id: string
         album: string
+        album_id: string
         skips: number
         image: string
         song_id: string
@@ -601,7 +619,11 @@ declare global {
         most_played_artists: string
         most_played_songs: string
         currently_playing: string
-        users: string[]
+        users: {
+            active: string
+            skipping: string
+            reveal: string
+        }
         mostx: MostX
         topx: TopX
     }
@@ -633,6 +655,7 @@ declare global {
         image: string | undefined
         song_id: string | undefined
         name: string | undefined
+        media_type?: 'track' | 'episode'
     }
 
     type ServiceStatusHuman = 'operational' | 'degraded' | 'down' | 'inactive'
@@ -701,6 +724,202 @@ declare global {
     type Status = StatusOperational | StatusStarting | StatusDegraded
 
     type Issue = 'domains' | 'logs' | 'server' | 'pods'
+
+    type MonitoringBar = {
+        status: boolean
+        delay: number
+        expectedDown: boolean
+        note: string | null
+        timestamp: string
+    }
+
+    type MonitoringCertificateIssuer = {
+        cn: string
+        name: string
+    }
+
+    type MonitoringCertificate = {
+        valid: boolean
+        subjectCN: string
+        issuer: MonitoringCertificateIssuer
+        validFrom: string
+        validTo: string
+        keyType: string
+        dnsNames: string
+    }
+
+    type MonitoringService = {
+        id: number
+        name: string
+        enabled: boolean
+        url: string
+        port: number
+        maxConsecutiveFailures: number
+        bars: MonitoringBar[]
+        uptime: string
+        tags: string[]
+        certificate?: MonitoringCertificate
+    }
+
+    type EngineKey = 'google' | 'duckduckgo' | 'brave'
+
+    type GPT_Client = {
+        name: string
+        ram: GPT_RAM[]
+        cpu: GPT_CPU[]
+        gpu: GPT_GPU[]
+        model: GPT_ModelMetrics
+    }
+
+    type GPT_RAM = {
+        name: string
+        load: number
+    }
+
+    type GPT_CPU = {
+        name: string
+        load: number
+    }
+
+    type GPT_GPU = {
+        name: string
+        load: number
+    }
+
+    type GPT_ModelStatus = 'idle' | 'preparing' | 'generating' | 'error'
+
+    type GPT_ModelMetrics = {
+        conversationId: string | null
+        status: GPT_ModelStatus
+        currentTokens: number
+        maxTokens: number
+        promptTokens: number
+        generatedTokens: number
+        contextTokens: number
+        contextMaxTokens: number
+        tps: number
+        lastUpdated: string | null
+        lastError: string | null
+    }
+
+    type GPT_ChatRole = 'system' | 'user' | 'assistant'
+
+    type GPT_ChatMessage = {
+        id: string
+        role: GPT_ChatRole
+        content: string
+        pending?: boolean
+        error?: boolean
+        clientName?: string | null
+        createdAt?: string
+    }
+
+    type ChatConversationSummary = {
+        id: string
+        title: string
+        originalClientName: string
+        activeClientName: string
+        ownerUserId: string | null
+        ownerSessionId: string | null
+        deletedAt: string | null
+        shareToken: string | null
+        sharedFromConversationId: string | null
+        createdAt: string
+        updatedAt: string
+        lastMessagePreview: string | null
+        lastMessageRole: GPT_ChatRole | null
+        messageCount: number
+    }
+
+    type StoredConversation = ChatConversationSummary & {
+        messages: GPT_ChatMessage[]
+    }
+
+    type ChatSession = {
+        title: string
+        originalClientName: string
+        clientName: string
+        conversationId: string
+        messages: GPT_ChatMessage[]
+        isSending: boolean
+        metrics: GPT_ModelMetrics
+        createdAt: string
+        updatedAt: string
+    }
+
+    type AIIdentity = {
+        userId: string | null
+        userName: string | null
+        sessionId: string
+        isLoggedIn: boolean
+        hideTemporaryBanner: boolean
+    }
+
+    type GptSocketMessage = {
+        type?: string
+        participants?: number
+        client?: GPT_Client
+        conversationId?: string
+        clientName?: string | null
+        messages?: GPT_ChatMessage[]
+        delta?: string
+        content?: string
+        error?: string
+        metrics?: GPT_ModelMetrics
+    }
+
+    type GPT = {
+        activeClient: GPT_Client | null
+        chatSession: ChatSession | null
+        clients: GPT_Client[]
+        closeChat: () => void
+        conversations: ChatConversationSummary[]
+        createConversation: (client: GPT_Client | string) => Promise<ChatSession | null>
+        isConnected: boolean
+        isLoadingChat: boolean
+        isLoadingConversations: boolean
+        loadConversations: (background?: boolean, deleted?: boolean) => Promise<void>
+        openChat: (client: GPT_Client) => Promise<ChatSession | null>
+        participants: number
+        restoreChat: (conversationId: string) => Promise<void>
+        sendPrompt: (content: string, sessionOverride?: ChatSession | null) => Promise<boolean>
+        switchConversationClient: (conversationId: string, clientName: string) => Promise<ChatSession | null>
+    }
+
+    type AIText = {
+        newChat: string
+        previousChats: string
+        loading: string
+        noMessages: string
+        titleFallback: string
+        agent: string
+        loadingConversation: string
+        notFound: string
+        connected: string
+        reconnecting: string
+        modelUnavailable: string
+        handoffDescription: string
+        switching: string
+        continueOnAnotherModel: string
+        notFoundTitle: string
+        notFoundDescription: string
+        notFoundAction: string
+        thinking: string
+        copy: string
+        copied: string
+        delete: string
+        share: string
+        restore: string
+        deleted: string
+        loadFromSession: string
+        temporaryBanner: string
+        copySessionId: string
+        dismissBanner: string
+        loginToSave: string
+        loggedInBanner: string
+        askFollowup: string
+        connectToModel: string
+    }
 
     interface ExtendedNavigator extends Navigator {
         globalPrivacyControl: boolean

@@ -1,6 +1,6 @@
 import config from '@config'
 
-const baseUrl = config.url.WORKERBEE_API_URL
+const baseUrl = config.url.workerbee
 
 type GetParamsProps = {
     type?: string
@@ -115,13 +115,14 @@ export async function getAlbum(albumID: number): Promise<GetAlbumProps | string>
 }
 
 // Status
-export async function getStatus(): Promise<Status> {
-    return await fetchWrapper(`${config.url.BEEKEEPER_URL}/status`)
+export async function getStatus(): Promise<MonitoringService[]> {
+    const response = await fetchWrapper(`${config.url.beekeeper}/monitoring`)
+    return typeof response === 'string' ? [] : response
 }
 
 // Music
 export async function getActivity(): Promise<Music> {
-    const response = await fetchWrapper(`${config.url.TEKKOM_BOT_API_URL}/activity`)
+    const response = await fetchWrapper(`${config.url.tekkomBot}/activity`)
 
     if (typeof response === 'string') {
         console.error(response)
@@ -164,6 +165,18 @@ export async function getActivity(): Promise<Music> {
     }
 
     return response as Music
+}
+
+export async function getClients(): Promise<number> {
+    return await fetchWrapper(`${config.url.beekeeper}/clients`)
+}
+
+export async function getSafeActivity(): Promise<Music> {
+    const data = await getActivity()
+    data.mostActiveUsers = []
+    data.mostSkippingUsers = []
+    data.currentlyListening = data.currentlyListening.map(song => ({ ...song, user_id: undefined })) as CurrentlyListening[]
+    return data
 }
 
 async function fetchWrapper(path: string, options = {}) {

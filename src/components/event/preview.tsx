@@ -5,8 +5,40 @@ import EventListItem from '@components/event/eventItem'
 import EndCard from '@components/endCard'
 import { getEvents } from '@utils/api'
 import { cookies } from 'next/headers'
-import { Egg } from '@components/decoration/easter'
 import { Decoration } from '@components/decoration/wrapper'
+import { normalizeLang } from '@utils/lang'
+
+function Egg({
+    className, color, rotation = 0, width = 100, height = 135,
+    outlineColor = 'rgba(0,0,0,0.2)', outlineWidth = 3
+}: {
+    className?: string; color: string; rotation?: number;
+    width?: number; height?: number; outlineColor?: string;
+    outlineWidth?: number
+}) {
+    return (
+        <svg
+            viewBox='0 0 100 135'
+            className={className}
+            width={width}
+            height={height}
+            xmlns='http://www.w3.org/2000/svg'
+        >
+            <g transform={`rotate(${rotation} 50 67.5)`}>
+                <path
+                    d='M50 0 C20 0 0 35 0 75 C0 110 20 135 50 135 C80 135 100 110 100 75 C100 35 80 0 50 0 Z'
+                    fill={color}
+                    stroke={outlineColor}
+                    strokeWidth={outlineWidth}
+                    strokeLinejoin='round'
+                />
+                <path d='M10 75 Q50 95 90 75' fill='none' stroke='rgba(255,255,255,0.5)' strokeWidth='5' />
+                <path d='M15 55 Q50 75 85 55' fill='none' stroke='rgba(255,255,255,0.5)' strokeWidth='5' />
+                <path d='M15 95 Q50 115 85 95' fill='none' stroke='rgba(255,255,255,0.5)' strokeWidth='5' />
+            </g>
+        </svg>
+    )
+}
 
 export default async function EventsPreview() {
     const eventsResponse = await getEvents({
@@ -24,7 +56,7 @@ export default async function EventsPreview() {
             return start - now > 0
         })
 
-    const lang = ((await cookies()).get('lang')?.value || 'no') as Lang
+    const lang = normalizeLang((await cookies()).get('lang')?.value)
     const text = lang === 'no' ? no : en
 
     return (
@@ -54,17 +86,19 @@ export default async function EventsPreview() {
                         </span>
                     </Link>
                 </div>
-                {typeof events !== 'string' && Array.isArray(events) && events.length > 0 && (
+                {events.length > 0 && (
                     <ul
                         className='relative grid grid-flow-col list-none overflow-auto
                             p-[0_1rem_1rem_1rem] snap-x snap-mandatory 400px:gap-4
                             800px:grid-cols-2 800px:grid-flow-row-dense 800px:gap-8
                             1000px:grid-cols-3 1000px:gap-4 1000px:p-0'
                     >
-                        {/* eslint-disable-next-line */}
-                        {events.map((e: any) => (
-                            <li key={e.id} className='snap-center w-[80vw] max-w-88 min-w-72 800px:w-full 800px:max-w-md 1000px:m-[0_auto]'>
-                                <EventListItem event={e} variant='card' highlight={false} />
+                        {events.map((event) => (
+                            <li
+                                key={event.id}
+                                className='snap-center w-[80vw] max-w-88 min-w-72 800px:w-full 800px:max-w-md 1000px:m-[0_auto]'
+                            >
+                                <EventListItem event={event} variant='card' highlight={false} />
                             </li>
                         ))}
                         {events.length > 2 && <EndCard path='/events' />}

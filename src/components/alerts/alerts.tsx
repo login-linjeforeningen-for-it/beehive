@@ -5,6 +5,7 @@ import Alert from '@components/alert/alert'
 import { getCookie, setCookie } from 'utilbee/utils'
 import { usePathname } from 'next/navigation'
 import { X } from 'lucide-react'
+import { normalizeLang } from '@utils/lang'
 
 export default function Alerts() {
     const [alert, setAlert] = useState<GetAlertProps | null>(null)
@@ -13,7 +14,7 @@ export default function Alerts() {
     const [duration, setDuration] = useState(5000)
 
     const pathname = usePathname()
-    const lang = (getCookie('lang') || 'no') as Lang
+    const lang = normalizeLang(getCookie('lang'))
 
 
     function calculateDuration(text: string) {
@@ -92,7 +93,10 @@ export default function Alerts() {
                 </div>
             </Alert>
             <button
-                onClick={() => {setShowToast(false); setCookie('alertDismissed-' + alert.id, 'true', 1)}}
+                onClick={() => {
+                    setShowToast(false)
+                    setCookie('alertDismissed-' + alert.id, 'true', 1)
+                }}
                 className='absolute top-2 right-2 p-1 transition-colors cursor-pointer'
                 aria-label='Close alert'
             >

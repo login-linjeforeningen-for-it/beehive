@@ -2,7 +2,6 @@
 
 import LangToggle from '@components/langtoggle/langToggle'
 import ThemeToggle from '../themetoggle/themeToggle'
-import './topBar.css'
 import config from '@config'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -21,7 +20,7 @@ export default function TopBar({lang, theme}: TopBarProps) {
             <div className='flex items-center h-12 p-[0.2rem] 800px:p-0'>
                 <Link href='/' onClick={(e) => { e.preventDefault(); window.location.href = '/' }}>
                     <Image
-                        src={`${config.url.CDN_URL}/img/login_shitty_thicc${theme ? '_white' : ''}.png`}
+                        src={`${config.url.cdn}/img/login_shitty_thicc${theme ? '_white' : ''}.png`}
                         className='object-cover'
                         alt='ticc login logo'
                         width={48}

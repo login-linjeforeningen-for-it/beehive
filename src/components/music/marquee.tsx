@@ -35,7 +35,7 @@ export default function Marquee({ text, className = '', innerClassName = '' }: M
         >
             <div
                 ref={textRef}
-                className={`${shouldScroll ? 'animate-marquee' : ''} ${innerClassName}`}
+                className={`${shouldScroll ? 'inline-block align-top animate-[marquee_12s_linear_infinite]' : ''} ${innerClassName}`}
                 style={{
                     display: 'block',
                     '--scroll-distance': `${scrollDistance}px`,
