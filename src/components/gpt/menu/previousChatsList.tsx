@@ -83,12 +83,15 @@ export default function PreviousChatsList({
                                         </button>
                                         {sidebar === conversation.id && (
                                             <div className='absolute'>
-                                                <div className='relative left-8 top-4 grid min-w-40 rounded-lg bg-grey-700/10 p-2 text-sm outline outline-grey-700/30'>
+                                                <div className='relative left-8 top-4 grid min-w-40 rounded-lg
+                                                    bg-grey-700/10 p-2 text-sm outline outline-grey-700/30'
+                                                >
                                                     <button
                                                         type='button'
                                                         aria-label={`${text.share}: ${conversation.title}`}
                                                         onClick={(event) => handleShareConversation(event, conversation.id)}
-                                                        className='flex cursor-pointer items-center gap-1 rounded p-1 opacity-0 transition group-hover:opacity-60 hover:opacity-100'
+                                                        className='flex cursor-pointer items-center gap-1 rounded p-1
+                                                            opacity-0 transition group-hover:opacity-60 hover:opacity-100'
                                                     >
                                                         <Share2 className='h-4 w-4' />
                                                         <h1>{text.share}</h1>
