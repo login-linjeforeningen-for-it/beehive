@@ -26,16 +26,25 @@ const yahooFinance = new YahooFinance({ suppressNotices: ['yahooSurvey'] })
 let cachedPayload: HoldingsTotalPayload | null = null
 let cachedUntil = 0
 
-const HOLDINGS: Holding[] = (holdingsData.holdning || []).flatMap((entry) => {
-    const firstValidEntry = Object.entries(entry).find(([, value]) => typeof value === 'number')
-    const [symbol, shares] = firstValidEntry || []
-
-    if (typeof symbol !== 'string' || typeof shares !== 'number') {
+const HOLDINGS: Holding[] = (() => {
+    const data = Array.isArray(holdingsData) ? holdingsData : []
+    const currentHoldingsEntry = data.find((entry) => entry.until_date === '')
+    
+    if (!currentHoldingsEntry || !Array.isArray(currentHoldingsEntry.holdning)) {
         return []
     }
 
-    return [{ symbol, shares }]
-})
+    return currentHoldingsEntry.holdning.flatMap((entry) => {
+        const firstValidEntry = Object.entries(entry).find(([, value]) => typeof value === 'number')
+        const [symbol, shares] = firstValidEntry || []
+
+        if (typeof symbol !== 'string' || typeof shares !== 'number') {
+            return []
+        }
+
+        return [{ symbol, shares }]
+    })
+})()
 
 async function fetchYahooQuotes(symbols: string[]): Promise<YahooQuote[]> {
     if (symbols.length === 0) return []

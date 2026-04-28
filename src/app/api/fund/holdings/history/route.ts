@@ -2,6 +2,11 @@ import { NextResponse } from 'next/server'
 import YahooFinance from 'yahoo-finance2'
 import holdingsData from '../holdings.json'
 
+type HoldingsSnapshot = {
+    untilDate: string
+    holdings: Holding[]
+}
+
 type Holding = {
     symbol: string
     shares: number
@@ -56,16 +61,54 @@ const cacheByRange = new Map<HistoryRange, {
     cachedUntil: number
 }>()
 
-const HOLDINGS: Holding[] = (holdingsData.holdning || []).flatMap((entry) => {
-    const firstValidEntry = Object.entries(entry).find(([, value]) => typeof value === 'number')
-    const [symbol, shares] = firstValidEntry || []
+const HOLDINGS_SNAPSHOTS: HoldingsSnapshot[] = (() => {
+    // holdingsData is an array of { until_date, holdning } objects
+    const data = Array.isArray(holdingsData) ? holdingsData : []
+    
+    return data.map((entry) => {
+        const untilDate = entry.until_date || ''
+        const holdings: Holding[] = []
+        
+        if (Array.isArray(entry.holdning)) {
+            for (const holdingObj of entry.holdning) {
+                const firstValidEntry = Object.entries(holdingObj).find(([, value]) => typeof value === 'number')
+                const [symbol, shares] = firstValidEntry || []
 
-    if (typeof symbol !== 'string' || typeof shares !== 'number') {
-        return []
+                if (typeof symbol !== 'string' || typeof shares !== 'number') {
+                    continue
+                }
+
+                holdings.push({ symbol, shares })
+            }
+        }
+        
+        return { untilDate, holdings }
+    })
+})()
+
+function getHoldingsForDate(dateStr: string): Holding[] {
+    
+    let activeSnapshot: HoldingsSnapshot | undefined
+    
+    for (const snapshot of HOLDINGS_SNAPSHOTS) {
+        if (!snapshot.untilDate) {
+            if (!activeSnapshot || activeSnapshot.untilDate <= dateStr) {
+                activeSnapshot = snapshot
+            }
+        } else if (dateStr <= snapshot.untilDate) {
+            activeSnapshot = snapshot
+            break
+        } else {
+            activeSnapshot = snapshot 
+        }
     }
+    
+    return activeSnapshot?.holdings || []
+}
 
-    return [{ symbol, shares }]
-})
+const ALL_SYMBOLS = Array.from(
+    new Set(HOLDINGS_SNAPSHOTS.flatMap(s => s.holdings.map(h => h.symbol)))
+)
 
 function getDateKey(date: Date) {
     return date.toISOString().slice(0, 10)
@@ -98,27 +141,36 @@ async function fetchQuotes(symbols: string[]): Promise<YahooQuote[]> {
 }
 
 async function fetchHistoricalCloseSeries(symbol: string, period1: Date, period2: Date) {
-    const rows = await yahooFinance.historical(symbol, {
-        period1,
-        period2,
-        interval: '1d'
-    })
+    try {
+        const rows = await yahooFinance.historical(symbol, {
+            period1,
+            period2,
+            interval: '1d'
+        })
 
-    const closeByDate = new Map<string, number>()
-    const orderedDates: Date[] = []
+        const closeByDate = new Map<string, number>()
+        const orderedDates: Date[] = []
 
-    for (const row of rows) {
-        if (!(row.date instanceof Date) || typeof row.close !== 'number') {
-            continue
+        for (const row of rows) {
+            if (!(row.date instanceof Date) || typeof row.close !== 'number') {
+                continue
+            }
+
+            closeByDate.set(getDateKey(row.date), row.close)
+            orderedDates.push(row.date)
         }
 
-        closeByDate.set(getDateKey(row.date), row.close)
-        orderedDates.push(row.date)
-    }
-
-    return {
-        closeByDate,
-        orderedDates: orderedDates.sort((a, b) => a.getTime() - b.getTime())
+        return {
+            closeByDate,
+            orderedDates: orderedDates.sort((a, b) => a.getTime() - b.getTime())
+        }
+    } catch (error) {
+        console.error(`Failed to fetch historical data for ${symbol}:`, error instanceof Error ? error.message : error)
+        // Return empty data for symbols that fail - they'll contribute 0 to calculations
+        return {
+            closeByDate: new Map<string, number>(),
+            orderedDates: []
+        }
     }
 }
 
@@ -145,7 +197,7 @@ async function calculateHistory(baseCurrency: string, range: HistoryRange): Prom
     const rangeConfig = RANGE_CONFIG[range]
     const { checkpoints, stepDays, lookbackDays } = rangeConfig
 
-    const symbols = HOLDINGS.map((holding) => holding.symbol)
+    const symbols = ALL_SYMBOLS
     if (symbols.length === 0) {
         return {
             points: [],
@@ -172,11 +224,17 @@ async function calculateHistory(baseCurrency: string, range: HistoryRange): Prom
         return subDays(now, daysAgo)
     })
 
-    const currencies = HOLDINGS.map((holding) => quoteBySymbol.get(holding.symbol)?.currency || baseCurrency)
-    const uniqueCurrencies = [...new Set(currencies.filter((currency) => currency && currency !== baseCurrency))]
+    // Collect all unique currencies
+    const allCurrencies = new Set<string>()
+    for (const symbol of symbols) {
+        const currency = quoteBySymbol.get(symbol)?.currency || baseCurrency
+        if (currency !== baseCurrency) {
+            allCurrencies.add(currency)
+        }
+    }
 
     const fxHistoricalEntries = await Promise.all(
-        uniqueCurrencies.map(async (currency) => {
+        Array.from(allCurrencies).map(async (currency) => {
             const fxSymbol = `${currency}${baseCurrency}=X`
             const fxSeries = await fetchHistoricalCloseSeries(fxSymbol, period1, period2)
             return [currency, fxSeries] as const
@@ -188,8 +246,10 @@ async function calculateHistory(baseCurrency: string, range: HistoryRange): Prom
     const points: CalculatedHistoryPoint[] = targetDates.map((targetDate) => {
         const dateKey = getDateKey(targetDate)
         let hasExactDataDay = false
+        
+        const activeHoldings = getHoldingsForDate(dateKey)
 
-        const totalBase = HOLDINGS.reduce((sum, holding) => {
+        const totalBase = activeHoldings.reduce((sum, holding) => {
             const historical = historicalBySymbol.get(holding.symbol)
             if (!historical) return sum
 
@@ -273,9 +333,12 @@ export async function GET(request: Request) {
             }
         })
     } catch (error) {
+        console.error('[/api/fund/holdings/history] Error:', error)
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error'
         return NextResponse.json(
             {
-                error: error instanceof Error ? error.message : 'Unknown error'
+                error: errorMessage,
+                details: error instanceof Error ? error.stack : undefined
             },
             {
                 status: 502,
