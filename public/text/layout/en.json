@@ -13,7 +13,8 @@
     "more": "More",
     "status": "Status",
     "internal": "Internal",
-    "ai": "Login GPT"
+    "ai": "Login GPT",
+    "profile": "Profile"
   },
   "info": {
     "login": "Log in to save your chats."

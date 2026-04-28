@@ -1,5 +1,17 @@
 {
-    "title": "Profile",
-    "intro": "Introduction lorem imsum"
+    "eyebrow": "Account and shortcuts",
+    "description": "One practical home base for Login services, memberships, and your Authentik identity.",
+    "loginTitle": "Sign in for more content",
+    "loginButton": "Sign in",
+    "actions": "Quick actions",
+    "account": "Account information",
+    "groups": "Groups and roles",
+    "metadata": "Authentik details",
+    "attributes": "Extra attributes",
+    "unavailable": "Could not load the Authentik profile right now.",
+    "verified": "Verified",
+    "unverified": "Not verified",
+    "active": "Active",
+    "inactive": "Inactive",
+    "noGroups": "No groups reported"
 }
-  

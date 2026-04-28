@@ -10,12 +10,17 @@ const beekeeperWsUrl = env.NEXT_PUBLIC_BEEKEEPER_WSS_URL
 const config = {
     url: {
         workerbee:  env.WORKERBEE_API_URL ?? 'https://workerbee.login.no/api/v2',
+        appApi:     env.APP_API_URL ?? 'https://app.login.no/api',
         tekkomBot: env.TEKKOM_BOT_API_URL ?? 'https://bot.login.no/api',
         beekeeper: beekeeperApiUrl,
         beekeeper_wss: beekeeperWsUrl,
         cdn,
         exam: 'https://exam.login.no',
         wiki: 'https://wiki.login.no',
+        studentbee: 'https://studentbee.login.no',
+        queenbee: 'https://queenbee.login.no',
+        forms: 'https://forms.login.no',
+        git: 'https://git.login.no',
         github: 'https://github.com/login-linjeforeningen-for-it',
         gitlab: 'https://gitlab.login.no',
         linkedin: 'https://www.linkedin.com/company/linjeforeningen-login/about',

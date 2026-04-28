@@ -4,12 +4,22 @@ import { Navbar, NavDropdown, NavItem } from 'uibee/components'
 import en from '@text/layout/en.json'
 import no from '@text/layout/no.json'
 import config from '@config'
-import { Activity, BookMarked, BookOpen, Heart, Images, Music, Lock, Sparkles } from 'lucide-react'
 import Office from '@components/svg/symbols/office'
 import { getCookie, setCookie } from 'utilbee'
 import { usePathname } from 'next/navigation'
 import { normalizeLang } from '@utils/lang'
 import { useState } from 'react'
+import {
+    Activity,
+    BookMarked,
+    BookOpen,
+    Heart,
+    Images,
+    Music,
+    Lock,
+    Sparkles,
+    UserRound
+} from 'lucide-react'
 
 type TopBarProps = {
     onlyLogo: boolean
@@ -126,6 +136,14 @@ export default function Topbar({ onlyLogo, bubbleLogin, theme }: TopBarProps) {
                                 {text.nav.ai}
                             </div>
                         </NavItem>
+                        {accessToken && (
+                            <NavItem href='/profile'>
+                                <div className='flex flex-row items-center'>
+                                    <UserRound className='size-6 stroke-(--color-text-regular) mr-[0.7rem]' />
+                                    {text.nav.profile}
+                                </div>
+                            </NavItem>
+                        )}
                         {accessToken && (
                             <NavItem href='/internal'>
                                 <div className='flex flex-row items-center'>

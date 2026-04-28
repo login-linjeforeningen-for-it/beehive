@@ -1,5 +1,17 @@
 {
-    "title": "Profil",
-    "intro": "Introduksjon lorem imsum"
+    "eyebrow": "Konto og snarveier",
+    "description": "En samlet startside for Login-tjenester, medlemskap og identiteten din i Authentik.",
+    "loginTitle": "Logg inn for mer innhold.",
+    "loginButton": "Logg inn",
+    "actions": "Hurtighandlinger",
+    "account": "Kontoinformasjon",
+    "groups": "Grupper og roller",
+    "metadata": "Authentik-detaljer",
+    "attributes": "Ekstra attributter",
+    "unavailable": "Kunne ikke hente Authentik-profilen akkurat nå.",
+    "verified": "Verifisert",
+    "unverified": "Ikke verifisert",
+    "active": "Aktiv",
+    "inactive": "Inaktiv",
+    "noGroups": "Ingen grupper rapportert"
 }
-  
