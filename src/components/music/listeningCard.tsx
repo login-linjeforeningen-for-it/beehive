@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { useVisibility } from 'uibee/hooks'
 import Loader from '@components/loader/loader'
 
-type InnerCurrentlyListeningCardProps = {
+type CardBodyProps = {
     song: CurrentlyListening
     progressPercent: number
     progressMs: number
@@ -17,7 +17,7 @@ type InnerCurrentlyListeningCardProps = {
     done: boolean
 }
 
-export default function CurrentlyListeningCard({ song }: { song: CurrentlyListening }) {
+export default function ListeningCard({ song }: { song: CurrentlyListening }) {
     const startMs = Date.parse(song.start)
     const endMs = Date.parse(song.end)
     const durationMs = endMs - startMs
@@ -88,7 +88,7 @@ export default function CurrentlyListeningCard({ song }: { song: CurrentlyListen
     if (!song.song_id) {
         return (
             <div className={style}>
-                <InnerCurrentlyListeningCard
+                <CardBody
                     done={done}
                     song={song}
                     durationMs={durationMs}
@@ -108,7 +108,7 @@ export default function CurrentlyListeningCard({ song }: { song: CurrentlyListen
             onMouseLeave={handleMouseLeave}
             ref={ref}
         >
-            <InnerCurrentlyListeningCard
+            <CardBody
                 done={done}
                 song={song}
                 durationMs={durationMs}
@@ -120,14 +120,14 @@ export default function CurrentlyListeningCard({ song }: { song: CurrentlyListen
     )
 }
 
-function InnerCurrentlyListeningCard({
+function CardBody({
     done,
     song,
     progressPercent,
     progressMs,
     durationMs,
     shouldRenderPlayer
-}: InnerCurrentlyListeningCardProps) {
+}: CardBodyProps) {
     const innerTextStyle = `text-xs ${done
         ? 'text-(--color-text-discreet)/50'
         : 'text-(--color-text-discreet)'}`

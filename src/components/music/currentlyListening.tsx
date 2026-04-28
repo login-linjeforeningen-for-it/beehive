@@ -1,5 +1,5 @@
 import Card from './card'
-import CurrentlyPlayingCard from './currentlyListeningCard'
+import ListeningCard from './listeningCard'
 import no from '@text/music/no.json'
 import en from '@text/music/en.json'
 import { useState } from 'react'
@@ -33,7 +33,7 @@ export default function CurrentlyPlaying({ songs, lang, expanded }: CurrentlyPla
                 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden
                 ${expanded ? 'max-h-[77.64vh] overflow-auto' : 'max-h-[69vh] overflow-auto'}`}
             >
-                {uniqueSongs.map((song) => <CurrentlyPlayingCard key={song.id} song={song} />)}
+                {uniqueSongs.map((song) => <ListeningCard key={song.id} song={song} />)}
             </div>
         </Card>
     )
