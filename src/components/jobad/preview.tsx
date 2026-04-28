@@ -45,7 +45,10 @@ export default async function JobadsPreview() {
                             1000px:grid-cols-3 1000px:gap-4 1000px:p-0'
                     >
                         {jobads.map((jobad) => (
-                            <li key={jobad.id} className='snap-center w-[80vw] max-w-88 min-w-72 800px:w-full 800px:max-w-md 1000px:m-[0_auto]'>
+                            <li
+                                key={jobad.id}
+                                className='snap-center w-[80vw] max-w-88 min-w-72 800px:w-full 800px:max-w-md 1000px:m-[0_auto]'
+                            >
                                 <JobadCard jobad={jobad} />
                             </li>
                         ))}

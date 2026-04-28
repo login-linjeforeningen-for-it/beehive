@@ -94,7 +94,10 @@ export default async function EventsPreview() {
                             1000px:grid-cols-3 1000px:gap-4 1000px:p-0'
                     >
                         {events.map((event) => (
-                            <li key={event.id} className='snap-center w-[80vw] max-w-88 min-w-72 800px:w-full 800px:max-w-md 1000px:m-[0_auto]'>
+                            <li
+                                key={event.id}
+                                className='snap-center w-[80vw] max-w-88 min-w-72 800px:w-full 800px:max-w-md 1000px:m-[0_auto]'
+                            >
                                 <EventListItem event={event} variant='card' highlight={false} />
                             </li>
                         ))}
