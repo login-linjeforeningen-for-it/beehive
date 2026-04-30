@@ -9,7 +9,7 @@
         "heading2": "Søknadsperioder",
         "body2": "En gang i semesteret vil fondsstyret kunngjøre via Login sine hovedkommunikasjonskanaler at de nå tar imot søknader. Dette vil typisk vare i en måned og skje i begynnelsen av semesteret. Behandlingstiden for søknadene vil variere avhengig av antall innkomne søknader.",
         "heading3": "Hvordan søke?",
-        "body3": "Send en e-post til <a class='link link--primary'  target='_blank' rel='noopener noreferrer' href='mailto:fondet@login.no'>fondet@login.no</a> med en søknadstekst. Oppgi antall medlemmer eller studenter involvert i ditt initiativ, samt en fullstendig budsjettering av planene dine. Flere detaljer om hvordan søknaden skal utformes finnes <a class='link link--primary'  target='_blank' rel='noopener noreferrer' href='https://outline.login.no/s/fondet-vedtekter'>her <i class='logfont-wikijs'></i></a>."
+        "body3": "Send en e-post til <a class='link link--primary'  target='_blank' rel='noopener noreferrer' href='mailto:fondet@login.no'>fondet@login.no</a> med en søknadstekst. Oppgi antall medlemmer eller studenter involvert i ditt initiativ, samt en fullstendig budsjettering av planene dine. Flere detaljer om hvordan søknaden skal utformes finnes <a class='link link--primary'  target='_blank' rel='noopener noreferrer' href='https://outline.login.no/s/fondet-vedtekter'>her <img class='wiki-logo-inline' src='/img/outline-logo.svg' alt='' /></a>."
     },
     "purpose": {
         "title": "Formål",
@@ -21,11 +21,11 @@
     },
     "meeting": {
         "title": "Møter",
-        "body": "Alle fondets møter vil bli annonsert en uke i forveien i samsvar med vedtektene gjennom Logins kommunikasjonskanaler. Fondstyret oppfordrer alle som ønsker å delta på åpent kvarter å delta på fondstyremøtene. Alle referater vil bli publisert på Fondets <a class='link link--primary' target='_blank' rel='noopener noreferrer' href='https://outline.login.no/s/fondet-referat'>wikiside <i class='logfont-wikijs'></i></a>."
+        "body": "Alle fondets møter vil bli annonsert en uke i forveien i samsvar med vedtektene gjennom Logins kommunikasjonskanaler. Fondstyret oppfordrer alle som ønsker å delta på åpent kvarter å delta på fondstyremøtene. Alle referater vil bli publisert på Fondets <a class='link link--primary' target='_blank' rel='noopener noreferrer' href='https://outline.login.no/s/fondet-referat'>wiki <img class='wiki-logo-inline' src='/img/outline-logo.svg' alt='' /></a>."
     },
     "yield": {
         "title": "Avkastning",
-        "body": "Fondet har en langsiktig investeringsstrategi, med lav risikofaktor. Dette gjør at avkastningen er moderat, men stabil. Fondet sikter mot en årlig avkastning i tråd med globale indekser for langsiktige investeringer. Vår investeringsplan finnes i Fondets <a class='link link--primary' target='_blank' rel='noopener noreferrer' href='https://outline.login.no/s/fondet-styringsdokument'>styringsdokument <i class='logfont-wikijs'></i></a>."
+        "body": "Fondet har en langsiktig investeringsstrategi, med lav risikofaktor. Dette gjør at avkastningen er moderat, men stabil. Fondet sikter mot en årlig avkastning i tråd med globale indekser for langsiktige investeringer. Vår investeringsplan finnes i Fondets <a class='link link--primary' target='_blank' rel='noopener noreferrer' href='https://outline.login.no/s/fondet-styringsdokument'>styringsdokument <img class='wiki-logo-inline' src='/img/outline-logo.svg' alt='' /></a>."
     },
     "graph": {
         "title": "Investeringer",

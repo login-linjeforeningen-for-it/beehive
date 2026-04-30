@@ -69,7 +69,7 @@
   },
   "publicDocs": {
     "title": "Public documents",
-    "body": "For more information and public documents, visit our <a class='link link--primary' href='https://outline.login.no/s/doc/docs' target='_blank' rel='noopener noreferrer'>wiki<i class='logfont-wikijs'></i></a>, here you can find the following types of documents:",
+    "body": "For more information and public documents, visit our <a class='link link--primary' href='https://outline.login.no/s/doc/docs' target='_blank' rel='noopener noreferrer'>wiki <img class='wiki-logo-inline' src='/img/outline-logo.svg' alt='' /></a>, here you can find the following types of documents:",
     "bulletPoints": {
       "agendas": "Agenda",
       "minutes": "Minutes",

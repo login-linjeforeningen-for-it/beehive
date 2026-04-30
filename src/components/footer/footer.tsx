@@ -48,10 +48,11 @@ const socialLinks: SocialLink[] = [
         hoverClass: 'hover:text-white'
     },
     {
-        name: 'Wiki',
+        name: 'wiki',
         url: config.url.wiki,
-        iconClass: 'logfont-wikijs',
-        hoverClass: 'hover:text-[rgb(5,186,243)]'
+        logoSrc: '/img/outline-logo.svg',
+        logoContainerClass: 'w-6 h-6',
+        logoClass: 'w-6 h-6'
     },
     {
         name: 'Norsk Tipping',

@@ -78,7 +78,7 @@
   },
   "publicDocs": {
     "title": "Offentlige dokumenter",
-    "body": "For mer informasjon og offentlige dokumenter kan du besøke <a class='link link--primary' href='https://outline.login.no/s/doc/docs' target=\"_blank\" rel=\"noreferrer\">wikien <i class='logfont-wikijs'></i></a>, her kan du blant annet finne følgende type dokumenter:",
+    "body": "For mer informasjon og offentlige dokumenter kan du besøke <a class='link link--primary' href='https://outline.login.no/s/doc/docs' target=\"_blank\" rel=\"noreferrer\">wikien <img class='wiki-logo-inline' src='/img/outline-logo.svg' alt='' /></a>, her kan du blant annet finne følgende type dokumenter:",
     "bulletPoints": {
       "agendas": "Agenda",
       "minutes": "Referat",

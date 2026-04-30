@@ -276,7 +276,7 @@ function getQuickActions(lang: Lang): QuickActionProps[] {
 
     return [
         {
-            title: 'Wiki',
+            title: 'wiki',
             description: no ? 'Dokumenter, referater og håndbøker.' : 'Documents, minutes, and handbooks.',
             href: config.url.wiki,
             icon: <BookOpen className='h-5 w-5' />,

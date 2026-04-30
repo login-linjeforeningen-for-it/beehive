@@ -101,7 +101,7 @@ export default function Topbar({ onlyLogo, bubbleLogin, theme }: TopBarProps) {
                         <NavItem href={config.url.wiki} external target='_blank'>
                             <div className='flex flex-row items-center'>
                                 <BookOpen className='size-6 stroke-(--color-text-regular) mr-[0.7rem]' />
-                                Wiki
+                                wiki
                             </div>
                         </NavItem>
                     </NavDropdown>
