@@ -2,8 +2,8 @@ import packageInfo from './package.json'
 
 const { env } = process
 
-const cdn = env.NEXT_PUBLIC_CDN_URL ?? 'https://cdn.login.no'
-const albumCdn = env.NEXT_PUBLIC_ALBUM_CDN_URL ?? 'https://s3.login.no/beehive'
+const cdn = env.NEXT_PUBLIC_CDN_URL ?? 'https://s3.login.no/beehive'
+const albumCdn = env.NEXT_PUBLIC_ALBUM_CDN_URL ?? cdn
 const beekeeperApiUrl = env.BEEKEEPER_API_URL ?? 'https://beekeeper.login.no/api'
 const beekeeperWsUrl = env.NEXT_PUBLIC_BEEKEEPER_WSS_URL
     ?? beekeeperApiUrl.replace(/^http/, 'ws')
