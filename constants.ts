@@ -16,7 +16,7 @@ const config = {
         beekeeper_wss: beekeeperWsUrl,
         cdn,
         exam: 'https://exam.login.no',
-        wiki: 'https://wiki.login.no',
+        wiki: 'https://outline.login.no/s/doc',
         studentbee: 'https://studentbee.login.no',
         queenbee: 'https://queenbee.login.no',
         forms: 'https://forms.login.no',

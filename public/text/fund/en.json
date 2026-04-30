@@ -9,7 +9,7 @@
         "heading2": "Application periods",
         "body2": "Once per semester, the fund board will announce through Login's main communication channels that they are now accepting applications. This will typically last for a month and happen at the beginning of the semester. The processing time for applications will vary depending on the number of applications received.",
         "heading3": "How to apply?",
-        "body3": "Send an email to <a href='mailto:fondet@login.no' class='link link--primary' target='_blank' rel='noopener noreferrer'>fondet@login.no</a> with your application. Provide the number of members or students involved in your initiative, along with a complete budget for your plans. More details on how the application should be structured can be found <a class='link link--primary' href='https://wiki.login.no/fondet/vedtekter' target='_blank' rel='noopener noreferrer'>here <i class='logfont-wikijs'></i></a>."
+        "body3": "Send an email to <a href='mailto:fondet@login.no' class='link link--primary' target='_blank' rel='noopener noreferrer'>fondet@login.no</a> with your application. Provide the number of members or students involved in your initiative, along with a complete budget for your plans. More details on how the application should be structured can be found <a class='link link--primary' href='https://outline.login.no/s/fondet-vedtekter' target='_blank' rel='noopener noreferrer'>here <i class='logfont-wikijs'></i></a>."
     },
     "purpose": {
         "title": "Purpose",
@@ -21,11 +21,11 @@
     },
     "meeting": {
         "title": "Meetings",
-        "body": "All fund meetings will be announced one week in advance in accordance with the bylaws through Login's communication channels. The fund board encourages everyone who wishes to participate in the open quarter to attend the fund board meetings. All minutes will be published on the Fund's <a class='link link--primary' href='https://wiki.login.no/fondet/referat' target='_blank' rel='noopener noreferrer'>wiki page <i class='logfont-wikijs'></i></a>."
+        "body": "All fund meetings will be announced one week in advance in accordance with the bylaws through Login's communication channels. The fund board encourages everyone who wishes to participate in the open quarter to attend the fund board meetings. All minutes will be published on the Fund's <a class='link link--primary' href='https://outline.login.no/s/fondet-referat' target='_blank' rel='noopener noreferrer'>wiki page <i class='logfont-wikijs'></i></a>."
     },
     "yield": {
         "title": "Yield",
-        "body": "The Fund has a long-term investment strategy with a low-risk factor. This results in a moderate but stable yield. The Fund aims for an annual return in line with global indexes for long-term investments. Our investment plan can be found in the Fund's <a class='link link--primary' href='https://wiki.login.no/en/fondet/styringsdokument' target='_blank' rel='noopener noreferrer'>governance document <i class='logfont-wikijs'></i></a>."
+        "body": "The Fund has a long-term investment strategy with a low-risk factor. This results in a moderate but stable yield. The Fund aims for an annual return in line with global indexes for long-term investments. Our investment plan can be found in the Fund's <a class='link link--primary' href='https://outline.login.no/s/fondet-styringsdokument' target='_blank' rel='noopener noreferrer'>governance document <i class='logfont-wikijs'></i></a>."
     },
     "graph": {
         "title": "Investments",
