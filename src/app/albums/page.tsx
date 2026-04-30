@@ -48,7 +48,7 @@ export default async function Page({ searchParams }: PageProps) {
                                     ? cardStack(Math.min(album.images.length, 3), (index, className) => (
                                         <Image
                                             key={index}
-                                            src={`${config.url.cdn}/albums/${album.id}/${album.images[index]}`}
+                                            src={`${config.url.albumCdn}/albums/${album.id}/${encodeURIComponent(album.images[index]!)}`}
                                             alt={lang === 'no' ? album.name_no : album.name_en}
                                             className={className + ' object-cover bg-(--color-bg-surface-raised)'}
                                             width={280}

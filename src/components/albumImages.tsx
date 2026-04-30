@@ -90,7 +90,7 @@ export default function AlbumImages({ images, albumId, albumNameNo, albumNameEn,
     }, [isImageLoading])
 
     function getImageUrl(filename: string) {
-        return `${config.url.cdn}/albums/${albumId}/${filename}`
+        return `${config.url.albumCdn}/albums/${albumId}/${encodeURIComponent(filename)}`
     }
 
     const visibleImages = images.slice(0, visibleCount)

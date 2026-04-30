@@ -76,6 +76,13 @@ const nextConfig: NextConfig = {
             },
             {
                 protocol: 'https',
+                hostname: 's3.login.no',
+                port: '',
+                pathname: '/beehive/**',
+                search: '',
+            },
+            {
+                protocol: 'https',
                 hostname: 'i.scdn.co',
                 port: '',
                 pathname: '/image/**',
