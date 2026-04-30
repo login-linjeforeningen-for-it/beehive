@@ -733,6 +733,16 @@ declare global {
         timestamp: string
     }
 
+    type MonitoringCheck = {
+        name: string
+        url: string
+        status: boolean
+        delay: number
+        expectedStatus?: number
+        actualStatus?: number
+        note: string
+    }
+
     type MonitoringCertificateIssuer = {
         cn: string
         name: string
@@ -759,6 +769,7 @@ declare global {
         uptime: string
         tags: string[]
         certificate?: MonitoringCertificate
+        checks?: MonitoringCheck[]
     }
 
     type EngineKey = 'google' | 'duckduckgo' | 'brave'

@@ -24,6 +24,8 @@
     "monitorId": "Overvåkings-ID",
     "enabled": "Overvåking aktiv",
     "url": "Adresse",
+    "urls": "Overvåkede mål",
+    "checkStatus": "Sjekkstatus",
     "port": "Port",
     "maxConsecutiveFailures": "Tillatte feilede sjekker",
     "uptime": "Oppetid",

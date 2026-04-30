@@ -208,6 +208,44 @@ function ServiceCard({
                         />
                     </div>
 
+                    {service.checks?.length ? (
+                        <div className='mt-4 border-t border-(--color-border-default) pt-4'>
+                            <h3 className='text-sm font-semibold text-(--color-text-main)'>
+                                {text.service.urls}
+                            </h3>
+                            <div className='mt-3 grid gap-2'>
+                                {service.checks.map((check) => (
+                                    <div
+                                        key={`${service.id}-${check.name}-${check.url}`}
+                                        className='rounded-(--border-radius) bg-(--color-bg-surface) px-3 py-2'
+                                    >
+                                        <div className='flex flex-wrap items-center justify-between gap-2'>
+                                            <p className='text-sm font-medium text-(--color-text-main)'>
+                                                {check.name}
+                                            </p>
+                                            <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${check.status
+                                                ? 'bg-[#12351d] text-[#8ae39d] in-[.light]:bg-[#e8f7eb] in-[.light]:text-[#1f7a33]'
+                                                : 'bg-[#3c1d1f] text-[#ffb4b8] in-[.light]:bg-[#fdebec] in-[.light]:text-[#a12633]'}`}
+                                            >
+                                                {check.status ? text.statuses.healthy : text.statuses.issues}
+                                            </span>
+                                        </div>
+                                        <p className='mt-1 wrap-break-word text-xs text-(--color-text-regular)'>
+                                            {check.url}
+                                        </p>
+                                        <p className='mt-1 text-xs text-(--color-text-discreet)'>
+                                            {text.service.checkStatus}: {check.actualStatus ?? text.values.unknown}
+                                            {check.expectedStatus ? ` / ${check.expectedStatus}` : ''} · {formatDelay(check.delay)}
+                                        </p>
+                                        <p className='mt-1 text-xs text-(--color-text-discreet)'>
+                                            {check.note}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ) : null}
+
                     {service.certificate ? (
                         <div className='mt-4 border-t border-(--color-border-default) pt-4'>
                             <div className='flex items-center justify-between'>

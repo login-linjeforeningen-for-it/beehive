@@ -24,6 +24,8 @@
     "monitorId": "Monitor ID",
     "enabled": "Monitoring enabled",
     "url": "Address",
+    "urls": "Monitored targets",
+    "checkStatus": "Check status",
     "port": "Port",
     "maxConsecutiveFailures": "Allowed failed checks",
     "uptime": "Uptime",
