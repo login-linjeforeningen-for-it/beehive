@@ -8,5 +8,8 @@ export async function GET(request: Request) {
         return NextResponse.json('Page parameter is required', { status: 400 })
     }
     const data = await getAlerts(page)
+    if (typeof data === 'string') {
+        return NextResponse.json(data, { status: 400 })
+    }
     return NextResponse.json(data)
 }
