@@ -5,7 +5,7 @@ import ConfirmationNumber from '@components/svg/symbols/confirmationNumber'
 import Group from '@components/svg/symbols/group'
 
 type LiveData = {
-    registered_count: number
+    registered_count: number | null
     limit: number | null
     spaces_left: number | null
 }
@@ -39,20 +39,25 @@ export default function LiveCount({ formName, lang }: Props) {
     const registeredLabel = lang === 'no' ? 'Påmeldt' : 'Registered'
     const spacesLeftLabel = lang === 'no' ? 'Ledige plasser' : 'Spaces left'
 
+    const hasRegistered = data.registered_count !== null && data.registered_count !== undefined
+    const hasLimit = data.limit !== null && data.limit !== undefined
+    const hasSpacesLeft = data.spaces_left !== null && data.spaces_left !== undefined
+
     return (
         <>
-            {data.limit && data.limit !== null && (
+            {hasRegistered && (
                 <>
                     <div className='inline-flex text-(--color-text-discreet)'>
                         <ConfirmationNumber className='w-8 pr-2 text-center leading-6 fill-(--color-text-discreet)' />
                         {registeredLabel}:
                     </div>
                     <div className='font-medium text-(--color-text-regular) wrap-break-word hyphens-auto'>
-                        {data.registered_count} / {data.limit}
+                        {data.registered_count}
+                        {hasLimit && <> / {data.limit}</>}
                     </div>
                 </>
             )}
-            {data.spaces_left && data.spaces_left !== null && (
+            {hasSpacesLeft && (
                 <>
                     <div className='inline-flex text-(--color-text-discreet) text-nowrap'>
                         <Group className='w-8 pr-2 text-center leading-6 fill-(--color-text-discreet)' />
