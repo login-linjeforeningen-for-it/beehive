@@ -18,7 +18,7 @@
     "react-dom": "^19.2.6",
     "react-snowfall": "^2.4.0",
     "swr": "^2.4.1",
-    "uibee": "^2.17.4",
+    "uibee": "^2.17.5",
     "utilbee": "^1.4.7",
     "yahoo-finance2": "^3.14.0"
   },

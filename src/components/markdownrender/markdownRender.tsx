@@ -5,7 +5,6 @@ import JobadCard from '@components/jobad/jobadCard'
 import Alert from '@components/alert/alert'
 import { getEventRow, getJobRow } from '@utils/api'
 import Link from 'next/link'
-import clsx from '@utils/clsx'
 
 type CustomLinkProps = {
     href: number
@@ -23,54 +22,6 @@ export default function MarkdownRender({MDstr}: {MDstr: string}) {
         <UibeeMarkdownRender
             MDstr={MDstr}
             components={{
-                h1: ({children}) => (
-                    <h2 className={clsx(
-                        'my-[1.5em] mb-[0.5em] leading-[1.2em] text-(--color-text-main)',
-                        'font-normal text-[1.6rem] 400px:text-[1.7rem] 800px:text-[2rem]'
-                    )}>
-                        {children}
-                    </h2>
-                ),
-                h2: ({children}) => (
-                    <h2 className={clsx(
-                        'my-[1.5em] mb-[0.5em] leading-[1.2em] text-(--color-text-main)',
-                        'font-normal text-[1.6rem] 400px:text-[1.7rem] 800px:text-[2rem]'
-                    )}>
-                        {children}
-                    </h2>
-                ),
-                h3: ({children}) => (
-                    <h3 className={clsx(
-                        'my-[1.5em] mb-[0.5em] leading-[1.2em] text-(--color-text-main)',
-                        'font-normal text-[1.3rem] 400px:text-[1.4rem] 800px:text-[1.7rem]'
-                    )}>
-                        {children}
-                    </h3>
-                ),
-                h4: ({children}) => (
-                    <h4 className={clsx(
-                        'my-[1.5em] mb-[0.5em] leading-[1.2em] text-(--color-text-main)',
-                        'font-semibold text-base 400px:text-[1.1rem] 800px:text-[1.4rem]'
-                    )}>
-                        {children}
-                    </h4>
-                ),
-                h5: ({children}) => <h5 className='my-[1.5em] mb-[0.5em] leading-[1.2em] text-(--color-text-main)'>{children}</h5>,
-                h6: ({children}) => <h6 className='my-[1.5em] mb-[0.5em] leading-[1.2em] text-(--color-text-main)'>{children}</h6>,
-                p: ({children}) => <section className='my-4 max-w-160 text-(--color-text-regular)'>{children}</section>,
-                em: ({children}) => <em>{children}</em>,
-                strong: ({children}) => <strong className='font-semibold text-(--color-text-main)'>{children}</strong>,
-                table: ({children}) => <table className='my-4 w-full border-collapse'>{children}</table>,
-                th: ({children}) => <th className='border-[0.1rem] border-(--color-border-default) px-4 py-2'>{children}</th>,
-                td: ({children}) => <td className='border-[0.1rem] border-(--color-border-default) px-4 py-2'>{children}</td>,
-                ul: ({children}) => <ul className='my-4 ml-6 list-disc marker:text-(--color-text-primary)'>{children}</ul>,
-                ol: ({children}) => <ol className='my-4 ml-6 list-decimal'>{children}</ol>,
-                li: ({children}) => <li className='text-(--color-text-regular)'>{children}</li>,
-                code: ({children}) => (
-                    <code className='rounded-(--border-radius) bg-(--color-bg-surface) p-4 font-mono'>
-                        {children}
-                    </code>
-                ),
                 a: ({href, children}) => <CustomLink href={href as unknown as number}>{children}</CustomLink>,
             }}
         />
