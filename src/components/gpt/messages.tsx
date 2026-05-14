@@ -1,8 +1,7 @@
 import { Bot, Check, Copy } from 'lucide-react'
 import Link from 'next/link'
 import { RefObject, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
-import ReactMarkdown, { type Components } from 'react-markdown'
-import remarkGfm from 'remark-gfm'
+import { MarkdownRender } from 'uibee/components'
 
 const SCROLL_FOLLOW_THRESHOLD = 96
 
@@ -44,7 +43,7 @@ export default function Messages({
     const messageViewportRef = useRef<HTMLDivElement | null>(null)
     const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null)
     const hasPlacedInitialScrollRef = useRef(false)
-    const markdownComponents = useMemo<Components>(() => ({
+    const markdownComponents = useMemo(() => ({
         h1: ({children}) => <h1 className='my-4 text-2xl font-semibold leading-tight text-current'>{children}</h1>,
         h2: ({children}) => <h2 className='my-4 text-[1.35rem] font-semibold leading-tight text-current'>{children}</h2>,
         h3: ({children}) => <h3 className='my-3 text-[1.2rem] font-semibold leading-tight text-current'>{children}</h3>,
@@ -171,9 +170,7 @@ export default function Messages({
                                 ${getMessageClassName(message)}`}
                         >
                             <div className='max-w-none select-text wrap-break-word text-current'>
-                                <ReactMarkdown components={markdownComponents} remarkPlugins={[remarkGfm]}>
-                                    {message.content || '...'}
-                                </ReactMarkdown>
+                                <MarkdownRender MDstr={message.content || '...'} components={markdownComponents} />
                             </div>
                             {message.role === 'assistant' && <AssistantMessage
                                 text={text}
