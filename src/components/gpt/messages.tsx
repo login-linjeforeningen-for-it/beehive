@@ -5,6 +5,8 @@ import { MarkdownRender } from 'uibee/components'
 
 const SCROLL_FOLLOW_THRESHOLD = 96
 
+type MdProps = { children?: ReactNode }
+
 type MessagesProps = {
     isLoadingChat: boolean
     chatSession: ChatSession | null
@@ -44,19 +46,19 @@ export default function Messages({
     const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null)
     const hasPlacedInitialScrollRef = useRef(false)
     const markdownComponents = useMemo(() => ({
-        h1: ({children}) => <h1 className='my-4 text-2xl font-semibold leading-tight text-current'>{children}</h1>,
-        h2: ({children}) => <h2 className='my-4 text-[1.35rem] font-semibold leading-tight text-current'>{children}</h2>,
-        h3: ({children}) => <h3 className='my-3 text-[1.2rem] font-semibold leading-tight text-current'>{children}</h3>,
-        h4: ({children}) => <h4 className='my-3 text-[1.05rem] font-semibold leading-tight text-current'>{children}</h4>,
-        h5: ({children}) => <h5 className='my-2 text-sm font-semibold text-current'>{children}</h5>,
-        h6: ({children}) => <h6 className='text-sm font-semibold text-current'>{children}</h6>,
-        p: ({children}) => <p className='text-current'>{children}</p>,
-        strong: ({children}) => <strong className='font-semibold text-current'>{children}</strong>,
-        em: ({children}) => <em className='text-current'>{children}</em>,
-        ul: ({children}) => <ul className='my-2 ml-5 list-disc'>{children}</ul>,
-        ol: ({children}) => <ol className='my-2 ml-5 list-decimal'>{children}</ol>,
-        li: ({children}) => <li className='my-1 pl-1 text-current'>{children}</li>,
-        a: ({children, href}) => (
+        h1: ({children}: MdProps) => <h1 className='my-4 text-2xl font-semibold leading-tight text-current'>{children}</h1>,
+        h2: ({children}: MdProps) => <h2 className='my-4 text-[1.35rem] font-semibold leading-tight text-current'>{children}</h2>,
+        h3: ({children}: MdProps) => <h3 className='my-3 text-[1.2rem] font-semibold leading-tight text-current'>{children}</h3>,
+        h4: ({children}: MdProps) => <h4 className='my-3 text-[1.05rem] font-semibold leading-tight text-current'>{children}</h4>,
+        h5: ({children}: MdProps) => <h5 className='my-2 text-sm font-semibold text-current'>{children}</h5>,
+        h6: ({children}: MdProps) => <h6 className='text-sm font-semibold text-current'>{children}</h6>,
+        p: ({children}: MdProps) => <p className='text-current'>{children}</p>,
+        strong: ({children}: MdProps) => <strong className='font-semibold text-current'>{children}</strong>,
+        em: ({children}: MdProps) => <em className='text-current'>{children}</em>,
+        ul: ({children}: MdProps) => <ul className='my-2 ml-5 list-disc'>{children}</ul>,
+        ol: ({children}: MdProps) => <ol className='my-2 ml-5 list-decimal'>{children}</ol>,
+        li: ({children}: MdProps) => <li className='my-1 pl-1 text-current'>{children}</li>,
+        a: ({children, href}: MdProps & { href?: string }) => (
             <a
                 href={href}
                 target='_blank'
@@ -66,7 +68,7 @@ export default function Messages({
                 {children}
             </a>
         ),
-        code: ({children, className}) => (
+        code: ({children, className}: MdProps & { className?: string }) => (
             <MarkdownCode className={className} text={text}>
                 {children}
             </MarkdownCode>
