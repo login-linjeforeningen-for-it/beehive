@@ -65,7 +65,7 @@ All variables go in the root `.env` file.
 
 | Name                            | Default                             | Notes                                 |
 |---------------------------------|-------------------------------------|---------------------------------------|
-| `AUTHENTIK_URL`                 |                                     | Base URL for your Authentik instance  |
+| `AUTHENTIK_URL`                 | `https://authentik.login.no`        | Base URL for your Authentik instance  |
 | `AUTHENTIK_CLIENT_ID`           |                                     | OAuth2 client ID from Authentik       |
 | `AUTHENTIK_CLIENT_SECRET`       |                                     | OAuth2 client secret from Authentik   |
 | `WORKERBEE_API_URL`             | `https://workerbee.login.no/api/v2` | Workerbee API base URL                |
