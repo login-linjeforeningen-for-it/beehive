@@ -174,7 +174,6 @@ export default async function AssetsPage({ searchParams }: PageProps) {
                                             style={previewStyle(file.key)}
                                         >
                                             {img ? (
-                                                // eslint-disable-next-line @next/next/no-img-element
                                                 <img
                                                     src={url}
                                                     alt={name}
