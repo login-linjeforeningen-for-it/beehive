@@ -13,6 +13,7 @@ import {
     Activity,
     BookMarked,
     BookOpen,
+    FolderOpen,
     Heart,
     Images,
     Music,
@@ -116,6 +117,12 @@ export default function Topbar({ onlyLogo, bubbleLogin, theme }: TopBarProps) {
                             <div className='flex flex-row items-center'>
                                 <Images className='size-6 stroke-(--color-text-regular) mr-[0.7rem]' />
                                 {text.nav.albums}
+                            </div>
+                        </NavItem>
+                        <NavItem href='/assets'>
+                            <div className='flex flex-row items-center'>
+                                <FolderOpen className='size-6 stroke-(--color-text-regular) mr-[0.7rem]' />
+                                {text.nav.assets}
                             </div>
                         </NavItem>
                         <NavItem href='/music'>

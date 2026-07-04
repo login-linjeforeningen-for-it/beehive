@@ -86,6 +86,12 @@ const nextConfig: NextConfig = {
                 hostname: 'cdn.discordapp.com',
                 port: '',
                 pathname: '/avatars/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'tekkom-assets.s3.de.io.cloud.ovh.net',
+                port: '',
+                pathname: '/**',
             }
         ],
         qualities: [25, 50, 75],

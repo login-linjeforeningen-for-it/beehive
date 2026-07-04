@@ -14,7 +14,8 @@
     "status": "Status",
     "internal": "Internside",
     "ai": "Login GPT",
-    "profile": "Profil"
+    "profile": "Profil",
+    "assets": "Assets"
   },
   "info": {
     "login": "Logg inn for å lagre samtalene dine."

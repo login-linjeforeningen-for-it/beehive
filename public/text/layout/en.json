@@ -14,7 +14,8 @@
     "status": "Status",
     "internal": "Internal",
     "ai": "Login GPT",
-    "profile": "Profile"
+    "profile": "Profile",
+    "assets": "Assets"
   },
   "info": {
     "login": "Log in to save your chats."
