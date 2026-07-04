@@ -154,6 +154,7 @@ export default function Footer() {
                         <Link className='block text-(--color-text-footer)' href='/policy'>{text.footer.sites.nav.policy}</Link>
                         <Link className='block text-(--color-text-footer)' href='/search'>{text.footer.sites.nav.search}</Link>
                         <Link className='block text-(--color-text-footer)' href='/pwned'>{text.footer.sites.nav.pwned}</Link>
+                        <Link className='block text-(--color-text-footer)' href='/ai'>{text.footer.sites.nav.ai}</Link>
                     </div>
                 </div>
             </div>

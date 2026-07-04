@@ -334,12 +334,6 @@ function getQuickActions(lang: Lang): QuickActionProps[] {
             external: true,
         },
         {
-            title: no ? 'Internside' : 'Internal',
-            description: no ? 'Drift og adminverktøy.' : 'Operations and admin tools.',
-            href: '/internal',
-            icon: <ShieldCheck className='h-5 w-5' />,
-        },
-        {
             title: 'Queenbee',
             description: no ? 'Administrer Login-innhold.' : 'Manage Login content.',
             href: config.url.queenbee,

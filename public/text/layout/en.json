@@ -12,8 +12,8 @@
     "music": "Music",
     "more": "More",
     "status": "Status",
-    "internal": "Internal",
     "ai": "Login GPT",
+    "tjenester": "Services",
     "profile": "Profile",
     "assets": "Assets"
   },
@@ -35,7 +35,8 @@
         "nav": {
           "policy": "Policy",
           "search": "Search",
-          "pwned": "Pwned"
+          "pwned": "Pwned",
+          "ai": "Login GPT"
         }
     },
     "sponsor": "Main partner",

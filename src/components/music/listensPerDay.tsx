@@ -165,7 +165,7 @@ export default function ListensPerDayChart({ data, text }: ListensPerDayProps) {
                 <div className='space-y-1'>
                     <p className='font-semibold text-md'>{text.most_played}</p>
                     <p>{display.listens} {text.listens}</p>
-                    <p className='opacity-80'>{display.song} — {display.artist}</p>
+                    <p className='opacity-80'>{display.song} · {display.artist}</p>
                     <p className='opacity-60'>{display.album}</p>
                 </div>
             </div>

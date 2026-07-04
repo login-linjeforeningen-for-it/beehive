@@ -123,7 +123,7 @@ export default async function AssetsPage({ searchParams }: PageProps) {
         )
     }
 
-    // Category view — fetch all files recursively, group by sub-folder
+    // Category view: fetch all files recursively, group by sub-folder
     const files = await fetchAllFiles(p)
     const groups = groupBySubfolder(files, p)
     const sortedGroups = Array.from(groups.entries()).sort(([a], [b]) => {

@@ -11,13 +11,12 @@ import { normalizeLang } from '@utils/lang'
 import { useState } from 'react'
 import {
     Activity,
-    BookMarked,
     BookOpen,
     FolderOpen,
+    Globe,
     Heart,
     Images,
     Music,
-    Lock,
     Sparkles,
     UserRound
 } from 'lucide-react'
@@ -107,12 +106,6 @@ export default function Topbar({ onlyLogo, bubbleLogin, theme }: TopBarProps) {
                         </NavItem>
                     </NavDropdown>
                     <NavDropdown title={text.nav.more} className='bg-(--color-bg-topbar-fallback)!'>
-                        <NavItem href={config.url.exam} external target='_blank'>
-                            <div className='flex flex-row items-center'>
-                                <BookMarked className='size-6 stroke-(--color-text-regular) mr-[0.7rem]' />
-                                {text.nav.exam}
-                            </div>
-                        </NavItem>
                         <NavItem href='/albums'>
                             <div className='flex flex-row items-center'>
                                 <Images className='size-6 stroke-(--color-text-regular) mr-[0.7rem]' />
@@ -137,10 +130,10 @@ export default function Topbar({ onlyLogo, bubbleLogin, theme }: TopBarProps) {
                                 {text.nav.status}
                             </div>
                         </NavItem>
-                        <NavItem href='/ai'>
+                        <NavItem href='/tjenester'>
                             <div className='flex flex-row items-center'>
-                                <Sparkles className='size-6 stroke-(--color-text-regular) mr-[0.7rem]' />
-                                {text.nav.ai}
+                                <Globe className='size-6 stroke-(--color-text-regular) mr-[0.7rem]' />
+                                {text.nav.tjenester}
                             </div>
                         </NavItem>
                         {accessToken && (
@@ -148,14 +141,6 @@ export default function Topbar({ onlyLogo, bubbleLogin, theme }: TopBarProps) {
                                 <div className='flex flex-row items-center'>
                                     <UserRound className='size-6 stroke-(--color-text-regular) mr-[0.7rem]' />
                                     {text.nav.profile}
-                                </div>
-                            </NavItem>
-                        )}
-                        {accessToken && (
-                            <NavItem href='/internal'>
-                                <div className='flex flex-row items-center'>
-                                    <Lock className='size-6 stroke-(--color-text-regular) mr-[0.7rem]' />
-                                    {text.nav.internal}
                                 </div>
                             </NavItem>
                         )}
