@@ -79,7 +79,10 @@ export default function Alerts() {
     if (!showToast || !alert) return null
 
     return (
-        <div className='fixed bottom-5 right-4 z-50 max-w-sm'>
+        <div
+            className='fixed bottom-5 right-4 z-50 max-w-sm'
+            style={{ viewTransitionName: 'site-alerts' }}
+        >
             <Alert variant='info' className='shadow-lg'>
                 <div>
                     <h4 className='font-bold'>{lang === 'en' ? alert.title_en : alert.title_no}</h4>

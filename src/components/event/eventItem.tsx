@@ -14,6 +14,7 @@ import { formatEventStartDate, isOngoing } from '@utils/datetimeFormatter'
 import clsx from '@utils/clsx'
 import Image from 'next/image'
 import { cookies } from 'next/headers'
+import type { CSSProperties } from 'react'
 
 type EventListItemProps = {
     event: GetEventProps
@@ -39,12 +40,13 @@ export default async function EventListItem({ event, highlight = true, disableTa
             ? 'p-4 h-full flex flex-col 400px:p-[5%]'
             : 'grid grid-cols-[min-content_auto_min-content] w-full p-2 600px:p-4'
     )
-    const pictureBaseClassName = 'relative overflow-hidden aspect-5/2 bg-[rgba(128,128,128,0.05)]'
+    const pictureBaseClassName = 'vt-morph relative overflow-hidden aspect-5/2 bg-[rgba(128,128,128,0.05)]'
     const cardPictureClassName = clsx(pictureBaseClassName, 'rounded-(--border-radius)')
     const listPictureClassName = clsx(
         pictureBaseClassName,
         'hidden 600px:block 600px:max-h-20 600px:w-[12.5rem] 600px:h-full 600px:rounded-[0.2rem]'
     )
+    const bannerVtStyle = { '--vt-name': `event-banner-${event.id}` } as CSSProperties
     const infoClassName = clsx(
         'grow flex flex-col whitespace-pre-line wrap-break-word [-ms-word-break:break-word]',
         '[-ms-hyphens:auto] [-moz-hyphens:auto] [-webkit-hyphens:auto] hyphens-auto',
@@ -93,7 +95,7 @@ export default async function EventListItem({ event, highlight = true, disableTa
                             day={event.category.name_no.toLowerCase() === 'fadderuka' ? true : false}
                         />
                     ) : (
-                        <div className={cardPictureClassName}>
+                        <div className={cardPictureClassName} style={bannerVtStyle}>
                             <div className={dateOverlayClassName}>
                                 <DateTile
                                     startDate={new Date(event.time_start)}
@@ -154,7 +156,7 @@ export default async function EventListItem({ event, highlight = true, disableTa
                         }
                     </div>
                     {!isCard &&
-                        <div className={listPictureClassName}>
+                        <div className={listPictureClassName} style={bannerVtStyle}>
                             {event.image_small ? (
                                 <Image
                                     src={`${config.url.cdn}/img/events/${event.image_small}`}

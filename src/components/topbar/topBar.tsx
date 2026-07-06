@@ -33,7 +33,8 @@ export default function Topbar({ onlyLogo, bubbleLogin, theme }: TopBarProps) {
     const accessToken = getCookie('access_token') || null
     const lang = normalizeLang(getCookie('lang'))
     const text = lang === 'no' ? no : en
-    const navbarClassName = 'bg-transparent! max-800px:[&.topbar--open]:h-screen '
+    const navbarClassName = 'site-header [view-transition-name:site-header] '
+        + 'bg-transparent! max-800px:[&.topbar--open]:h-screen '
         + 'max-800px:[&.topbar--open]:bg-(--color-bg-topbar-open) '
         + '800px:[&.topbar--open]:h-(--h-topbar)'
     const [hideBubbleLogin, setHideBubbleLogin] = useState(bubbleLogin)

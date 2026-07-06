@@ -12,6 +12,7 @@ import { cookies } from 'next/headers'
 import DefaultJobBanner from '@components/svg/defaultbanners/defaultJobBanner'
 import clsx from '@utils/clsx'
 import { normalizeLang } from '@utils/lang'
+import type { CSSProperties } from 'react'
 
 export default async function JobadsListItem({ jobad }: {jobad: GetJobProps}) {
     const lang = normalizeLang((await cookies()).get('lang')?.value)
@@ -67,10 +68,11 @@ export default async function JobadsListItem({ jobad }: {jobad: GetJobProps}) {
                     }
                     <div
                         className={clsx(
-                            'relative flex aspect-5/2 h-20 w-50 items-center justify-center rounded-(--border-radius)',
+                            'vt-morph relative flex aspect-5/2 h-20 w-50 items-center justify-center rounded-(--border-radius)',
                             'bg-(--color-border-default)',
                             '400px:row-start-2 800px:row-span-2 800px:row-start-1'
                         )}
+                        style={{ '--vt-name': `job-logo-${jobad.id}` } as CSSProperties}
                     >
                         {jobad.organization.logo ? (
                             <Image

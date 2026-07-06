@@ -9,6 +9,7 @@ import Pin from '@components/svg/symbols/pin'
 import DefaultJobBanner from '@components/svg/defaultbanners/defaultJobBanner'
 import clsx from '@utils/clsx'
 import { normalizeLang } from '@utils/lang'
+import type { CSSProperties } from 'react'
 
 type JobadCardProps = {
     jobad: GetJobProps
@@ -34,7 +35,7 @@ export default async function JobadCard({ jobad, highlight = true, disableTags =
         <Link href={`/career/${jobad.id}`}>
             <div
                 className={clsx(
-                    'mx-auto flex h-full w-full max-w-100 cursor-pointer flex-col rounded-(--border-radius)',
+                    'group mx-auto flex h-full w-full max-w-100 cursor-pointer flex-col rounded-(--border-radius)',
                     'p-4 transition-all duration-200 800px:p-[5%]',
                     highlightClass
                 )}
@@ -42,9 +43,10 @@ export default async function JobadCard({ jobad, highlight = true, disableTags =
                 <div>
                     <div
                         className={clsx(
-                            'relative flex w-full items-center justify-center overflow-clip rounded-(--border-radius)',
+                            'vt-morph relative flex w-full items-center justify-center overflow-clip rounded-(--border-radius)',
                             'min-h-20 max-h-40 bg-(--color-border-default) aspect-10/4'
                         )}
+                        style={{ '--vt-name': `job-logo-${jobad.id}` } as CSSProperties}
                     >
                         {jobad.banner_image || jobad.organization.logo ? (
                             <Image

@@ -61,6 +61,7 @@ export default async function JobadPage({ params }: PromisedPageProps) {
                                 <div
                                     className='relative block w-40 h-auto aspect-5/2 self-start rounded-(--border-radius)
                                         overflow-hidden 450px:w-48 800px:w-56'
+                                    style={{ viewTransitionName: `job-logo-${jobad.id}` }}
                                 >
                                     {jobad?.organization?.logo ? (
                                         <Image

@@ -1194,3 +1194,65 @@ abbr {
         opacity: 1;
     }
 }
+
+/* ----------------------------------- */
+/* --------- View transitions -------- */
+/* ----------------------------------- */
+
+:root {
+    --vt-duration: 220ms;
+    --vt-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: var(--vt-duration);
+    animation-timing-function: var(--vt-ease);
+}
+
+::view-transition-group(*) {
+    animation-duration: var(--vt-duration);
+    animation-timing-function: var(--vt-ease);
+}
+
+html:active-view-transition .site-header {
+    background: var(--color-bg-topbar-fallback) !important;
+}
+
+html:active-view-transition .site-header,
+html:active-view-transition .site-header * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+::view-transition-group(site-header),
+::view-transition-group(site-alerts) {
+    animation: none;
+}
+
+::view-transition-old(site-header),
+::view-transition-old(site-alerts) {
+    display: none;
+}
+
+::view-transition-new(site-header),
+::view-transition-new(site-alerts) {
+    animation: none;
+}
+
+/* Shared-element morph (card → detail page). */
+@media (hover: hover) {
+    .group:hover .vt-morph,
+    .group:focus-within .vt-morph {
+        view-transition-name: var(--vt-name);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-image-pair(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
+    }
+}

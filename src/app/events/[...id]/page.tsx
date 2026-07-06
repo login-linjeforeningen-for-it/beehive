@@ -223,6 +223,7 @@ async function Event({ event }: { event: GetEventProps }) {
             </div>
             <div
                 className='[grid-area:ban] bg-[rgba(100,100,100,0.3)] block aspect-10/4 w-full rounded-(--border-radius) overflow-hidden'
+                style={{ viewTransitionName: `event-banner-${event.id}` }}
             >
                 <EventBanner event={event} />
             </div>

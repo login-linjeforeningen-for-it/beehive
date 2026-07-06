@@ -6,7 +6,7 @@ import Footer from '@components/footer/footer'
 import Alerts from '@components/alerts/alerts'
 import clsx from '@utils/clsx'
 import { usePathname } from 'next/navigation'
-import { useEffect, type ReactNode } from 'react'
+import { useEffect, ViewTransition, type ReactNode } from 'react'
 
 type LayoutShellProps = {
     children: ReactNode
@@ -62,7 +62,7 @@ export default function LayoutShell({
                     <TopBar onlyLogo={dashboard} bubbleLogin={bubbleLogin} theme={theme} />
                 </header>
             ) : (
-                <header className={pwnedHeaderClassName}>
+                <header className={clsx('site-header', pwnedHeaderClassName)} style={{ viewTransitionName: 'site-header' }}>
                     <TopBarPwned lang={lang} theme={theme} />
                 </header>
             )}
@@ -73,7 +73,9 @@ export default function LayoutShell({
                     !dashboard && !aiChat && page !== 'pwned' && 'min-h-[calc(100vh-var(--h-topbar))]'
                 )}
             >
-                {children}
+                <ViewTransition>
+                    {children}
+                </ViewTransition>
             </main>
             {!hideFooter && (
                 <footer className='bg-(--color-bg-footer)'>
