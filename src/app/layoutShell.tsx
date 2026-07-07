@@ -13,6 +13,7 @@ type LayoutShellProps = {
     bubbleLogin: boolean
     lang: Lang
     theme: string
+    accessToken: string | null
 }
 
 export default function LayoutShell({
@@ -20,6 +21,7 @@ export default function LayoutShell({
     bubbleLogin,
     lang,
     theme,
+    accessToken,
 }: LayoutShellProps) {
     const path = usePathname() || ''
     const page = path.split('/').pop()
@@ -59,7 +61,7 @@ export default function LayoutShell({
         <>
             {page !== 'pwned' ? (
                 <header className='fixed top-0 z-900 w-full'>
-                    <TopBar onlyLogo={dashboard} bubbleLogin={bubbleLogin} theme={theme} />
+                    <TopBar onlyLogo={dashboard} bubbleLogin={bubbleLogin} theme={theme} lang={lang} accessToken={accessToken} />
                 </header>
             ) : (
                 <header className={clsx('site-header', pwnedHeaderClassName)} style={{ viewTransitionName: 'site-header' }}>
@@ -79,7 +81,7 @@ export default function LayoutShell({
             </main>
             {!hideFooter && (
                 <footer className='bg-(--color-bg-footer)'>
-                    <Footer />
+                    <Footer lang={lang} />
                 </footer>
             )}
             <Alerts />

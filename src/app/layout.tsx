@@ -14,11 +14,12 @@ export default async function layout({ children }: { children: ReactNode }) {
     const theme = Cookies.get('theme')?.value || 'dark'
     const bubbleLogin = Cookies.get('bubbleLogin')?.value === 'true'
     const lang = normalizeLang(Cookies.get('lang')?.value)
+    const accessToken = Cookies.get('access_token')?.value || null
 
     return (
         <html test-id='root' lang={lang === 'no' ? 'nb' : 'en'} className={theme}>
             <body className='min-h-screen w-full bg-(--color-bg-body)'>
-                <LayoutShell bubbleLogin={bubbleLogin} lang={lang} theme={theme}>
+                <LayoutShell bubbleLogin={bubbleLogin} lang={lang} theme={theme} accessToken={accessToken}>
                     {children}
                 </LayoutShell>
             </body>

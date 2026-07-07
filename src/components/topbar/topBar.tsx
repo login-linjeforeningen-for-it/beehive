@@ -5,9 +5,8 @@ import en from '@text/layout/en.json'
 import no from '@text/layout/no.json'
 import config from '@config'
 import Office from '@components/svg/symbols/office'
-import { getCookie, setCookie } from 'utilbee'
+import { setCookie } from 'utilbee'
 import { usePathname } from 'next/navigation'
-import { normalizeLang } from '@utils/lang'
 import { useState } from 'react'
 import {
     Activity,
@@ -25,13 +24,13 @@ type TopBarProps = {
     onlyLogo: boolean
     bubbleLogin: boolean
     theme: string
+    lang: Lang
+    accessToken: string | null
 }
 
-export default function Topbar({ onlyLogo, bubbleLogin, theme }: TopBarProps) {
+export default function Topbar({ onlyLogo, bubbleLogin, theme, lang, accessToken }: TopBarProps) {
     const pathname = usePathname()
     const isAiRoute = pathname.startsWith('/ai')
-    const accessToken = getCookie('access_token') || null
-    const lang = normalizeLang(getCookie('lang'))
     const text = lang === 'no' ? no : en
     const navbarClassName = 'site-header [view-transition-name:site-header] '
         + 'bg-transparent! max-800px:[&.topbar--open]:h-screen '

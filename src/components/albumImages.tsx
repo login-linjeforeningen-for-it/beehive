@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
+import { Spinner } from 'uibee/components'
 import config from '@config'
 
 type AlbumImagesProps = {
@@ -125,7 +126,7 @@ export default function AlbumImages({ images, albumId, albumNameNo, albumNameEn,
 
             {visibleCount < images.length && (
                 <div ref={loadMoreRef} className='h-20 w-full flex items-center justify-center'>
-                    <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900'></div>
+                    <Spinner size='lg' />
                 </div>
             )}
 

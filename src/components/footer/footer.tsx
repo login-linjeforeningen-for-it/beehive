@@ -2,214 +2,76 @@ import config from '@config'
 import no from '@text/layout/no.json'
 import en from '@text/layout/en.json'
 import Image from 'next/image'
-import Link from 'next/link'
-import { normalizeLang } from '@utils/lang'
-import { getCookie } from 'utilbee'
+import {
+    Footer as UibeeFooter,
+    loginAddress,
+    loginEmail,
+    loginCopyright,
+    loginSocialLinks,
+    type FooterColumn,
+    type FooterSocialLink,
+} from 'uibee/components'
 
-interface SocialLink {
-    name: string
-    url: string
-    iconClass?: string
-    hoverClass?: string
-    logoSrc?: string
-    logoContainerClass?: string
-    logoClass?: string
+const norskTipping: FooterSocialLink = {
+    title: 'Norsk Tipping',
+    href: config.url.norskTipping,
+    icon: (
+        <span
+            aria-hidden='true'
+            className='flex size-8 items-center justify-center transition-all duration-200
+                brightness-0 invert-[.69] opacity-100 group-hover:brightness-100 group-hover:invert-0'
+        >
+            <img src='/img/Norsk_Tipping.svg' alt='' className='block h-6 w-6' />
+        </span>
+    ),
 }
 
-const socialLinks: SocialLink[] = [
-    {
-        name: 'Discord',
-        url: config.url.discord,
-        iconClass: 'logfont-discord',
-        hoverClass: 'hover:text-[#6571fd]'
-    },
-    {
-        name: 'Instagram',
-        url: config.url.instagram,
-        iconClass: 'logfont-instagram',
-        hoverClass: 'hover:text-transparent'
-    },
-    {
-        name: 'Facebook',
-        url: config.url.facebook,
-        iconClass: 'logfont-facebook',
-        hoverClass: 'hover:text-[#2c87ff]'
-    },
-    {
-        name: 'LinkedIn',
-        url: config.url.linkedin,
-        iconClass: 'logfont-linkedin',
-        hoverClass: 'hover:text-[#1a7bdd]'
-    },
-    {
-        name: 'GitHub',
-        url: config.url.github,
-        iconClass: 'logfont-github',
-        hoverClass: 'hover:text-white'
-    },
-    {
-        name: 'wiki',
-        url: config.url.wiki,
-        logoSrc: '/img/outline-logo.svg',
-        logoContainerClass: 'w-6 h-6',
-        logoClass: 'w-6 h-6'
-    },
-    {
-        name: 'Norsk Tipping',
-        url: config.url.norskTipping,
-        logoSrc: '/img/Norsk_Tipping.svg',
-        logoContainerClass: 'w-6 h-6',
-        logoClass: 'w-6 h-6'
-    }
-]
-
-function SocialLinks() {
-    const baseIconStyle = 'text-2xl leading-none transition-all duration-200 text-center block text-(--color-text-footer)'
-
-    return (
-        <div className='grid justify-between mx-auto mt-20 mb-12 sm:grid-cols-7 grid-cols-3 gap-6 w-fit'>
-            {socialLinks.map((link) => (
-                <a
-                    key={link.name}
-                    className='flex items-center justify-center w-8 h-8 mx-auto group'
-                    href={link.url}
-                    target='_blank'
-                    rel='noreferrer'
-                    aria-label={`Visit our ${link.name} page`}
-                    title={link.name}
-                >
-                    {link.logoSrc ? (
-                        <span
-                            aria-hidden='true'
-                            className={`flex items-center justify-center transition-all duration-200 ${link.logoContainerClass ?? ''}
-                                brightness-0 invert opacity-100 group-hover:brightness-100 group-hover:invert-0`}
-                        >
-                            <img
-                                src={link.logoSrc}
-                                alt=''
-                                className={`block ${link.logoClass ?? ''}`}
-                            />
-                        </span>
-                    ) : (
-                        <i
-                            className={`${baseIconStyle} ${link.iconClass ?? ''} ${link.hoverClass ?? ''}
-                                ${link.iconClass === 'logfont-instagram'
-                            ? 'bg-[linear-gradient(45deg,#fff695_0%,#fff695_5%,#ff5445_45%,#ff37c0_60%,#3d6dff_90%)] bg-clip-text' : ''}`
-                            }
-                        />
-                    )}
-                </a>
-            ))}
-        </div>
-    )
-}
-
-export default function Footer() {
-    const currentDate = new Date()
-    const currentYear = currentDate.getFullYear()
-    const lang = normalizeLang(getCookie('lang'))
+export default function Footer({ lang }: { lang: Lang }) {
     const text = lang === 'no' ? no : en
 
+    const sites: FooterColumn = {
+        heading: text.footer.sites.title,
+        items: [
+            { label: text.footer.sites.nav.policy, href: '/policy' },
+            { label: text.footer.sites.nav.search, href: '/search' },
+            { label: text.footer.sites.nav.pwned, href: '/pwned' },
+            { label: text.footer.sites.nav.ai, href: '/ai' },
+        ],
+    }
+
     return (
-        <div className='mt-40 mx-auto pt-16 px-4 pb-4
-            md:max-w-[calc(var(--w-page)+4rem)] md:pt-20 md:px-12 md:pb-4
-            md:grid md:grid-cols-[18rem_1fr] md:gap-x-12'
-        >
-            <div className='grid gap-16 max-w-60 w-full mx-auto md:row-span-2 md:max-w-72 md:gap-20'>
-                <div>
-                    <div className='block w-full'>
+        <UibeeFooter
+            lang={lang}
+            logo={
+                <Image
+                    src={`${config.url.cdn}/img/logo/logo-tekst-white.svg`}
+                    className='block w-full'
+                    alt='Login - Linjeforeningen for IT'
+                    width={800}
+                    height={200}
+                />
+            }
+            sponsor={{
+                node: (
+                    <a href='https://www.mnemonic.io/' target='_blank' rel='noreferrer'>
                         <Image
-                            src={`${config.url.cdn}/img/logo/logo-tekst-white.svg`}
+                            src={`${config.url.cdn}/img/company/mnemonic-logo_light-nopayoff-2021.svg`}
                             className='block w-full'
-                            alt='Login - Linjeforeningen for IT'
+                            alt='mnemonic'
                             width={800}
                             height={200}
                         />
-                    </div>
-                </div>
-                <div>
-                    <Link href='https://www.mnemonic.io/' target='_blank'>
-                        <div className='block w-full'>
-                            <Image
-                                src={`${config.url.cdn}/img/company/mnemonic-logo_light-nopayoff-2021.svg`}
-                                className='block w-full'
-                                alt='mnemonic'
-                                width={800}
-                                height={200}
-                            />
-                        </div>
-                    </Link>
-                    <p className='text-center text-(--color-text-footer-discret) pt-8'>{text.footer.sponsor}</p>
-                </div>
-            </div>
-            <div className='grid w-full max-w-60 mt-16 self-start
-                sm:max-w-88 md:col-start-2 md:row-start-1 md:max-w-136
-                md:justify-self-center md:mt-0'
-            >
-                <div>
-                    <h4 className='pb-2 text-(--color-text-footer-discret) font-medium text-sm tracking-widest'>
-                        {text.footer.sites.title}
-                    </h4>
-                    <div className='text-(--color-text-footer)'>
-                        <Link className='block text-(--color-text-footer)' href='/policy'>{text.footer.sites.nav.policy}</Link>
-                        <Link className='block text-(--color-text-footer)' href='/search'>{text.footer.sites.nav.search}</Link>
-                        <Link className='block text-(--color-text-footer)' href='/pwned'>{text.footer.sites.nav.pwned}</Link>
-                        <Link className='block text-(--color-text-footer)' href='/ai'>{text.footer.sites.nav.ai}</Link>
-                    </div>
-                </div>
-            </div>
-            <div className='grid w-full max-w-60 mt-16 gap-8 self-start sm:grid-cols-2
-                sm:max-w-88 sm:justify-items-end sm:justify-self-end
-                md:col-start-2 md:row-start-1 md:max-w-136
-                md:justify-self-end md:mt-0 md:gap-0'
-            >
-                <div className='sm:justify-self-center md:justify-self-end'>
-                    <h4 className='text-(--color-text-footer-discret) font-medium text-sm tracking-widest pb-2'>
-                        {text.footer.contact.address.header}
-                    </h4>
-                    <p className='text-(--color-text-footer)'>
-                        {text.footer.contact.address.info1}
-                        <br />
-                        {text.footer.contact.address.info2}
-                        <br />
-                        {text.footer.contact.address.info3}
-                    </p>
-                </div>
-                <div className='sm:justify-self-center md:justify-self-end'>
-                    <h4 className='text-(--color-text-footer-discret) font-medium text-sm tracking-widest pb-2'>
-                        {text.footer.contact.email}
-                    </h4>
-                    <p className='text-(--color-text-footer)'>
-                        <a
-                            className='text-(--color-text-footer) hover:underline'
-                            href={`mailto:${config.url.mail}`}
-                        >
-                            {config.url.mail}
-                        </a>
-                    </p>
-                </div>
-            </div>
-            <div className='md:col-start-2 md:row-start-2 md:justify-self-end'>
-                <SocialLinks />
-            </div>
-            <div className='grid grid-cols-[auto_min-content] gap-8 mt-24 items-end md:col-span-2 md:row-start-3'>
-                <p
-                    className='text-(--color-text-footer-discret) text-xs'
-                    dangerouslySetInnerHTML={{
-                        __html: ` ${text.footer.copy1} ${currentYear} ${text.footer.copy2}`,
-                    }}
-                />
-                {typeof config.version !== 'undefined' ? (
-                    <Link
-                        className='bg-[rgba(200,200,200,0.1)] px-[0.6rem] py-[0.4rem]
-                            rounded-(--border-radius) text-white tracking-wide font-semibold'
-                        target='_blank'
-                        href={`${config.url.github}/beehive`}
-                    >
-                        v{config.version}
-                    </Link>
-                ) : null}
-            </div>
-        </div>
+                    </a>
+                ),
+                label: text.footer.sponsor,
+            }}
+            columns={[sites, loginAddress, loginEmail(config.url.mail)]}
+            socialLinks={[...loginSocialLinks, norskTipping]}
+            copyright={loginCopyright}
+            version={typeof config.version !== 'undefined' ? {
+                tag: config.version,
+                href: `${config.url.github}/beehive`,
+            } : undefined}
+        />
     )
 }
