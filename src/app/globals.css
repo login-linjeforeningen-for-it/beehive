@@ -2,6 +2,11 @@
 
 @config '../../tailwind.config.ts';
 
+/* Apply hover styles on :hover directly instead of gating them behind
+   @media (hover: hover), which never matches on devices reporting hover: none. */
+@custom-variant hover (&:hover);
+@custom-variant group-hover (&:is(:where(.group):hover *));
+
 :root {
     /* font family */
     --font-primary: "Poppins", sans-serif;

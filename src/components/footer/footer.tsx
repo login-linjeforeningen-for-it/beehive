@@ -9,22 +9,7 @@ import {
     loginCopyright,
     loginSocialLinks,
     type FooterColumn,
-    type FooterSocialLink,
 } from 'uibee/components'
-
-const norskTipping: FooterSocialLink = {
-    title: 'Norsk Tipping',
-    href: config.url.norskTipping,
-    icon: (
-        <span
-            aria-hidden='true'
-            className='flex size-8 items-center justify-center transition-all duration-200
-                brightness-0 invert-[.69] opacity-100 group-hover:brightness-100 group-hover:invert-0'
-        >
-            <img src='/img/Norsk_Tipping.svg' alt='' className='block h-6 w-6' />
-        </span>
-    ),
-}
 
 export default function Footer({ lang }: { lang: Lang }) {
     const text = lang === 'no' ? no : en
@@ -66,7 +51,7 @@ export default function Footer({ lang }: { lang: Lang }) {
                 label: text.footer.sponsor,
             }}
             columns={[sites, loginAddress, loginEmail(config.url.mail)]}
-            socialLinks={[...loginSocialLinks, norskTipping]}
+            socialLinks={loginSocialLinks}
             copyright={loginCopyright}
             version={typeof config.version !== 'undefined' ? {
                 tag: config.version,
