@@ -87,12 +87,12 @@ function ServiceCard({
     const [open, setOpen] = useState(false)
     const latestBar = service.bars[0]
     const averageDelay = getAverageDelay(service.bars)
-    const serviceStatus = getServiceStatus(service)
-
     return (
         <article
             onClick={() => setOpen(prev => !prev)}
-            className='rounded-lg bg-(--color-bg-surface) p-4 800px:p-5 cursor-pointer hover:bg-(--color-bg-surface-raised) transition-colors'
+            className={
+                'rounded-lg bg-(--color-bg-surface) p-4 800px:p-5 cursor-pointer hover:bg-(--color-bg-surface-raised) transition-colors'
+            }
         >
             <div className='flex items-center justify-between gap-3'>
                 <h2 className='text-[1.1rem] font-semibold leading-tight text-(--color-text-main)'>
@@ -310,10 +310,6 @@ function getServiceStatus(service: MonitoringService): StatusLevel {
     }
 
     return latestBar.status ? 'healthy' : 'issues'
-}
-
-function getStatusLabel(status: StatusLevel, text: StatusText) {
-    return text.statuses[status]
 }
 
 function getBarClassName(bar: MonitoringBar) {

@@ -11,7 +11,7 @@
         "react-dom": "^19.2.7",
         "react-snowfall": "^2.4.0",
         "swr": "^2.4.1",
-        "uibee": "^3.3.2",
+        "uibee": "^3.3.3",
         "utilbee": "^1.4.7",
         "yahoo-finance2": "^3.15.3",
       },
@@ -762,7 +762,7 @@
 
     "typescript-eslint": ["typescript-eslint@8.61.1", "", { "dependencies": { "@typescript-eslint/eslint-plugin": "8.61.1", "@typescript-eslint/parser": "8.61.1", "@typescript-eslint/typescript-estree": "8.61.1", "@typescript-eslint/utils": "8.61.1" }, "peerDependencies": { "eslint": "^8.57.0 || ^9.0.0 || ^10.0.0", "typescript": ">=4.8.4 <6.1.0" } }, "sha512-V7PayAfJokV3pEHgN7/v03D1SpujhRfQtYLbLIiBfDDncdg4PAiRBfoS4cnCANK4jmAPncczi59QO3afiXUlNw=="],
 
-    "uibee": ["uibee@3.3.2", "", { "dependencies": { "lucide-react": "^1.21.0", "react-dom": "^19.2.7", "react-markdown": "^10.1.0", "rehype-highlight": "^7.0.2", "remark-gfm": "^4.0.1", "utilbee": "^1.4.7" }, "peerDependencies": { "next": "^16.2.9", "react": "^19.2.7" } }, "sha512-iyOLwigaI2EhNrnhTA7Dug6uO+wVKjREkk8auMlXk+6y0omQG9CPbcCOCrP4x9xUukozMBz7sSKAxsSbQ9PCTA=="],
+    "uibee": ["uibee@3.3.3", "", { "dependencies": { "lucide-react": "^1.21.0", "react-dom": "^19.2.7", "react-markdown": "^10.1.0", "rehype-highlight": "^7.0.2", "remark-gfm": "^4.0.1", "utilbee": "^1.4.7" }, "peerDependencies": { "next": "^16.2.9", "react": "^19.2.7" } }, "sha512-KiSn47NJ7ulNnmPmD85wPtqTUBIa1eFwVmI10fev0YEkju3kexovfePRllg0euyOqvZ2YmO+JZzwUgwSuKHO1Q=="],
 
     "undici-types": ["undici-types@7.24.6", "", {}, "sha512-WRNW+sJgj5OBN4/0JpHFqtqzhpbnV0GuB+OozA9gCL7a993SmU+1JBZCzLNxYsbMfIeDL+lTsphD5jN5N+n0zg=="],
 

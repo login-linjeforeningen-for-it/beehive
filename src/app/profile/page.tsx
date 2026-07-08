@@ -154,7 +154,11 @@ export default async function ProfilePage() {
 function SectionLabel({ label, icon }: { label: string; icon: React.ReactNode }) {
     return (
         <div className='flex items-center gap-3 mt-8 mb-4'>
-            <span className='flex items-center gap-1.5 text-(--color-text-discreet) text-xs font-semibold uppercase tracking-[0.08em] shrink-0'>
+            <span
+                className={
+                    'flex items-center gap-1.5 text-(--color-text-discreet) text-xs font-semibold uppercase tracking-[0.08em] shrink-0'
+                }
+            >
                 <span style={{ color: 'var(--color-primary)' }}>{icon}</span>
                 {label}
             </span>
