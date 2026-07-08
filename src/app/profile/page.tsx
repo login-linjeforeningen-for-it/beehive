@@ -1,5 +1,4 @@
 import config from '@config'
-import clsx from '@utils/clsx'
 import {
     formatProfileDate,
     getAuthentikProfile,
@@ -8,23 +7,10 @@ import {
     getReadableGroupName,
 } from '@utils/profile'
 import {
-    ArrowUpRight,
     BadgeCheck,
-    BookOpen,
-    Bot,
-    BriefcaseBusiness,
-    CalendarDays,
-    ClipboardList,
-    Code2,
     DatabaseZap,
-    FileText,
-    GraduationCap,
-    Images,
-    KeyRound,
-    LayoutDashboard,
     Lock,
     LogIn,
-    Music,
     ShieldCheck,
     UserRound,
 } from 'lucide-react'
@@ -48,22 +34,19 @@ export default async function ProfilePage() {
     if (!accessToken) {
         return (
             <main className='page-container'>
-                <section className='page-section--normal mx-auto flex max-w-4xl flex-col items-center py-24 text-center'>
-                    <div className='mb-8 flex h-24 w-24 items-center justify-center rounded-full
-                        border border-login-orange/30 bg-login-orange/10 shadow-2xl shadow-login-orange/10'
-                    >
-                        <UserRound className='h-10 w-10 stroke-login-orange' />
+                <section className='page-section--normal flex flex-col items-center py-24 text-center'>
+                    <div className='mb-6 flex h-20 w-20 items-center justify-center rounded-(--border-radius-large)
+                        border border-(--color-border-default) bg-(--color-bg-surface)'>
+                        <UserRound className='h-9 w-9 text-(--color-primary)' />
                     </div>
-                    <p className='mb-3 text-sm font-semibold uppercase tracking-[0.35em] text-login-orange'>
-                        {text.eyebrow}
-                    </p>
-                    <h1 className='heading-1 mb-5'>{text.loginTitle}</h1>
+                    <h1 className='heading-1 mb-4'>{text.loginTitle}</h1>
                     <Link
                         href={`${config.authPath.login}?redirect=${encodeURIComponent('/profile')}`}
-                        className='mt-6 inline-flex items-center gap-3 rounded-full bg-login-orange px-6 py-3
-                            font-semibold shadow-lg shadow-login-orange/20 transition hover:scale-[1.02]'
+                        className='mt-4 inline-flex items-center gap-2 rounded-(--border-radius)
+                            bg-(--color-primary) px-5 py-2.5 text-sm font-semibold text-white
+                            transition hover:brightness-110'
                     >
-                        <LogIn className='h-5 w-5' />
+                        <LogIn className='h-4 w-4' />
                         {text.loginButton}
                     </Link>
                 </section>
@@ -72,132 +55,111 @@ export default async function ProfilePage() {
     }
 
     return (
-        <main className='page-container overflow-hidden'>
-            <section className='page-section--normal relative grid gap-8 py-12 1100px:grid-cols-[minmax(0,0.95fr)_minmax(0,1.35fr)]'>
-                <div className='absolute left-1/2 top-0 -z-10 h-80 w-80 -translate-x-1/2 rounded-full
-                    bg-login-orange/15 blur-3xl'
-                />
-                <aside className='flex flex-col gap-5'>
-                    <section className='rounded-4xl border border-white/10 bg-white/4 p-6 shadow-2xl shadow-black/10'>
-                        <div className='flex items-start gap-4'>
-                            <div className='flex h-20 w-20 shrink-0 items-center justify-center rounded-3xl
-                                bg-login-orange text-3xl font-bold text-black shadow-lg shadow-login-orange/20'
-                            >
-                                {getProfileInitials(profile)}
-                            </div>
-                            <div className='min-w-0'>
-                                <p className='mb-2 text-xs font-semibold uppercase tracking-[0.28em] text-login-orange'>
-                                    {text.eyebrow}
-                                </p>
-                                <h1 className='text-3xl font-bold text-(--color-text-main) 800px:text-4xl'>
-                                    {profile?.name || profile?.username}
-                                </h1>
-                                <p className='mt-2 wrap-break-word text-sm text-(--color-text-regular)'>
-                                    {profile?.email || text.unavailable}
-                                </p>
-                            </div>
-                        </div>
-                        <div className='mt-6 grid gap-3'>
+        <main className='page-container'>
+            <div className='page-section--normal pb-16'>
+                <h1 className='heading-1 heading-1--top-left-corner'>{text.eyebrow}</h1>
+                <p className='p-highlighted'>{text.description}</p>
+
+                <div className='mt-6 flex items-start gap-5 border border-(--color-border-default)
+                    bg-(--color-bg-surface) rounded-(--border-radius-large) p-5'>
+                    <div
+                        className='flex h-14 w-14 shrink-0 items-center justify-center
+                            rounded-(--border-radius) text-xl font-bold text-white'
+                        style={{ background: 'var(--color-primary)' }}
+                    >
+                        {getProfileInitials(profile)}
+                    </div>
+                    <div className='min-w-0 flex-1'>
+                        <h2 className='text-2xl font-bold text-(--color-text-main) leading-tight'>
+                            {profile?.name || profile?.username}
+                        </h2>
+                        <p className='mt-1 text-sm text-(--color-text-regular) wrap-break-word'>
+                            {profile?.email || text.unavailable}
+                        </p>
+                        <div className='mt-3 flex flex-wrap gap-2'>
                             <InfoPill
-                                icon={<BadgeCheck className='h-4 w-4' />}
+                                icon={<BadgeCheck className='h-3.5 w-3.5' />}
                                 label={profile?.emailVerified ? text.verified : text.unverified}
                                 active={Boolean(profile?.emailVerified)}
                             />
                             <InfoPill
-                                icon={<ShieldCheck className='h-4 w-4' />}
+                                icon={<ShieldCheck className='h-3.5 w-3.5' />}
                                 label={profile?.authentik.isActive === false ? text.inactive : text.active}
                                 active={profile?.authentik.isActive !== false}
                             />
                         </div>
-                    </section>
-                    <ProfileCard title={text.groups} icon={<Lock className='h-5 w-5' />}>
-                        {groups.length ? (
-                            <div className='flex flex-wrap gap-2'>
-                                {groups.map((group) => (
-                                    <span
-                                        key={group}
-                                        className='rounded-full border border-login-orange/25 bg-login-orange/10
-                                            px-3 py-1 text-sm text-(--color-text-main)'
-                                    >
-                                        {group}
-                                    </span>
-                                ))}
-                            </div>
-                        ) : (
-                            <p className='text-sm text-(--color-text-regular)'>{text.noGroups}</p>
-                        )}
-                    </ProfileCard>
-                </aside>
-
-                <div className='flex flex-col gap-5'>
-                    <section className='rounded-4xl border border-white/10 bg-white/4 p-6 shadow-xl shadow-black/10'>
-                        <p className='max-w-3xl text-lg leading-8 text-(--color-text-regular)'>
-                            {text.description}
-                        </p>
-                    </section>
-
-                    <ProfileCard title={text.actions} icon={<LayoutDashboard className='h-5 w-5' />}>
-                        <div className='grid gap-3 700px:grid-cols-2'>
-                            {getQuickActions(lang).map((action) => (
-                                <QuickAction key={action.href} {...action} />
-                            ))}
-                        </div>
-                    </ProfileCard>
-
-                    <div className='grid gap-5 900px:grid-cols-2'>
-                        <ProfileCard title={text.account} icon={<UserRound className='h-5 w-5' />}>
-                            <InfoList
-                                rows={[
-                                    ['ID', profile?.id],
-                                    ['Username', profile?.username],
-                                    ['Preferred username', profile?.preferredUsername],
-                                    ['Nickname', profile?.nickname],
-                                    ['Given name', profile?.givenName],
-                                    ['Family name', profile?.familyName],
-                                    ['Email', profile?.email],
-                                ]}
-                            />
-                        </ProfileCard>
-                        <ProfileCard title={text.metadata} icon={<KeyRound className='h-5 w-5' />}>
-                            <InfoList
-                                rows={[
-                                    ['Authentik PK', profile?.authentik.pk],
-                                    ['UID', profile?.authentik.uid],
-                                    ['Type', profile?.authentik.type],
-                                    ['Path', profile?.authentik.path],
-                                    ['Created', formatProfileDate(profile?.authentik.dateJoined || null, lang)],
-                                    ['Last login', formatProfileDate(profile?.authentik.lastLogin || null, lang)],
-                                ]}
-                            />
-                        </ProfileCard>
                     </div>
+                </div>
 
-                    {attributes.length ? (
-                        <ProfileCard title={text.attributes} icon={<DatabaseZap className='h-5 w-5' />}>
-                            <InfoList rows={attributes.map((attribute) => [attribute.key, attribute.value])} />
-                        </ProfileCard>
+                <SectionLabel icon={<Lock className='h-3.5 w-3.5' />} label={text.groups} />
+                {groups.length ? (
+                    <div className='flex flex-wrap gap-2'>
+                        {groups.map((group) => (
+                            <span
+                                key={group}
+                                className='rounded-(--border-radius) border border-(--color-border-default)
+                                    bg-(--color-bg-surface) px-3 py-1 text-sm text-(--color-text-main)'
+                            >
+                                {group}
+                            </span>
+                        ))}
+                    </div>
+                ) : (
+                    <p className='text-sm text-(--color-text-regular)'>{text.noGroups}</p>
+                )}
+
+                <SectionLabel icon={<UserRound className='h-3.5 w-3.5' />} label={text.account} />
+                <div className={`grid gap-5 ${profile?.authentik.available ? '900px:grid-cols-2' : ''}`}>
+                    <InfoList
+                        rows={[
+                            ['ID', profile?.id],
+                            ['Username', profile?.username],
+                            ['Preferred username', profile?.preferredUsername],
+                            ['Nickname', profile?.nickname],
+                            ['Given name', profile?.givenName],
+                            ['Family name', profile?.familyName],
+                            ['Email', profile?.email],
+                        ]}
+                    />
+                    {profile?.authentik.available ? (
+                        <div>
+                            <p className='mb-3 text-xs font-semibold uppercase tracking-[0.08em] text-(--color-text-discreet)'>
+                                {text.metadata}
+                            </p>
+                            <InfoList
+                                rows={[
+                                    ['Authentik PK', profile.authentik.pk],
+                                    ['UID', profile.authentik.uid],
+                                    ['Type', profile.authentik.type],
+                                    ['Path', profile.authentik.path],
+                                    ['Created', formatProfileDate(profile.authentik.dateJoined, lang)],
+                                    ['Last login', formatProfileDate(profile.authentik.lastLogin, lang)],
+                                ]}
+                            />
+                        </div>
                     ) : null}
                 </div>
-            </section>
+
+                {attributes.length ? (
+                    <>
+                        <SectionLabel icon={<DatabaseZap className='h-3.5 w-3.5' />} label={text.attributes} />
+                        <InfoList rows={attributes.map((attribute) => [attribute.key, attribute.value])} />
+                    </>
+                ) : null}
+            </div>
         </main>
     )
 }
 
-function ProfileCard({ title, icon, children }: {
-    title: string
-    icon: React.ReactNode
-    children: React.ReactNode
-}) {
+function SectionLabel({ label, icon }: { label: string; icon: React.ReactNode }) {
     return (
-        <section className='rounded-4xl border border-white/10 bg-white/3 p-5 shadow-xl shadow-black/10'>
-            <h2 className='mb-4 flex items-center gap-2 text-lg font-semibold text-(--color-text-main)'>
-                <span className='flex h-9 w-9 items-center justify-center rounded-2xl bg-login-orange/15 text-login-orange'>
-                    {icon}
-                </span>
-                {title}
-            </h2>
-            {children}
-        </section>
+        <div className='flex items-center gap-3 mt-8 mb-4'>
+            <span className='flex items-center gap-1.5 text-(--color-text-discreet) text-xs font-semibold uppercase tracking-[0.08em] shrink-0'>
+                <span style={{ color: 'var(--color-primary)' }}>{icon}</span>
+                {label}
+            </span>
+            <div className='flex-1 h-px bg-(--color-border-default)' />
+        </div>
     )
 }
 
@@ -205,11 +167,14 @@ function InfoList({ rows }: { rows: Array<[string, unknown]> }) {
     const visibleRows = rows.filter(([, value]) => value !== null && value !== undefined && String(value).length > 0)
 
     return (
-        <dl className='grid gap-3'>
+        <dl className='grid gap-2'>
             {visibleRows.map(([label, value]) => (
-                <div key={label} className='grid gap-1 rounded-2xl border border-white/8 bg-black/10 p-3'>
-                    <dt className='text-xs uppercase tracking-[0.18em] text-(--color-text-regular)'>{label}</dt>
-                    <dd className='wrap-break-word text-sm text-(--color-text-main)'>{String(value)}</dd>
+                <div
+                    key={label}
+                    className='rounded-(--border-radius) border border-(--color-border-default) bg-(--color-bg-surface) px-3 py-2'
+                >
+                    <dt className='text-xs uppercase tracking-[0.12em] text-(--color-text-discreet)'>{label}</dt>
+                    <dd className='mt-0.5 wrap-break-word text-sm text-(--color-text-main)'>{String(value)}</dd>
                 </div>
             ))}
         </dl>
@@ -218,134 +183,13 @@ function InfoList({ rows }: { rows: Array<[string, unknown]> }) {
 
 function InfoPill({ icon, label, active }: { icon: React.ReactNode; label: string; active: boolean }) {
     return (
-        <div
-            className={clsx(
-                'flex items-center gap-2 rounded-full border px-3 py-2 text-sm',
-                active
-                    ? 'border-emerald-400/25 bg-emerald-400/10 text-emerald-200'
-                    : 'border-white/10 bg-white/5 text-(--color-text-regular)'
-            )}
-        >
+        <span className={`inline-flex items-center gap-1.5 rounded-(--border-radius) border px-2.5 py-1 text-xs font-medium ${
+            active
+                ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400'
+                : 'border-(--color-border-default) bg-(--color-bg-body) text-(--color-text-regular)'
+        }`}>
             {icon}
             {label}
-        </div>
+        </span>
     )
-}
-
-type QuickActionProps = {
-    title: string
-    description: string
-    href: string
-    icon: React.ReactNode
-    external?: boolean
-}
-
-function QuickAction({ title, description, href, icon, external = false }: QuickActionProps) {
-    const content = (
-        <>
-            <span className='flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-login-orange/15 text-login-orange'>
-                {icon}
-            </span>
-            <span className='min-w-0 flex-1'>
-                <span className='block font-semibold text-(--color-text-main)'>{title}</span>
-                <span className='mt-1 block text-sm leading-5 text-(--color-text-regular)'>{description}</span>
-            </span>
-            <ArrowUpRight className='h-4 w-4 shrink-0 text-login-orange' />
-        </>
-    )
-    const className = 'group flex items-center gap-3 rounded-3xl border border-white/10 bg-white/3 p-4 '
-        + 'transition hover:-translate-y-0.5 hover:border-login-orange/35 hover:bg-login-orange/10'
-
-    if (external) {
-        return (
-            <a href={href} target='_blank' rel='noopener noreferrer' className={className}>
-                {content}
-            </a>
-        )
-    }
-
-    return (
-        <Link href={href} className={className}>
-            {content}
-        </Link>
-    )
-}
-
-function getQuickActions(lang: Lang): QuickActionProps[] {
-    const no = lang === 'no'
-
-    return [
-        {
-            title: 'wiki',
-            description: no ? 'Dokumenter, referater og håndbøker.' : 'Documents, minutes, and handbooks.',
-            href: config.url.wiki,
-            icon: <BookOpen className='h-5 w-5' />,
-            external: true,
-        },
-        {
-            title: 'Studentbee',
-            description: no ? 'Emner, notater og studentverktøy.' : 'Courses, notes, and student tools.',
-            href: config.url.studentbee,
-            icon: <GraduationCap className='h-5 w-5' />,
-            external: true,
-        },
-        {
-            title: 'Login GPT',
-            description: no ? 'Fortsett samtaler med Login AI.' : 'Continue conversations with Login AI.',
-            href: '/ai',
-            icon: <Bot className='h-5 w-5' />,
-        },
-        {
-            title: no ? 'Arrangementer' : 'Events',
-            description: no ? 'Se hva som skjer og meld deg på.' : 'See what is happening and sign up.',
-            href: '/events',
-            icon: <CalendarDays className='h-5 w-5' />,
-        },
-        {
-            title: no ? 'Karriere' : 'Career',
-            description: no ? 'Stillinger og bedriftspresentasjoner.' : 'Jobs and company presentations.',
-            href: '/career',
-            icon: <BriefcaseBusiness className='h-5 w-5' />,
-        },
-        {
-            title: no ? 'Albumer' : 'Albums',
-            description: no ? 'Bilder fra Login-arrangementer.' : 'Photos from Login events.',
-            href: '/albums',
-            icon: <Images className='h-5 w-5' />,
-        },
-        {
-            title: no ? 'Musikk' : 'Music',
-            description: no ? 'Live aktivitet og statistikk.' : 'Live activity and stats.',
-            href: '/music',
-            icon: <Music className='h-5 w-5' />,
-        },
-        {
-            title: 'Forms',
-            description: no ? 'Skjemaer og påmeldinger.' : 'Forms and registrations.',
-            href: config.url.forms,
-            icon: <ClipboardList className='h-5 w-5' />,
-            external: true,
-        },
-        {
-            title: 'Git',
-            description: no ? 'Kode og interne repositories.' : 'Code and internal repositories.',
-            href: config.url.git,
-            icon: <Code2 className='h-5 w-5' />,
-            external: true,
-        },
-        {
-            title: 'Queenbee',
-            description: no ? 'Administrer Login-innhold.' : 'Manage Login content.',
-            href: config.url.queenbee,
-            icon: <FileText className='h-5 w-5' />,
-            external: true,
-        },
-        {
-            title: 'Beekeeper',
-            description: no ? 'TekKom API og statusverktøy.' : 'TekKom API and status tooling.',
-            href: config.url.beekeeper,
-            icon: <DatabaseZap className='h-5 w-5' />,
-            external: true,
-        },
-    ]
 }

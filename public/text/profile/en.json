@@ -1,6 +1,6 @@
 {
-    "eyebrow": "Account and shortcuts",
-    "description": "One practical home base for Login services, memberships, and your Authentik identity.",
+    "eyebrow": "Account",
+    "description": "Memberships, and your Authentik identity.",
     "loginTitle": "Sign in for more content",
     "loginButton": "Sign in",
     "actions": "Quick actions",
