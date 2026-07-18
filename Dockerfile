@@ -30,4 +30,4 @@ ENV HOSTNAME=0.0.0.0
 ENV PORT=3001
 EXPOSE 3000
 
-CMD ["sh", "-c", "varnishd -a :3000 -f /etc/varnish/default.vcl -s malloc,1g & bun server.js"]
+CMD ["sh", "-c", "varnishd -a :3000 -f /etc/varnish/default.vcl -s malloc,1g & exec bun server.js"]
