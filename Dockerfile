@@ -13,7 +13,7 @@ RUN bun run build
 FROM oven/bun:alpine
 WORKDIR /app
 
-RUN apk add --no-cache varnish \
+RUN apk add --no-cache varnish=7.7.3-r0 \
     && addgroup -S app && adduser -S app -G app
 
 COPY --from=builder --chown=app:app /app/.next/standalone ./
