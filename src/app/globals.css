@@ -344,6 +344,56 @@ abbr {
         transform-origin: 50px 70px;
     }
 
+    .barkom-logo_bubble {
+        opacity: 0;
+        transform-box: fill-box;
+        transform-origin: center;
+    }
+
+    .tabs_nav-title--active .barkom-logo_bubble--1 {
+        animation: rise-a 1.1s linear 0.05s 1;
+    }
+
+    .tabs_nav-title--active .barkom-logo_bubble--2 {
+        animation: rise-b 1.3s linear 0.4s 1;
+    }
+
+    .tabs_nav-title--active .barkom-logo_bubble--3 {
+        animation: rise-c 1s linear 0.7s 1;
+    }
+
+    .tabs_nav-title--active .barkom-logo_bubble--4 {
+        animation: rise-b 1.4s linear 0.15s 1;
+    }
+
+    .tabs_nav-title--active .barkom-logo_bubble--5 {
+        animation: rise-a 1.1s linear 0.55s 1;
+    }
+
+    .tabs_nav-title--active .barkom-logo_bubble--6 {
+        animation: rise-c 1.5s linear 0s 1;
+    }
+
+    .tabs_nav-title--active .barkom-logo_bubble--7 {
+        animation: rise-b 1s linear 0.8s 1;
+    }
+
+    .tabs_nav-title--active .barkom-logo_bubble--8 {
+        animation: rise-a 1.3s linear 0.3s 1;
+    }
+
+    .tabs_nav-title--active .barkom-logo_bubble--9 {
+        animation: rise-c 0.95s linear 0.65s 1;
+    }
+
+    .tabs_nav-title--active .barkom-logo_bubble--10 {
+        animation: rise-b 1.2s linear 0.35s 1;
+    }
+
+    .tabs_nav-title--active .barkom-logo_bubble--11 {
+        animation: rise-a 1.1s linear 0.9s 1;
+    }
+
     .tabs_nav-title--active .tekkom-logo_caret {
         animation: caret 1.2s ease;
     }
@@ -649,6 +699,84 @@ abbr {
 
         100% {
             transform: rotate(0);
+        }
+    }
+
+    @keyframes rise-a {
+        0% {
+            opacity: 0;
+            transform: translate(0, 2px) scale(0.4);
+        }
+
+        10% {
+            opacity: 0.85;
+            transform: translate(1px, -3px) scale(1);
+        }
+
+        40% {
+            transform: translate(-1.5px, -18px) scale(1.04);
+        }
+
+        70% {
+            opacity: 0.8;
+            transform: translate(1.5px, -33px) scale(1.08);
+        }
+
+        100% {
+            opacity: 0;
+            transform: translate(-0.5px, -48px) scale(1.12);
+        }
+    }
+
+    @keyframes rise-b {
+        0% {
+            opacity: 0;
+            transform: translate(0, 2px) scale(0.4);
+        }
+
+        10% {
+            opacity: 0.85;
+            transform: translate(-1px, -3px) scale(1);
+        }
+
+        40% {
+            transform: translate(1.5px, -18px) scale(1.04);
+        }
+
+        70% {
+            opacity: 0.8;
+            transform: translate(-1.5px, -34px) scale(1.08);
+        }
+
+        100% {
+            opacity: 0;
+            transform: translate(0.5px, -50px) scale(1.12);
+        }
+    }
+
+    @keyframes rise-c {
+        0% {
+            opacity: 0;
+            transform: translate(0, 2px) scale(0.45);
+        }
+
+        12% {
+            opacity: 0.85;
+            transform: translate(0.5px, -3px) scale(1);
+        }
+
+        45% {
+            transform: translate(-1px, -16px) scale(1.03);
+        }
+
+        75% {
+            opacity: 0.8;
+            transform: translate(1px, -29px) scale(1.07);
+        }
+
+        100% {
+            opacity: 0;
+            transform: translate(-0.5px, -42px) scale(1.1);
         }
     }
 
