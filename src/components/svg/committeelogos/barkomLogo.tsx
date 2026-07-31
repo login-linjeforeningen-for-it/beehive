@@ -8,7 +8,8 @@ export default function BarkomLogo() {
                 dominantBaseline='central'
                 fontSize='42'
                 fontWeight='bold'
-                className='fill-(--color-text-disabled) transition duration-200 group-hover:fill-(--color-text-main) group-[.active]:fill-(--color-text-main)'
+                className='fill-(--color-text-disabled) transition duration-200 group-hover:fill-(--color-text-main)
+                    group-[.active]:fill-(--color-text-main)'
             >
                 Bar
             </text>
