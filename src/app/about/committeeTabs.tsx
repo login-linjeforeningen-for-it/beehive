@@ -170,7 +170,7 @@ export default function CommitteeTabs({ lang }: { lang: Lang }) {
             </TabContent>
             <TabContent id='bar' activeTab={activeTab}>
                 <h3 className='heading-3 flex items-center gap-2'>
-                    <i className='logfont-barkom text-4xl' /> {text.committeeSection.barkom.title}
+                    {text.committeeSection.barkom.title}
                 </h3>
                 <div className='grid grid-cols-1 gap-12 items-start 800px:grid-cols-[auto_11rem]'>
                     <div className='max-w-180'>
