@@ -18,7 +18,7 @@ const config = {
         cdn,
         albumCdn,
         exam: 'https://exam.login.no',
-        wiki: 'https://outline.login.no/s/doc',
+        wiki: 'https://wiki.login.no',
         studentbee: 'https://studentbee.login.no',
         queenbee: 'https://queenbee.login.no',
         forms: 'https://forms.login.no',

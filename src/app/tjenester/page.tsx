@@ -37,10 +37,10 @@ const groups: Group[] = [
             {
                 name: 'Wiki',
                 description: 'Dokumenter, referater og håndbøker for Login.',
-                url: 'https://outline.login.no',
+                url: 'https://wiki.login.no',
                 icon: <BookOpen className='size-4.5' />,
                 external: true,
-                host: 'outline.login.no',
+                host: 'wiki.login.no',
             },
             {
                 name: 'Studentbee',
