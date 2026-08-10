@@ -117,6 +117,16 @@ export default function StudyPrograms({ lang }: { lang: Lang }) {
             />
             <AccordionContent id='master' activeAccordionItem={activeAccordionItem}>
                 <li className={clsx('flex flex-row', contentItemClassName)}>
+                    <Link
+                        href='https://www.ntnu.no/studier/msit'
+                        target='_blank'
+                        className='flex flex-row items-center gap-2'
+                    >
+                        {text.master.informatics}
+                        <ArrowOutward className='max-w-6 w-full h-6 fill-(--color-text-main)'/>
+                    </Link>
+                </li>
+                <li className={clsx('flex flex-row', contentItemClassName)}>
 
                     <Link
                         href='https://www.ntnu.no/studier/mis'

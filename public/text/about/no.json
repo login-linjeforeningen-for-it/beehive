@@ -7,6 +7,7 @@
     "prog": "Programmering"
   },
   "master": {
+    "informatics": "Informatikk",
     "infosec": "Information security",
     "applied": "Applied computer science",
     "colorimg": "Computational colour and spectral imaging"
