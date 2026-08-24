@@ -6,6 +6,10 @@ backend default {
 }
 
 sub vcl_recv {
+    if (req.url ~ "^/api/health(/|$)") {
+        return (pass);
+    }
+
     if (req.url ~ "^/ai(/|$)" || req.url ~ "^/api/ai(/|$)") {
         return (pass);
     }
@@ -33,6 +37,12 @@ sub vcl_hash {
 }
 
 sub vcl_backend_response {
+    if (bereq.url ~ "^/api/health(/|$)") {
+        set beresp.ttl = 0s;
+        set beresp.uncacheable = true;
+        return (deliver);
+    }
+
     if (bereq.url ~ "^/ai(/|$)" || bereq.url ~ "^/api/ai(/|$)") {
         set beresp.ttl = 0s;
         set beresp.uncacheable = true;
