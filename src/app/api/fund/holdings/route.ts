@@ -1,10 +1,12 @@
 import { NextResponse } from 'next/server'
 import holdingsData from './holdings.json'
+import { fetchFxRatesToBase } from '@utils/currencyExchange'
 import YahooFinance from 'yahoo-finance2'
 
 type Holding = {
     symbol: string
     shares: number
+    currency?: string
 }
 
 type YahooQuote = {
@@ -13,9 +15,19 @@ type YahooQuote = {
     currency?: string
 }
 
+type HoldingValue = {
+    symbol: string
+    shares: number
+    currency: string
+    regularMarketPrice: number
+    fxRateToNok: number
+    valueNok: number
+}
+
 type HoldingsTotalPayload = {
     totalBase: number
     currency: string
+    holdings: HoldingValue[]
     updatedAt: number
 }
 
@@ -37,12 +49,13 @@ const HOLDINGS: Holding[] = (() => {
     return currentHoldingsEntry.holdning.flatMap((entry) => {
         const firstValidEntry = Object.entries(entry).find(([, value]) => typeof value === 'number')
         const [symbol, shares] = firstValidEntry || []
+        const currency = typeof entry.currency === 'string' ? entry.currency.toUpperCase() : undefined
 
         if (typeof symbol !== 'string' || typeof shares !== 'number') {
             return []
         }
 
-        return [{ symbol, shares }]
+        return [{ symbol, shares, currency }]
     })
 })()
 
@@ -72,33 +85,6 @@ async function fetchYahooQuotes(symbols: string[]): Promise<YahooQuote[]> {
     return successfulQuotes
 }
 
-async function getFxRatesToBase(currencies: string[], baseCurrency: string) {
-    const uniqueCurrencies = [...new Set(currencies.filter((currency) => currency && currency !== baseCurrency))]
-
-    if (uniqueCurrencies.length === 0) {
-        return new Map<string, number>()
-    }
-
-    const fxSymbols = uniqueCurrencies.map((currency) => `${currency}${baseCurrency}=X`)
-    const quotes = await fetchYahooQuotes(fxSymbols)
-
-    const fxRates = new Map<string, number>()
-
-    for (const quote of quotes) {
-        const symbol = quote.symbol
-        const rate = quote.regularMarketPrice
-
-        if (!symbol || typeof rate !== 'number') continue
-
-        const sourceCurrency = symbol.split(baseCurrency)[0]
-        if (sourceCurrency) {
-            fxRates.set(sourceCurrency, rate)
-        }
-    }
-
-    return fxRates
-}
-
 async function calculateTotalHoldingsValue(baseCurrency: string) {
     const symbols = HOLDINGS.map((holding) => holding.symbol)
     const quotes = await fetchYahooQuotes(symbols)
@@ -110,21 +96,34 @@ async function calculateTotalHoldingsValue(baseCurrency: string) {
         }
     }
 
-    const usedCurrencies = HOLDINGS.map((holding) => quoteBySymbol.get(holding.symbol)?.currency || baseCurrency)
-    const fxRates = await getFxRatesToBase(usedCurrencies, baseCurrency)
+    const currenciesToResolve = [...new Set(HOLDINGS.map((holding) => holding.currency ||
+        quoteBySymbol.get(holding.symbol)?.currency || baseCurrency).filter((currency) => currency !== baseCurrency))]
+    const fxRates = await fetchFxRatesToBase(currenciesToResolve, baseCurrency)
 
-    const totalBase = HOLDINGS.reduce((sum, holding) => {
+    const holdings = HOLDINGS.map((holding) => {
         const quote = quoteBySymbol.get(holding.symbol)
         const price = typeof quote?.regularMarketPrice === 'number' ? quote.regularMarketPrice : 0
-        const currency = quote?.currency || baseCurrency
+        const currency = holding.currency || quote?.currency || baseCurrency
         const fxRate = currency === baseCurrency ? 1 : (fxRates.get(currency) || 0)
 
-        return sum + (holding.shares * price * fxRate)
+        return {
+            symbol: holding.symbol,
+            shares: holding.shares,
+            currency,
+            regularMarketPrice: price,
+            fxRateToNok: fxRate,
+            valueNok: holding.shares * price * fxRate
+        }
+    })
+
+    const totalBase = holdings.reduce((sum, holding) => {
+        return sum + holding.valueNok
     }, 0)
 
     return {
         totalBase,
         currency: baseCurrency,
+        holdings,
         updatedAt: Date.now()
     } satisfies HoldingsTotalPayload
 }

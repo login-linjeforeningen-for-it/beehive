@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { fetchFxHistoricalSeries } from '@utils/currencyExchange'
 import YahooFinance from 'yahoo-finance2'
 import holdingsData from '../holdings.json'
 
@@ -10,6 +11,7 @@ type HoldingsSnapshot = {
 type Holding = {
     symbol: string
     shares: number
+    currency?: string
 }
 
 type YahooQuote = {
@@ -68,12 +70,13 @@ const HOLDINGS_SNAPSHOTS: HoldingsSnapshot[] = (() => {
             for (const holdingObj of entry.holdning) {
                 const firstValidEntry = Object.entries(holdingObj).find(([, value]) => typeof value === 'number')
                 const [symbol, shares] = firstValidEntry || []
+                const currency = typeof holdingObj.currency === 'string' ? holdingObj.currency.toUpperCase() : undefined
 
                 if (typeof symbol !== 'string' || typeof shares !== 'number') {
                     continue
                 }
 
-                holdings.push({ symbol, shares })
+                holdings.push({ symbol, shares, currency })
             }
         }
 
@@ -219,19 +222,20 @@ async function calculateHistory(baseCurrency: string, range: HistoryRange): Prom
         return subDays(now, daysAgo)
     })
 
-    // Collect all unique currencies
+    // Collect all unique currencies from the holdings data first, then fall back to Yahoo metadata.
     const allCurrencies = new Set<string>()
-    for (const symbol of symbols) {
-        const currency = quoteBySymbol.get(symbol)?.currency || baseCurrency
-        if (currency !== baseCurrency) {
-            allCurrencies.add(currency)
+    for (const snapshot of HOLDINGS_SNAPSHOTS) {
+        for (const holding of snapshot.holdings) {
+            const currency = holding.currency || quoteBySymbol.get(holding.symbol)?.currency || baseCurrency
+            if (currency !== baseCurrency) {
+                allCurrencies.add(currency)
+            }
         }
     }
 
     const fxHistoricalEntries = await Promise.all(
         Array.from(allCurrencies).map(async (currency) => {
-            const fxSymbol = `${currency}${baseCurrency}=X`
-            const fxSeries = await fetchHistoricalCloseSeries(fxSymbol, period1, period2)
+            const fxSeries = await fetchFxHistoricalSeries(currency, period1, period2, baseCurrency)
             return [currency, fxSeries] as const
         })
     )
@@ -251,7 +255,7 @@ async function calculateHistory(baseCurrency: string, range: HistoryRange): Prom
             const price = closestValueOnOrBefore(historical.orderedDates, historical.closeByDate, targetDate)
             if (typeof price !== 'number') return sum
 
-            const currency = quoteBySymbol.get(holding.symbol)?.currency || baseCurrency
+            const currency = holding.currency || quoteBySymbol.get(holding.symbol)?.currency || baseCurrency
             let fxRate = 1
 
             if (currency !== baseCurrency) {
