@@ -96,7 +96,8 @@ async function calculateTotalHoldingsValue(baseCurrency: string) {
         }
     }
 
-    const currenciesToResolve = [...new Set(HOLDINGS.map((holding) => holding.currency || quoteBySymbol.get(holding.symbol)?.currency || baseCurrency).filter((currency) => currency !== baseCurrency))]
+    const currenciesToResolve = [...new Set(HOLDINGS.map((holding) => holding.currency ||
+        quoteBySymbol.get(holding.symbol)?.currency || baseCurrency).filter((currency) => currency !== baseCurrency))]
     const fxRates = await fetchFxRatesToBase(currenciesToResolve, baseCurrency)
 
     const holdings = HOLDINGS.map((holding) => {
