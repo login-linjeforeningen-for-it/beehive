@@ -76,6 +76,7 @@ export default function ImageWithPlayer({ song, src, shouldRenderPlayer }: Playe
                     width={64}
                     height={64}
                     className='rounded-lg object-cover bg-gray-900 w-16 h-16'
+                    onError={event => { event.currentTarget.src = '/img/music-placeholder.svg' }}
                 />
                 {isInsideAndNotPodcast && allowPlayer && (
                     <div className='absolute inset-0 bg-black/50 rounded-lg pt-2'>

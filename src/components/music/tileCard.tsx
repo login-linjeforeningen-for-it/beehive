@@ -101,6 +101,7 @@ function InnerTileCard({ src, children, user_id, song, shouldRenderPlayer }: Inn
                     width={64}
                     height={64}
                     className='rounded-lg object-cover w-16 h-16'
+                    onError={event => { event.currentTarget.src = '/img/music-placeholder.svg' }}
                 />}
             <div className='flex flex-col flex-1 min-w-0'>
                 {children}

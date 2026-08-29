@@ -35,7 +35,7 @@ export default function TopTileMap({ text, items, dropdown = false, open = true,
                         imageHash={item.image}
                         className={`${index === 0 ? 'md:col-span-2' : ''} w-full`}
                         song_id={'song_id' in item ? item.song_id : undefined}
-                        media_type='track'
+                        media_type={'song' in item ? 'track' : 'episode'}
                         url={'song' in item
                             ? `${config.url.spotify}${item.song_id}`
                             : `${config.url.spotifyEpisode}/${item.id}`}
