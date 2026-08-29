@@ -83,7 +83,7 @@ export default function Music({ initialData, lang }: { initialData: Music, lang:
     return (
         <section className='flex flex-col justify-center items-center gap-4'>
             <PrivacyDisclaimer lang={lang} />
-            <TileInfo data={data} text={text} />
+            <TileInfo data={data} text={text} lang={lang} />
             <MostPlayed
                 lang={lang}
                 mostPlayedAlbums={data.mostPlayedAlbums}

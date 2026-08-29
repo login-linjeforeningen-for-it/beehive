@@ -2,12 +2,12 @@ import Card from './card'
 
 type TileInfoText = Pick<MusicText, 'average_duration' | 'total_minutes' | 'minutes_this_year' | 'total_songs'>
 
-export default function TileInfo({ data, text }: { data: Music, text: TileInfoText }) {
+export default function TileInfo({ data, text, lang }: { data: Music, text: TileInfoText, lang: Lang }) {
     const tileInfoData: Array<{ title: string; value: string }> = [
-        { title: text.average_duration, value: formatDuration(data.stats.avg_seconds) },
-        { title: text.total_minutes, value: formatDuration(data.stats.total_minutes * 60) },
-        { title: text.minutes_this_year, value: formatDuration(data.stats.total_minutes_this_year * 60) },
-        { title: text.total_songs, value: data.stats.total_songs.toString() }
+        { title: text.average_duration, value: formatDuration(data.stats.avg_seconds, lang) },
+        { title: text.total_minutes, value: formatDuration(data.stats.total_minutes * 60, lang) },
+        { title: text.minutes_this_year, value: formatDuration(data.stats.total_minutes_this_year * 60, lang) },
+        { title: text.total_songs, value: formatSongCount(data.stats.total_songs, lang) }
     ]
 
     return (
@@ -21,7 +21,7 @@ export default function TileInfo({ data, text }: { data: Music, text: TileInfoTe
     )
 }
 
-function formatDuration(seconds: number): string {
+function formatDuration(seconds: number, lang: Lang): string {
     const MINUTE = 60
     const HOUR = MINUTE * 60
     const DAY = HOUR * 24
@@ -38,8 +38,12 @@ function formatDuration(seconds: number): string {
     const remainingSeconds = seconds % MINUTE
 
     const parts = []
-    if (years > 0) parts.push(`${years}y`)
-    if (months > 0) parts.push(`${months}mo`)
+    if (years > 0) {
+        parts.push(lang === 'no' ? `${years}år` : `${years}y`)
+        if (months > 0) parts.push(lang === 'no' ? `${months}mnd` : `${months}mo`)
+        return parts.join(' ')
+    }
+
     if (weeks > 0) parts.push(`${weeks}w`)
     if (days > 0) parts.push(`${days}d`)
     if (hours > 0) parts.push(`${hours}h`)
@@ -47,4 +51,11 @@ function formatDuration(seconds: number): string {
     if (remainingSeconds > 0 || parts.length === 0) parts.push(`${remainingSeconds}s`)
 
     return parts.join(' ')
+}
+
+function formatSongCount(count: number, lang: Lang): string {
+    if (count <= 100000) return count.toString()
+
+    const thousands = Math.round(count / 1000)
+    return lang === 'no' ? `${thousands} tusen` : `${thousands}k`
 }
