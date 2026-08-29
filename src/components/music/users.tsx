@@ -6,7 +6,7 @@ import clsx from '@utils/clsx'
 import { useState, type Dispatch, type SetStateAction } from 'react'
 import { Trophy, Users as UsersIcon } from 'lucide-react'
 import Loader from '@components/loader/loader'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import Button from '../button/button'
 import { MUSIC_USERS_KEY, useMusicUsersPrefetch } from './useMusicUsers'
 
@@ -114,6 +114,7 @@ export function Users({
                             discord={true}
                             user_id={item.user_id}
                             user={true}
+                            onImageError={() => void mutate(MUSIC_USERS_KEY)}
                         >
                             <div className='flex w-full justify-between text-neutral-400 items-top'>
                                 <div className={clsx('flex gap-2', isCurrentlyListening ? 'max-w-[85%]' : 'max-w-full')}>

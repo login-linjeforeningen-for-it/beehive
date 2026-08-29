@@ -19,6 +19,7 @@ type TileCardProps = {
     user?: boolean
     start?: string
     end?: string
+    onImageError?: () => void
 }
 
 type InnerTileCardProps = {
@@ -26,6 +27,7 @@ type InnerTileCardProps = {
     user_id?: string
     src: string
     fallbackSrc: string
+    onImageError?: () => void
     song?: MinimalSong
     shouldRenderPlayer?: boolean
 }
@@ -42,7 +44,8 @@ export default function TileCard({
     song_id,
     media_type = 'track',
     start,
-    end
+    end,
+    onImageError
 }: TileCardProps) {
     const src = discord
         ? `${config.url.discordAvatars}/${user_id}/${imageHash}?size=1024`
@@ -83,6 +86,7 @@ export default function TileCard({
                     song={song}
                     src={src}
                     fallbackSrc={fallbackSrc}
+                    onImageError={onImageError}
                     children={children}
                     shouldRenderPlayer={shouldRenderPlayer}
                 />
@@ -92,12 +96,18 @@ export default function TileCard({
 
     return (
         <div className={style}>
-            <InnerTileCard src={src} fallbackSrc={fallbackSrc} children={children} user_id={user_id} />
+            <InnerTileCard
+                src={src}
+                fallbackSrc={fallbackSrc}
+                onImageError={onImageError}
+                children={children}
+                user_id={user_id}
+            />
         </div>
     )
 }
 
-function InnerTileCard({ src, fallbackSrc, children, user_id, song, shouldRenderPlayer }: InnerTileCardProps) {
+function InnerTileCard({ src, fallbackSrc, onImageError, children, user_id, song, shouldRenderPlayer }: InnerTileCardProps) {
     return (
         <>
             {song?.song_id
@@ -112,6 +122,7 @@ function InnerTileCard({ src, fallbackSrc, children, user_id, song, shouldRender
                     height={64}
                     className='rounded-lg object-cover w-16 h-16'
                     onError={event => {
+                        onImageError?.()
                         if (!event.currentTarget.src.endsWith(fallbackSrc)) event.currentTarget.src = fallbackSrc
                     }}
                 />}
