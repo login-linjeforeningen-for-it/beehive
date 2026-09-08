@@ -10,7 +10,6 @@ import { useEffect, ViewTransition, type ReactNode } from 'react'
 
 type LayoutShellProps = {
     children: ReactNode
-    bubbleLogin: boolean
     lang: Lang
     theme: string
     accessToken: string | null
@@ -18,7 +17,6 @@ type LayoutShellProps = {
 
 export default function LayoutShell({
     children,
-    bubbleLogin,
     lang,
     theme,
     accessToken,
@@ -26,9 +24,8 @@ export default function LayoutShell({
     const path = usePathname() || ''
     const page = path.split('/').pop()
     const dashboard = path.includes('dashboard')
-    const aiChat = path.startsWith('/ai')
-    const lockDocumentScroll = aiChat || page === 'pwned'
-    const hideFooter = page === 'pwned' || dashboard || aiChat
+    const lockDocumentScroll = page === 'pwned'
+    const hideFooter = page === 'pwned' || dashboard
     const pwnedHeaderClassName = 'fixed top-0 z-900 w-full bg-(--color-bg-topbar-fallback) '
         + 'supports-[backdrop-filter:blur(0px)]:bg-(--color-bg-topbar) '
         + 'supports-[backdrop-filter:blur(0px)]:backdrop-blur-[20px]'
@@ -61,7 +58,7 @@ export default function LayoutShell({
         <>
             {page !== 'pwned' ? (
                 <header className='fixed top-0 z-900 w-full'>
-                    <TopBar onlyLogo={dashboard} bubbleLogin={bubbleLogin} theme={theme} lang={lang} accessToken={accessToken} />
+                    <TopBar onlyLogo={dashboard} theme={theme} lang={lang} accessToken={accessToken} />
                 </header>
             ) : (
                 <header className={clsx('site-header', pwnedHeaderClassName)} style={{ viewTransitionName: 'site-header' }}>
@@ -71,8 +68,8 @@ export default function LayoutShell({
             <main
                 className={clsx(
                     'w-full mx-auto mt-(--h-topbar)',
-                    (dashboard || aiChat || page === 'pwned') && 'h-[calc(100dvh-var(--h-topbar))] min-h-0 overflow-hidden',
-                    !dashboard && !aiChat && page !== 'pwned' && 'min-h-[calc(100vh-var(--h-topbar))]'
+                    (dashboard || page === 'pwned') && 'h-[calc(100dvh-var(--h-topbar))] min-h-0 overflow-hidden',
+                    !dashboard && page !== 'pwned' && 'min-h-[calc(100vh-var(--h-topbar))]'
                 )}
             >
                 <ViewTransition>

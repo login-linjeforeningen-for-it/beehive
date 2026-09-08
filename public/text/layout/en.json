@@ -12,13 +12,9 @@
     "music": "Music",
     "more": "More",
     "status": "Status",
-    "ai": "Login GPT",
     "tjenester": "Services",
     "profile": "Profile",
     "assets": "Assets"
-  },
-  "info": {
-    "login": "Log in to save your chats."
   },
   "footer": {
     "contact": {
@@ -35,8 +31,7 @@
         "nav": {
           "policy": "Policy",
           "search": "Search",
-          "pwned": "Pwned",
-          "ai": "Login GPT"
+          "pwned": "Pwned"
         }
     },
     "sponsor": "Main partner",

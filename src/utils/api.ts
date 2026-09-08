@@ -167,10 +167,6 @@ export async function getActivity(): Promise<Music> {
     return response as Music
 }
 
-export async function getClients(): Promise<number> {
-    return await fetchWrapper(`${config.url.beekeeper}/clients`)
-}
-
 export async function getSafeActivity(): Promise<Music> {
     const data = await getActivity()
     data.mostActiveUsers = []

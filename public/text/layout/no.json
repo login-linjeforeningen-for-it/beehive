@@ -12,13 +12,9 @@
     "music": "Musikk",
     "more": "Mer",
     "status": "Status",
-    "ai": "Login GPT",
     "tjenester": "Tjenester",
     "profile": "Profil",
     "assets": "Assets"
-  },
-  "info": {
-    "login": "Logg inn for å lagre samtalene dine."
   },
   "footer": {
     "contact": {
@@ -35,8 +31,7 @@
       "nav": {
         "policy": "Policy",
         "search": "Søk",
-        "pwned": "Pwned",
-        "ai": "Login GPT"
+        "pwned": "Pwned"
       }
     },
     "sponsor": "Hovedsamarbeidspartner",

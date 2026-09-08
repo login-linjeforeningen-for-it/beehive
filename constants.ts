@@ -5,8 +5,6 @@ const { env } = process
 const cdn = env.NEXT_PUBLIC_CDN_URL ?? 'https://s3.login.no/beehive'
 const albumCdn = env.NEXT_PUBLIC_ALBUM_CDN_URL ?? cdn
 const beekeeperApiUrl = env.BEEKEEPER_API_URL ?? 'https://beekeeper.login.no/api'
-const beekeeperWsUrl = env.NEXT_PUBLIC_BEEKEEPER_WSS_URL
-    ?? beekeeperApiUrl.replace(/^http/, 'ws')
 
 const config = {
     url: {
@@ -14,7 +12,6 @@ const config = {
         appApi:     env.APP_API_URL ?? 'https://app.login.no/api',
         tekkomBot: env.TEKKOM_BOT_API_URL ?? 'https://bot.login.no/api',
         beekeeper: beekeeperApiUrl,
-        beekeeper_wss: beekeeperWsUrl,
         cdn,
         albumCdn,
         exam: 'https://exam.login.no',

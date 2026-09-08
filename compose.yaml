@@ -12,7 +12,6 @@ services:
             - .env
         environment:
             BEEKEEPER_API_URL: ${BEEKEEPER_API_URL:-https://beekeeper.login.no/api}
-            NEXT_PUBLIC_BEEKEEPER_WSS_URL: ${NEXT_PUBLIC_BEEKEEPER_WSS_URL:-wss://beekeeper.login.no/api}
         healthcheck:
             test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3000/ || exit 1"]
             interval: 30s

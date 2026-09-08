@@ -5,9 +5,6 @@ import en from '@text/layout/en.json'
 import no from '@text/layout/no.json'
 import config from '@config'
 import Office from '@components/svg/symbols/office'
-import { setCookie } from 'utilbee'
-import { usePathname } from 'next/navigation'
-import { useState } from 'react'
 import {
     Activity,
     BookOpen,
@@ -16,38 +13,22 @@ import {
     Heart,
     Images,
     Music,
-    Sparkles,
     UserRound
 } from 'lucide-react'
 
 type TopBarProps = {
     onlyLogo: boolean
-    bubbleLogin: boolean
     theme: string
     lang: Lang
     accessToken: string | null
 }
 
-export default function Topbar({ onlyLogo, bubbleLogin, theme, lang, accessToken }: TopBarProps) {
-    const pathname = usePathname()
-    const isAiRoute = pathname.startsWith('/ai')
+export default function Topbar({ onlyLogo, theme, lang, accessToken }: TopBarProps) {
     const text = lang === 'no' ? no : en
     const navbarClassName = 'site-header [view-transition-name:site-header] '
         + 'bg-transparent! max-800px:[&.topbar--open]:h-screen '
         + 'max-800px:[&.topbar--open]:bg-(--color-bg-topbar-open) '
         + '800px:[&.topbar--open]:h-(--h-topbar)'
-    const [hideBubbleLogin, setHideBubbleLogin] = useState(bubbleLogin)
-
-    function handleHideBubbleLogin(e: React.MouseEvent<SVGSVGElement, MouseEvent>) {
-        e.preventDefault()
-        e.stopPropagation()
-        setHideBubbleLogin(true)
-        setCookie('bubbleLogin', 'true')
-    }
-
-    function handleOpenAiMenu() {
-        window.dispatchEvent(new Event('open-ai-mobile-menu'))
-    }
 
     return (
         <div className='relative flex items-center'>
@@ -60,21 +41,6 @@ export default function Topbar({ onlyLogo, bubbleLogin, theme, lang, accessToken
                     logoutPath={config.authPath.logout}
                     onlyLogo={onlyLogo}
                     className={navbarClassName}
-                    bubble={{
-                        login: {
-                            condition: !accessToken && pathname.endsWith('/ai'),
-                            href: `${config.authPath.login}?redirect=${encodeURIComponent(pathname)}`,
-                            text: text.info.login,
-                            stroke: 'var(--color-login-orange)',
-                            fill: 'var(--color-bg-surface)',
-                            hide: hideBubbleLogin,
-                            handleHide: handleHideBubbleLogin,
-                            className: `hidden z-20 max-w-56 rounded-2xl border py-2
-                            border-(--color-login-orange) px-3 shadow-lg shadow-black/10 text-sm
-                            bg-(--color-bg-surface) text-(--color-text-main) 1200px:block`,
-                            x: 'stroke-(--color-login-orange)'
-                        }
-                    }}
                 >
                     <NavItem href='/events'>{text.nav.events}</NavItem>
                     <NavItem href='/career'>{text.nav.jobad}</NavItem>
@@ -147,19 +113,6 @@ export default function Topbar({ onlyLogo, bubbleLogin, theme, lang, accessToken
                     </NavDropdown>
                 </Navbar>
             </div>
-            {isAiRoute ? (
-                <button
-                    type='button'
-                    aria-label={text.nav.ai}
-                    onClick={handleOpenAiMenu}
-                    className='absolute left-15 top-3 cursor-pointer
-                        p-2 text-(--color-text-main) shadow-sm
-                        transition 800px:hidden
-                        hover:bg-(--color-bg-topbar-open) z-1200'
-                >
-                    <Sparkles className='h-6 w-6' />
-                </button>
-            ) : null}
         </div>
     )
 }

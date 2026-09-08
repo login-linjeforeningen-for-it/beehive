@@ -20,7 +20,6 @@ export default function Footer({ lang }: { lang: Lang }) {
             { label: text.footer.sites.nav.policy, href: '/policy' },
             { label: text.footer.sites.nav.search, href: '/search' },
             { label: text.footer.sites.nav.pwned, href: '/pwned' },
-            { label: text.footer.sites.nav.ai, href: '/ai' },
         ],
     }
 
