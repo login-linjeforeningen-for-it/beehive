@@ -3,23 +3,11 @@
     "pwned": [
         {
             "text": "Deg etter at vi sletta obligen din mens pcen din var ulåst",
-            "image": "oblig.png"
-        },
-        {
-            "text": "Kantineprisene når du glemmer å låse skjermen 📈",
-            "image": "sit_math.jpg"
-        },
-        {
-            "text": "Deg etter å ha forlatt skjermen ulåst",
-            "image": "sit_peas.jpg"
+            "image": "oblig.jpg"
         },
         {
             "text": "PC-en din etter å ha vært ulåst hele dagen",
             "image": "laptop_smoking.gif"
-        },
-        {
-            "text": "Du som er på vei til kantina etter å ha glemt å låse skjermen",
-            "image": "sit_money.jpg"
         },
         {
             "text": "PC-en din etter at klassekameratene dine installerte en bitcoin-miner mens du var på do",
@@ -34,10 +22,6 @@
             "image": "cat_shocked.gif"
         },
         {
-            "text": "Deg som prøver å skru tilbake tiden etter å ha latt skjermen stå ulåst",
-            "image": "cat_clock.gif"
-        },
-        {
             "text": "Deg som prøver å få dagen til å bli ferdig etter å ha latt skjermen stå ulåst",
             "image": "cat_clock_forward.gif"
         },
@@ -50,48 +34,80 @@
             "image": "erjon.png"
         },
         {
-            "text": "Meg som ser livet falle fra hverandre etter at jeg glemte å låse skjermen",
-            "image": "house_fire.gif"
-        },
-        {
             "text": "Jeg er bare en chill fyr, jeg bryr meg ikke om å låse skjermen",
             "image": "chill_guy.gif"
         },
         {
-            "text": "Hvordan våger du å la skjermen stå ulåst?",
-            "image": "greta.jpg"
-        },
-        {
-            "text": "Y U NO LOCK YOUR SCREEN",
-            "image": "y-u-no.jpg"
-        },
-        {
-            "text": "Gordon Ramsay er skuffet over at du ikke låste skjermen.",
-            "image": "gordon.jpg"
-        },
-        {
-            "text": "Lås skjermen før du vikler deg inn i trøbbel",
-            "image": "orbweaver.jpg"
-        },
-        {
-            "text": "Hvem ellers enn Zoidberg ville glemme å låse skjermen sin?",
-            "image": "zoidberg.png"
-        },
-        {
             "text": "Bernie Sanders er skuffet over at du ikke låste skjermen.",
-            "image": "bernie-sanders.jpg"
-        },
-        {
-            "text": "Ja, hvis du bare kunne låst skjermen neste gang, så hadde det vært flott.",
-            "image": "lumbergh.jpg"
-        },
-        {
-            "text": "Kapteinen er skuffet over at du ikke låste skjermen.",
-            "image": "the-captain.jpg"
+            "image": "bernie_sanders.jpg"
         },
         {
             "text": "Katten er skuffet over at du lot skjermen stå ulåst.",
-            "image": "disappointed-cat.png.jpeg"
+            "image": "disappointed_cat.jpg"
+        },
+        {
+            "text": "Rådet har talt. Offisiell tierlist over folk som låser skjermen: S: alle andre. F: deg (under Dahls).",
+            "image": "tierlist.jpg"
+        },
+        {
+            "text": "Login Most Wanted er oppdatert. #1: Han som stjeler fra USB. #2: Deg, for å la PC-en stå ulåst i loungen.",
+            "image": "most_wanted.jpg"
+        },
+        {
+            "text": "Noen fant PC-en din ulåst og bestilte hvit Monster til hele loungen. På din regning.",
+            "image": "monster_army.jpg"
+        },
+        {
+            "text": "Jeg mottar: full tilgang til PC-en din. Du mottar: én varm Dahls.",
+            "image": "trade_offer.jpg"
+        },
+        {
+            "text": "−500 social credits. Kan tjenes tilbake ved å trykke Win + L.",
+            "image": "social_credit.jpg"
+        },
+        {
+            "text": "Denne PC-en ble funnet ulåst på Login Loungen. Hent den innen en time, ellers blir den med i k8s-clusteret",
+            "image": "k8s_node.jpg"
+        },
+        {
+            "text": "Vannet til kaffemaskinen er stengt pga. lekkasje. Det eneste som lekker på LL nå er dataene dine.",
+            "image": "water_leak.jpg"
+        },
+        {
+            "text": "Login dama har bodd i loungen i flere år uten å bli pwned. Du klarte det på fem minutter.",
+            "image": "login_dama.jpg"
+        },
+        {
+            "text": "Skyhigh: nede. Eduroam: nede. PC-en din: 100 % oppetid, tilgjengelig for alle.",
+            "image": "uptime.jpg"
+        },
+        {
+            "text": "Dager siden siste ulåste skjerm: 0",
+            "image": "days_since.jpg"
+        },
+        {
+            "text": "Blackboard logger deg ut etter noen minutter. Hvorfor gjør ikke du det samme?",
+            "image": "blackboard.jpg"
+        },
+        {
+            "text": "Gratulerer! Du er dagens enkleste CTF-oppgave. Flagg: login{w1n_pluss_L}",
+            "image": "ctf.jpg"
+        },
+        {
+            "text": "Login Wrapped 2026: Din mest spilte aktivitet var å la skjermen stå ulåst. Du er blant topp 0,1 %.",
+            "image": "wrapped.jpg"
+        },
+        {
+            "text": "Lot PC-en stå ulåst for å hente «bare én pizzabit» på bedpres. Bedriften så det. Nå står du i kø hos NAV.",
+            "image": "uncanny.jpg"
+        },
+        {
+            "text": "Henter en hvit Monster. «Tar bare to sek.» Kommer tilbake til login.no/pwned.",
+            "image": "pikachu.jpg"
+        },
+        {
+            "text": "Det eneste som er mer gått ut på dato enn prima-pølsene på Login: sikkerhetsrutinene dine.",
+            "image": "prima_polse.jpg"
         }
     ]
 }

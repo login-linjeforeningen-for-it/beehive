@@ -3,23 +3,11 @@
     "pwned": [
         {
             "text": "You after we deleted your assignment while your pc was unlocked",
-            "image": "oblig.png"
-        },
-        {
-            "text": "Cafeteria prices when you forget to lock the screen 📈",
-            "image": "sit_math.jpg"
-        },
-        {
-            "text": "You after leaving the screen unlocked",
-            "image": "sit_peas.jpg"
+            "image": "oblig.jpg"
         },
         {
             "text": "Your PC after being left unlocked all day",
             "image": "laptop_smoking.gif"
-        },
-        {
-            "text": "You heading to the cafeteria after forgetting to lock the screen",
-            "image": "sit_money.jpg"
         },
         {
             "text": "Your PC after your classmates installed a bitcoin miner while you were in the bathroom",
@@ -34,10 +22,6 @@
             "image": "cat_shocked.gif"
         },
         {
-            "text": "You trying to turn back time after leaving the screen unlocked",
-            "image": "cat_clock.gif"
-        },
-        {
             "text": "You trying to end the day after leaving your screen unlocked",
             "image": "cat_clock_forward.gif"
         },
@@ -50,48 +34,80 @@
             "image": "erjon.png"
         },
         {
-            "text": "Me watching my life fall apart after I forgot to lock my screen",
-            "image": "house_fire.gif"
-        },
-        {
             "text": "I'm just a chill guy, I don't bother locking my screen",
             "image": "chill_guy.gif"
         },
         {
-            "text": "How dare you leave your screen unlocked.",
-            "image": "greta.jpg"
-        },
-        {
-            "text": "Y U NO LOCK YOUR SCREEN",
-            "image": "y-u-no.jpg"
-        },
-        {
-            "text": "Gordon Ramsay is disappointed that you didn't lock your screen.",
-            "image": "gordon.jpg"
-        },
-        {
-            "text": "Lock your screen before you get tangled up",
-            "image": "orbweaver.jpg"
-        },
-        {
-            "text": "Who else but Zoidberg would forget to lock their screen?",
-            "image": "zoidberg.png"
-        },
-        {
             "text": "Bernie Sanders is disappointed that you didn't lock your screen.",
-            "image": "bernie-sanders.jpg"
-        },
-        {
-            "text": "Yeah, if you could go ahead and lock your screen next time, that'd be great.",
-            "image": "lumbergh.jpg"
-        },
-        {
-            "text": "The Captain is disappointed that you didn't lock your screen.",
-            "image": "the-captain.jpg"
+            "image": "bernie_sanders.jpg"
         },
         {
             "text": "Disappointed cat is disappointed you left your screen unlocked.",
-            "image": "disappointed-cat.png.jpeg"
+            "image": "disappointed_cat.jpg"
+        },
+        {
+            "text": "The council has spoken. Official tier list of people who lock their screen: S: everyone else. F: you (below Dahls).",
+            "image": "tierlist.jpg"
+        },
+        {
+            "text": "Login Most Wanted has been updated. #1: The guy stealing from USB. #2: You, for leaving your PC unlocked in the lounge.",
+            "image": "most_wanted.jpg"
+        },
+        {
+            "text": "Someone found your PC unlocked and ordered white Monster for the whole lounge. On your tab.",
+            "image": "monster_army.jpg"
+        },
+        {
+            "text": "I receive: full access to your PC. You receive: one warm Dahls.",
+            "image": "trade_offer.jpg"
+        },
+        {
+            "text": "−500 social credits. Can be earned back by pressing Win + L.",
+            "image": "social_credit.jpg"
+        },
+        {
+            "text": "This PC was found unlocked in the Login Lounge. Collect it within an hour, or it joins the k8s cluster",
+            "image": "k8s_node.jpg"
+        },
+        {
+            "text": "The coffee machine water is shut off due to a leak. The only thing leaking in the lounge now is your data.",
+            "image": "water_leak.jpg"
+        },
+        {
+            "text": "Login dama has lived in the lounge for years without getting pwned. You managed it in five minutes.",
+            "image": "login_dama.jpg"
+        },
+        {
+            "text": "Skyhigh: down. Eduroam: down. Your PC: 100% uptime, accessible to everyone.",
+            "image": "uptime.jpg"
+        },
+        {
+            "text": "Days since last unlocked screen: 0",
+            "image": "days_since.jpg"
+        },
+        {
+            "text": "Blackboard logs you out after a few minutes. Why don't you?",
+            "image": "blackboard.jpg"
+        },
+        {
+            "text": "Congrats! You're today's easiest CTF challenge. Flag: login{w1n_plus_L}",
+            "image": "ctf.jpg"
+        },
+        {
+            "text": "Login Wrapped 2026: Your most played activity was leaving your screen unlocked. You're in the top 0.1%.",
+            "image": "wrapped.jpg"
+        },
+        {
+            "text": "Left your PC unlocked to grab \"just one slice\" of pizza at the company presentation. The company saw it. Now you're in line at NAV.",
+            "image": "uncanny.jpg"
+        },
+        {
+            "text": "Grab a white Monster. \"Just two seconds.\" Come back to login.no/pwned.",
+            "image": "pikachu.jpg"
+        },
+        {
+            "text": "The only thing more expired than the Login hot dogs: your security habits.",
+            "image": "prima_polse.jpg"
         }
     ]
 }
