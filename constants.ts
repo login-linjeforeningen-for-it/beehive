@@ -2,7 +2,7 @@ import packageInfo from './package.json'
 
 const { env } = process
 
-const cdn = env.NEXT_PUBLIC_CDN_URL ?? 'https://s3.login.no/beehive'
+const cdn = env.NEXT_PUBLIC_CDN_URL ?? 'https://tekkom-beehive.s3.de.io.cloud.ovh.net'
 const albumCdn = env.NEXT_PUBLIC_ALBUM_CDN_URL ?? cdn
 const beekeeperApiUrl = env.BEEKEEPER_API_URL ?? 'https://beekeeper.login.no/api'
 

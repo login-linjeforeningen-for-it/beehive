@@ -72,9 +72,9 @@ const nextConfig: NextConfig = {
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: 's3.login.no',
+                hostname: 'tekkom-beehive.s3.de.io.cloud.ovh.net',
                 port: '',
-                pathname: '/beehive/**',
+                pathname: '/**',
                 search: '',
             },
             {
