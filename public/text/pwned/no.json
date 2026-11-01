@@ -1,5 +1,6 @@
 {
     "text": "Det har gått {time} siden du ble pwned",
+    "sound": "Klikk hvor som helst for lyd",
     "pwned": [
         {
             "text": "Deg etter at vi sletta obligen din mens pcen din var ulåst",
