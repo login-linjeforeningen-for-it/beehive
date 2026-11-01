@@ -36,7 +36,19 @@ export default function PageClient({pwnedNumber, lang}: PageClientProps){
             setTime(difference)
         }, 1000)
 
-        return () => clearInterval(interval)
+        const audio = new Audio('/assets/audio/pwned.mp3')
+        const play = () => audio.play().catch(() => {})
+        let audioInterval: ReturnType<typeof setInterval>
+        const audioTimeout = setTimeout(() => {
+            play()
+            audioInterval = setInterval(play, 5 * 60 * 1000)
+        }, 60 * 1000)
+
+        return () => {
+            clearInterval(interval)
+            clearTimeout(audioTimeout)
+            clearInterval(audioInterval)
+        }
     }, [])
 
     const meme = memes.pwned[pwnedNumber] || memes.pwned[0] || { text: 'Pwned!', image: '' }

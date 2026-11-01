@@ -14,6 +14,10 @@ sub vcl_recv {
         return (pass);
     }
 
+    if (req.url ~ "^/pwned(/|\?|$)") {
+        return (pass);
+    }
+
     if (req.http.Cookie) {
         set req.http.X-Theme = regsub(req.http.Cookie, ".*theme=([^;]+);?.*", "\1");
         set req.http.X-Lang = regsub(req.http.Cookie, ".*lang=([^;]+);?.*", "\1");
