@@ -79,7 +79,7 @@
   },
   "publicDocs": {
     "title": "Offentlige dokumenter",
-    "body": "For mer informasjon og offentlige dokumenter kan du besøke <a class='link link--primary' href='https://wiki.login.no/s/doc/docs' target=\"_blank\" rel=\"noreferrer\">wikien</a>, her kan du blant annet finne følgende type dokumenter:",
+    "body": "For mer informasjon og offentlige dokumenter kan du besøke <a class='link link--primary' href='https://wiki.login.no/public/docs' target=\"_blank\" rel=\"noreferrer\">wikien</a>, her kan du blant annet finne følgende type dokumenter:",
     "bulletPoints": {
       "agendas": "Agenda",
       "minutes": "Referat",
