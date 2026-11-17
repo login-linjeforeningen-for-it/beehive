@@ -175,6 +175,22 @@ export async function getSafeActivity(): Promise<Music> {
     return data
 }
 
+export async function getWeather(): Promise<Weather[]> {
+    const response = await fetchWrapper('https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=60.7894&lon=10.6819', {
+        headers: { 'User-Agent': 'beehive https://login.no' }
+    })
+    if (typeof response === 'string') return []
+
+    return response.properties.timeseries.map((entry: {
+        time: string
+        data: { instant: { details: { air_temperature: number } }, next_1_hours?: { summary: { symbol_code: string } } }
+    }) => ({
+        time: entry.time,
+        temperature: entry.data.instant.details.air_temperature,
+        symbol: entry.data.next_1_hours?.summary.symbol_code ?? '',
+    }))
+}
+
 async function fetchWrapper(path: string, options = {}) {
     const controller = new AbortController()
     const timeout = setTimeout(() => controller.abort(), config.timeout)

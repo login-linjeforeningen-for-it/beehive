@@ -13,26 +13,26 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "lucide-react": "^1.61.0",
-    "next": "^16.4.3",
+    "lucide-react": "^1.73.0",
+    "next": "^16.4.6",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-snowfall": "^2.4.0",
     "swr": "^2.5.1",
-    "uibee": "^3.3.3",
+    "uibee": "^3.4.0",
     "utilbee": "^1.4.9",
     "yahoo-finance2": "^3.15.4"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.10.0",
-    "@tailwindcss/postcss": "^4.3.3",
+    "@tailwindcss/postcss": "^4.3.5",
     "@types/bun": "^1.4.4",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "eslint": "^10.13.0",
-    "tailwindcss": "^4.3.3",
+    "eslint": "^10.15.0",
+    "tailwindcss": "^4.3.5",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.72.0"
+    "typescript-eslint": "^8.72.2"
   }
 }

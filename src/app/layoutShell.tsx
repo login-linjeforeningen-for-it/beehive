@@ -23,8 +23,8 @@ export default function LayoutShell({
 }: LayoutShellProps) {
     const path = usePathname() || ''
     const page = path.split('/').pop()
-    const dashboard = path.includes('dashboard')
-    const lockDocumentScroll = page === 'pwned'
+    const dashboard = path.includes('dashboard') || path === '/tv'
+    const lockDocumentScroll = page === 'pwned' || path === '/tv'
     const hideFooter = page === 'pwned' || dashboard
     const pwnedHeaderClassName = 'fixed top-0 z-900 w-full bg-(--color-bg-topbar-fallback) '
         + 'supports-[backdrop-filter:blur(0px)]:bg-(--color-bg-topbar) '

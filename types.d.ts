@@ -1,4 +1,10 @@
 declare global {
+    type Weather = {
+        time: string
+        temperature: number
+        symbol: string
+    }
+
     type time_type = 'default' | 'no_end' | 'whole_day' | 'to_be_determined'
     type location_type = 'mazemap' | 'coords' | 'address' | 'digital'
     type embed_type = 'on' | 'off'

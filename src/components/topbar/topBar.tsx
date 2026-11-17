@@ -41,6 +41,7 @@ export default function Topbar({ onlyLogo, theme, lang, accessToken }: TopBarPro
                     logoutPath={config.authPath.logout}
                     onlyLogo={onlyLogo}
                     className={navbarClassName}
+                    innerClassName={onlyLogo ? 'max-w-none! 800px:px-8!' : undefined}
                 >
                     <NavItem href='/events'>{text.nav.events}</NavItem>
                     <NavItem href='/career'>{text.nav.jobad}</NavItem>
