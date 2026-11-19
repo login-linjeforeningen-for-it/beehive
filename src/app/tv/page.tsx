@@ -42,48 +42,71 @@ export default async function TV() {
         : eventsResponse.events.filter(event => new Date(event.time_end).getTime() > now)
     const jobs = typeof jobsResponse === 'string' || !Array.isArray(jobsResponse.jobs) ? [] : jobsResponse.jobs
 
+    const columns = [
+        <Column key='events' title={text.eventsPreview.title}>
+            {events.map(event => (
+                <li key={event.id}><EventListItem event={event} variant='list-item' highlight={event.highlight} /></li>
+            ))}
+        </Column>,
+        <Column key='jobs' title={text.jobadsPreview.title}>
+            {jobs.map(job => <li key={job.id} className='mb-2'><JobadsListItem jobad={job} /></li>)}
+            {!jobs.length && (
+                <li className='grid grid-cols-[auto_1fr] items-center gap-x-8 rounded-(--border-radius) bg-(--color-bg-body) p-4'>
+                    <div
+                        className={'flex aspect-5/2 h-20 items-center justify-center rounded-(--border-radius) '
+                            + 'bg-(--color-border-default) text-3xl font-bold'}
+                    >
+                        NAV
+                    </div>
+                    <div>
+                        <div className='text-2xl leading-[1.4em]'>
+                            {lang === 'no' ? 'Du hadde fått avslag uansett' : 'You would have been rejected anyway'}
+                        </div>
+                        <ul className='mt-2 flex list-none flex-wrap gap-x-6 gap-y-2 text-[0.95rem] text-(--color-text-regular)'>
+                            <li className='flex items-center'>
+                                <Apartment className='h-6 w-6 fill-(--color-text-discreet) pr-[0.3rem]' />
+                                NAV
+                            </li>
+                            <li>arbeidsplassen.nav.no</li>
+                        </ul>
+                    </div>
+                </li>
+            )}
+        </Column>,
+        <section key='info' className='flex min-h-0 flex-col gap-8 overflow-hidden'>
+            <h1 className='text-center text-5xl font-semibold'>
+                <i className='logfont-login pr-3 align-middle' />
+                Login Lounge
+            </h1>
+            <Clock lang={lang} />
+            <Weather weather={weather} lang={lang} />
+            <Music initialData={music} lang={lang} />
+        </section>,
+    ]
+    // OLED burn-in: rotate the columns one slot per day (UTC) so the static headings and clock move around
+    const shift = Math.floor(now / 86_400_000) % columns.length
+
     return (
         <div className='grid h-full grid-cols-3 grid-rows-[minmax(0,1fr)] gap-8 overflow-hidden p-8'>
-            <style>{'html { font-size: min(100vw / 120, 100vh / 67.5) }'}</style>
-            <Column title={text.eventsPreview.title}>
-                {events.map(event => (
-                    <li key={event.id}><EventListItem event={event} variant='list-item' highlight={event.highlight} /></li>
-                ))}
-            </Column>
-            <Column title={text.jobadsPreview.title}>
-                {jobs.map(job => <li key={job.id} className='mb-2'><JobadsListItem jobad={job} /></li>)}
-                {!jobs.length && (
-                    <li className='grid grid-cols-[auto_1fr] items-center gap-x-8 rounded-(--border-radius) bg-(--color-bg-body) p-4'>
-                        <div
-                            className={'flex aspect-5/2 h-20 items-center justify-center rounded-(--border-radius) '
-                                + 'bg-(--color-border-default) text-3xl font-bold'}
-                        >
-                            NAV
-                        </div>
-                        <div>
-                            <div className='text-2xl leading-[1.4em]'>
-                                {lang === 'no' ? 'Du hadde fått avslag uansett' : 'You would have been rejected anyway'}
-                            </div>
-                            <ul className='mt-2 flex list-none flex-wrap gap-x-6 gap-y-2 text-[0.95rem] text-(--color-text-regular)'>
-                                <li className='flex items-center'>
-                                    <Apartment className='h-6 w-6 fill-(--color-text-discreet) pr-[0.3rem]' />
-                                    NAV
-                                </li>
-                                <li>arbeidsplassen.nav.no</li>
-                            </ul>
-                        </div>
-                    </li>
-                )}
-            </Column>
-            <section className='flex min-h-0 flex-col gap-8 overflow-hidden'>
-                <h1 className='text-center text-5xl font-semibold'>
-                    <i className='logfont-login pr-3 align-middle' />
-                    Login Lounge
-                </h1>
-                <Clock lang={lang} />
-                <Weather weather={weather} lang={lang} />
-                <Music initialData={music} lang={lang} />
-            </section>
+            {/* OLED burn-in: drift everything, top bar included. Phase comes from the clock so reloads don't reset it.
+                Off-white instead of #fff, and no surface panels, so there are fewer bright static edges. */}
+            <style>{`
+                html { font-size: min(100vw / 120, 100vh / 67.5) }
+                :root {
+                    --color-white: var(--color-grey-400);
+                    --color-text-regular: var(--color-grey-500);
+                    --color-text-discreet: var(--color-grey-600);
+                    --color-text-disabled: var(--color-grey-800);
+                    --color-bg-surface: var(--color-bg-body);
+                }
+                body {
+                    animation: tv-x 420s steps(16) -${now}ms infinite alternate,
+                        tv-y 660s steps(16) -${now}ms infinite alternate;
+                }
+                @keyframes tv-x { from { translate: -0.5rem } to { translate: 0.5rem } }
+                @keyframes tv-y { from { transform: translateY(-0.5rem) } to { transform: translateY(0.5rem) } }
+            `}</style>
+            {[...columns.slice(shift), ...columns.slice(0, shift)]}
         </div>
     )
 }
